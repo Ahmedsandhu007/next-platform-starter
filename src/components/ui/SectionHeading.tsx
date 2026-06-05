@@ -1,0 +1,43 @@
+import { type ReactNode } from "react";
+import { Reveal } from "./Reveal";
+
+export function SectionHeading({
+  eyebrow,
+  title,
+  subtitle,
+  align = "center",
+  className = "",
+}: {
+  eyebrow: string;
+  title: ReactNode;
+  subtitle?: ReactNode;
+  align?: "center" | "left";
+  className?: string;
+}) {
+  const isCenter = align === "center";
+  return (
+    <Reveal
+      className={`flex flex-col ${
+        isCenter ? "items-center text-center" : "items-start text-left"
+      } ${className}`}
+    >
+      <span className="flex items-center gap-3 text-bronze">
+        <span className="h-px w-8 bg-bronze" aria-hidden />
+        <span className="eyebrow">{eyebrow}</span>
+        {isCenter && <span className="h-px w-8 bg-bronze" aria-hidden />}
+      </span>
+      <h2 className="mt-5 max-w-3xl text-balance text-3xl text-ink sm:text-4xl lg:text-[2.9rem] lg:leading-[1.12]">
+        {title}
+      </h2>
+      {subtitle ? (
+        <p
+          className={`mt-5 text-base leading-relaxed text-muted sm:text-lg ${
+            isCenter ? "max-w-2xl" : "max-w-xl"
+          }`}
+        >
+          {subtitle}
+        </p>
+      ) : null}
+    </Reveal>
+  );
+}

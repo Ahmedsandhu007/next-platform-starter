@@ -1,0 +1,62 @@
+import {
+  BookOpen,
+  Receipt,
+  Percent,
+  Users,
+  Building2,
+  TrendingUp,
+  BadgePoundSterling,
+  UserRound,
+  Cloud,
+  Lightbulb,
+  MessagesSquare,
+  ShieldCheck,
+  Laptop,
+  ShoppingCart,
+  Rocket,
+  Home,
+  UtensilsCrossed,
+  Stethoscope,
+  HardHat,
+  Palette,
+  PhoneCall,
+  Settings2,
+  LineChart,
+  Sparkles,
+  type LucideProps,
+} from "lucide-react";
+
+/** Explicit map keeps the bundle tree-shaken (no full-library import). */
+const map = {
+  BookOpen,
+  Receipt,
+  Percent,
+  Users,
+  Building2,
+  TrendingUp,
+  BadgePoundSterling,
+  UserRound,
+  Cloud,
+  Lightbulb,
+  MessagesSquare,
+  ShieldCheck,
+  Laptop,
+  ShoppingCart,
+  Rocket,
+  Home,
+  UtensilsCrossed,
+  Stethoscope,
+  HardHat,
+  Palette,
+  PhoneCall,
+  Settings2,
+  LineChart,
+  Sparkles,
+} as const;
+
+export type IconName = keyof typeof map;
+
+export function Icon({ name, ...props }: { name: IconName } & LucideProps) {
+  const Cmp = map[name];
+  return <Cmp {...props} />;
+}

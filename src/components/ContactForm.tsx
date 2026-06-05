@@ -1,0 +1,208 @@
+"use client";
+
+import { useRef, useState } from "react";
+import { Check, Loader2, Send } from "lucide-react";
+import { businessTypes } from "@/lib/content";
+
+type Errors = Partial<Record<"name" | "email" | "message" | "consent", string>>;
+type Status = "idle" | "submitting" | "success";
+
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const fieldClass =
+  "w-full rounded-none border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 transition-colors focus:border-bronze focus-visible:outline-none focus:ring-1 focus:ring-bronze";
+
+export function ContactForm() {
+  const [status, setStatus] = useState<Status>("idle");
+  const [errors, setErrors] = useState<Errors>({});
+  const formRef = useRef<HTMLFormElement>(null);
+
+  function validate(data: FormData): Errors {
+    const next: Errors = {};
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+    const consent = data.get("consent");
+
+    if (name.length < 2) next.name = "Please enter your name.";
+    if (!emailRe.test(email)) next.email = "Please enter a valid email address.";
+    if (message.length < 10) next.message = "Please add a few details (10+ characters).";
+    if (!consent) next.consent = "Please tick the box so we can reply.";
+    return next;
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const found = validate(data);
+    setErrors(found);
+    if (Object.keys(found).length > 0) {
+      const first = Object.keys(found)[0];
+      formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      return;
+    }
+    // NOTE: front-end demo — wire to a server action / email service to deliver.
+    setStatus("submitting");
+    window.setTimeout(() => setStatus("success"), 900);
+  }
+
+  if (status === "success") {
+    return (
+      <div className="flex flex-col items-center justify-center border border-line bg-white p-10 text-center">
+        <span className="grid h-16 w-16 place-items-center rounded-full border border-bronze text-bronze">
+          <Check className="h-7 w-7" strokeWidth={1.5} aria-hidden />
+        </span>
+        <h3 className="mt-6 font-display text-2xl text-ink">Thank you — message received</h3>
+        <p className="mt-3 max-w-sm text-sm text-muted">
+          One of our accountants will be in touch within one business day. We look forward to
+          helping your business thrive.
+        </p>
+        <button
+          type="button"
+          onClick={() => {
+            setStatus("idle");
+            setErrors({});
+            formRef.current?.reset();
+          }}
+          className="mt-7 text-xs font-semibold uppercase tracking-[0.18em] text-bronze underline-offset-4 hover:underline"
+        >
+          Send another message
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form ref={formRef} onSubmit={handleSubmit} noValidate className="border border-line bg-white p-7 sm:p-8">
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field label="Full name" htmlFor="name" error={errors.name} required>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autoComplete="name"
+            placeholder="Jane Smith"
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? "name-error" : undefined}
+            className={fieldClass}
+          />
+        </Field>
+
+        <Field label="Email address" htmlFor="email" error={errors.email} required>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            placeholder="jane@company.co.uk"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "email-error" : undefined}
+            className={fieldClass}
+          />
+        </Field>
+
+        <Field label="Phone (optional)" htmlFor="phone">
+          <input id="phone" name="phone" type="tel" autoComplete="tel" placeholder="07123 456789" className={fieldClass} />
+        </Field>
+
+        <Field label="Business type" htmlFor="businessType">
+          <select id="businessType" name="businessType" defaultValue="" className={fieldClass}>
+            <option value="" disabled>
+              Select an option
+            </option>
+            {businessTypes.map((b) => (
+              <option key={b} value={b}>
+                {b}
+              </option>
+            ))}
+          </select>
+        </Field>
+      </div>
+
+      <div className="mt-5">
+        <Field label="How can we help?" htmlFor="message" error={errors.message} required>
+          <textarea
+            id="message"
+            name="message"
+            rows={4}
+            placeholder="Tell us a little about your business and what you need…"
+            aria-invalid={!!errors.message}
+            aria-describedby={errors.message ? "message-error" : undefined}
+            className={`${fieldClass} resize-y`}
+          />
+        </Field>
+      </div>
+
+      <div className="mt-5">
+        <label className="flex items-start gap-3 text-sm text-muted">
+          <input
+            name="consent"
+            type="checkbox"
+            value="yes"
+            aria-invalid={!!errors.consent}
+            aria-describedby={errors.consent ? "consent-error" : undefined}
+            className="mt-0.5 h-5 w-5 shrink-0 rounded-none border-line accent-bronze focus-visible:outline-none"
+          />
+          <span>
+            I agree to MMR Accountants contacting me about my enquiry. We&apos;ll never share your details.
+          </span>
+        </label>
+        {errors.consent && (
+          <p id="consent-error" className="mt-1.5 text-xs font-medium text-red-700">
+            {errors.consent}
+          </p>
+        )}
+      </div>
+
+      <button
+        type="submit"
+        disabled={status === "submitting"}
+        className="group mt-7 inline-flex w-full items-center justify-center gap-2.5 bg-ink px-7 py-4 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-bronze disabled:cursor-not-allowed disabled:opacity-70"
+      >
+        {status === "submitting" ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+            Sending…
+          </>
+        ) : (
+          <>
+            Send Enquiry
+            <Send className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden />
+          </>
+        )}
+      </button>
+    </form>
+  );
+}
+
+function Field({
+  label,
+  htmlFor,
+  error,
+  required,
+  children,
+}: {
+  label: string;
+  htmlFor: string;
+  error?: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label
+        htmlFor={htmlFor}
+        className="mb-1.5 block text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-ink"
+      >
+        {label}
+        {required && <span className="ml-0.5 text-bronze">*</span>}
+      </label>
+      {children}
+      {error && (
+        <p id={`${htmlFor}-error`} className="mt-1.5 text-xs font-medium text-red-700">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
