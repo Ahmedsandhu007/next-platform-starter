@@ -1,11 +1,18 @@
 {
+<<<<<<< HEAD
   "name": "mmr-accountants",
   "version": "0.1.0",
+=======
+  "name": "next-netlify-platform-starter",
+  "version": "0.1.0",
+  "type": "module",
+>>>>>>> 4d5db64a2a363fbd31920ad9506a58165723257b
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+<<<<<<< HEAD
     "lint": "eslint"
   },
   "dependencies": {
@@ -25,5 +32,26 @@
     "eslint-config-next": "16.2.7",
     "tailwindcss": "^4",
     "typescript": "^5"
+=======
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.9",
+    "blobshape": "^1.0.0",
+    "bright": "^1.0.0",
+    "markdown-to-jsx": "^7.7.16",
+    "next": "^16.0.8",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "unique-names-generator": "^4.7.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.15",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "eslint": "9.39.4",
+    "eslint-config-next": "^16.0.8",
+    "postcss": "^8.4.36",
+    "tailwindcss": "^4.1.15"
+>>>>>>> 4d5db64a2a363fbd31920ad9506a58165723257b
   }
 }
