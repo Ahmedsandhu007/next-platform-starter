@@ -1,5 +1,12 @@
-{ 
-    "compilerOptions": {
-        "baseUrl": "."
-      }    
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "components/*": ["components/*"],
+      "data/*": ["data/*"],
+      "utils": ["utils.js"],
+      "app/*": ["app/*"]
+    }
+  }
 }
