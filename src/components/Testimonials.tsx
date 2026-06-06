@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import type { Swiper as SwiperClass } from "swiper";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -34,8 +35,7 @@ function GoldStars({ className = "h-4 w-4" }: { className?: string }) {
 
 export function Testimonials() {
   const t = copy.testimonials;
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
+  const swiperRef = useRef<SwiperClass | null>(null);
 
   return (
     <section
@@ -44,9 +44,10 @@ export function Testimonials() {
       aria-label="Accreditations and client reviews"
     >
       <Container>
-        {/* Regulated by */}
+        {/* Accreditations */}
         <Reveal className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">{t.regulatedTitle}</h2>
+          <span className="eyebrow text-bronze">{t.eyebrow}</span>
+          <h2 className="mt-4 text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">{t.regulatedTitle}</h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted">{t.regulatedText}</p>
         </Reveal>
 
@@ -59,35 +60,36 @@ export function Testimonials() {
           </div>
         </Reveal>
 
-        {/* Google reviews summary */}
-        <Reveal delay={0.05} className="mt-16 flex flex-col items-center text-center">
-          <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-ink">{t.ratingLabel}</p>
-          <div className="mt-2.5">
-            <GoldStars className="h-6 w-6" />
+        {/* Rating summary — distinct horizontal card */}
+        <Reveal delay={0.05} className="mt-14 flex justify-center">
+          <div className="flex flex-col items-center gap-4 rounded-2xl border border-line bg-cream/50 px-8 py-5 text-center sm:flex-row sm:gap-7 sm:text-left">
+            <div className="flex items-center gap-3">
+              <span className="font-display text-[2.6rem] font-extrabold leading-none text-ink">{t.ratingScore}</span>
+              <div>
+                <GoldStars className="h-[18px] w-[18px]" />
+                <p className="mt-1 text-xs text-muted">out of {t.ratingOutOf}</p>
+              </div>
+            </div>
+            <span className="hidden h-12 w-px bg-line sm:block" aria-hidden />
+            <p className="text-sm leading-relaxed text-muted">
+              from <span className="font-bold text-ink">{t.reviewsCount}+</span> verified reviews on{" "}
+              <GoogleWordmark className="align-middle text-base" />
+            </p>
           </div>
-          <p className="mt-2.5 text-sm text-muted">
-            Based on <span className="font-bold text-ink">{t.reviewsCount}</span> reviews
-          </p>
-          <GoogleWordmark className="mt-2 text-[1.75rem]" />
         </Reveal>
 
         {/* Review cards */}
         <div className="relative mt-12">
           <Swiper
-            modules={[Autoplay, Navigation, Pagination]}
+            modules={[Autoplay, Pagination]}
+            onSwiper={(s) => {
+              swiperRef.current = s;
+            }}
             spaceBetween={24}
             slidesPerView={1}
             loop
-            autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+            autoplay={{ delay: 5500, disableOnInteraction: false, pauseOnMouseEnter: true }}
             pagination={{ clickable: true }}
-            navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
-            onBeforeInit={(swiper) => {
-              const nav = swiper.params.navigation;
-              if (nav && typeof nav !== "boolean") {
-                nav.prevEl = prevRef.current;
-                nav.nextEl = nextRef.current;
-              }
-            }}
             breakpoints={{ 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
             style={
               {
@@ -128,18 +130,18 @@ export function Testimonials() {
             ))}
           </Swiper>
 
-          {/* Carousel arrows */}
+          {/* Carousel arrows — drive the Swiper instance directly */}
           <button
-            ref={prevRef}
             type="button"
+            onClick={() => swiperRef.current?.slidePrev()}
             aria-label="Previous reviews"
             className="absolute -left-2 top-[42%] z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-md transition-colors duration-300 hover:border-bronze hover:bg-bronze hover:text-white sm:-left-5"
           >
             <ChevronLeft className="h-5 w-5" aria-hidden />
           </button>
           <button
-            ref={nextRef}
             type="button"
+            onClick={() => swiperRef.current?.slideNext()}
             aria-label="Next reviews"
             className="absolute -right-2 top-[42%] z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-md transition-colors duration-300 hover:border-bronze hover:bg-bronze hover:text-white sm:-right-5"
           >

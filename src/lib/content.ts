@@ -569,11 +569,13 @@ export const copy = {
       subtitle:
         "We measure our success by yours. Here is what a few of the businesses we look after have to say about working with MMR.",
     },
-    regulatedTitle: "Regulated by ICAEW, ACCA & AAT",
+    eyebrow: "Accredited & reviewed",
+    regulatedTitle: "Qualified, regulated and trusted",
     regulatedText:
-      "Our team of qualified accountants holds qualifications from the top accountancy bodies — ICAEW (Institute of Chartered Accountants in England & Wales), ACCA (Association of Chartered Certified Accountants) and AAT (Association of Accounting Technicians). We are also on the ICAEW approved employers list.",
-    ratingLabel: "Excellent",
-    reviewsCount: 310,
+      "Every client is looked after by qualified accountants who belong to the UK's leading professional bodies — the ICAEW, ACCA and AAT. That means chartered-standard expertise, strict ethical oversight and fully insured advice you can count on.",
+    ratingScore: "4.9",
+    ratingOutOf: "5",
+    reviewsCount: 240,
     reviewsPlatform: "Google",
   },
   faq: {
