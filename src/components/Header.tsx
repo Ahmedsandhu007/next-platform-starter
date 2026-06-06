@@ -135,7 +135,7 @@ export function Header() {
                                 >
                                   <span
                                     className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg transition-colors ${
-                                      activeCat === i ? "bg-bronze text-white" : "bg-white text-bronze ring-1 ring-line"
+                                      activeCat === i ? "bg-ink text-white" : "bg-white text-bronze ring-1 ring-line"
                                     }`}
                                   >
                                     <Icon name={cat.icon as IconName} className="h-4 w-4" strokeWidth={1.9} aria-hidden />
@@ -152,11 +152,11 @@ export function Header() {
                           <div className="grid flex-1 grid-cols-2 gap-1 p-3">
                             {link.mega[activeCat].items.map((it) => (
                               <Link
-                                key={it.href}
+                                key={it.title}
                                 href={it.href}
                                 className="group/i flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-cream"
                               >
-                                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-cream text-bronze transition-colors group-hover/i:bg-bronze group-hover/i:text-white">
+                                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-cream text-bronze transition-colors group-hover/i:bg-ink group-hover/i:text-white">
                                   <Icon name={it.icon as IconName} className="h-[18px] w-[18px]" strokeWidth={1.8} aria-hidden />
                                 </span>
                                 <span className="min-w-0">
@@ -256,8 +256,8 @@ export function Header() {
                             transition={{ duration: 0.25 }}
                             className="overflow-hidden pb-2 pl-3"
                           >
-                            {subItems.map((child) => (
-                              <li key={child.href}>
+                            {subItems.map((child, ci) => (
+                              <li key={`${link.href}-${ci}`}>
                                 <Link
                                   href={child.href}
                                   onClick={() => setOpen(false)}

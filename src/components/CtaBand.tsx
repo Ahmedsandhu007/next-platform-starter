@@ -18,22 +18,16 @@ export function CtaBand() {
         <div className="relative overflow-hidden rounded-3xl bg-ink px-6 py-16 text-center sm:px-12 lg:py-20">
           {/* Continuously animated glow + sheen */}
           <div aria-hidden className="pointer-events-none absolute inset-0">
-            <motion.div
-              className="absolute -left-20 -top-24 h-80 w-80 rounded-full bg-bronze/25 blur-3xl"
-              animate={reduce ? {} : { x: [0, 34, 0], y: [0, 22, 0], scale: [1, 1.18, 1] }}
-              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div
-              className="absolute -bottom-28 -right-16 h-96 w-96 rounded-full bg-bronze/15 blur-3xl"
-              animate={reduce ? {} : { x: [0, -26, 0], y: [0, -18, 0], scale: [1, 1.22, 1] }}
-              transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-            />
+            {/* Static glows — animating large blur surfaces is too GPU-heavy */}
+            <div className="absolute -left-20 -top-24 h-80 w-80 rounded-full bg-bronze/25 blur-3xl" />
+            <div className="absolute -bottom-28 -right-16 h-96 w-96 rounded-full bg-bronze/15 blur-3xl" />
+            {/* Opacity-only breathing glow (compositor-cheap — no re-rasterising the blur) */}
             <motion.div
               className="absolute -top-10 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-bronze/10 blur-3xl"
-              animate={reduce ? {} : { opacity: [0.4, 0.9, 0.4], scale: [0.9, 1.1, 0.9] }}
+              animate={reduce ? {} : { opacity: [0.45, 0.85, 0.45] }}
               transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
             />
-            {/* Sweeping sheen */}
+            {/* Sweeping sheen — a thin, un-blurred gradient (cheap) */}
             <motion.div
               className="absolute inset-y-0 -left-1/3 w-1/3 skew-x-12 bg-gradient-to-r from-transparent via-white/[0.07] to-transparent"
               animate={reduce ? {} : { x: ["0%", "420%"] }}
