@@ -1,0 +1,10 @@
+# Netlify configuration for the MMR Accountants Next.js site.
+# Netlify auto-detects Next.js and installs its Next Runtime (@netlify/plugin-nextjs),
+# which handles SSR, next/image optimisation and the generated OG image for you.
+# This file pins the build command and Node version for reproducible builds.
+
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"

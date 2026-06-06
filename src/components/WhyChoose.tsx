@@ -1,76 +1,53 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
+import { RingAccent } from "@/components/ui/Decorations";
 import { whyPoints } from "@/lib/content";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function WhyChoose() {
   return (
-    <section id="why" className="relative scroll-mt-24 border-t border-line bg-white py-20 sm:py-28">
-      <Container>
-        <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-          {/* Intro */}
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <Reveal>
-              <span className="flex items-center gap-3 text-bronze">
-                <span className="h-px w-8 bg-bronze" aria-hidden />
-                <span className="eyebrow">Why MMR</span>
+    <section id="why" className="relative scroll-mt-24 overflow-hidden border-b border-line bg-white py-20 sm:py-28">
+      <RingAccent className="absolute -right-10 top-24 hidden h-40 w-40 lg:block" />
+
+      <Container className="relative">
+        <SectionHeading
+          eyebrow="Why MMR"
+          title="Why established businesses choose MMR"
+          subtitle="Chartered-standard expertise with genuinely human service — no jargon, no surprise bills, and an adviser who actually picks up the phone."
+        />
+
+        <motion.ul
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {whyPoints.map((point) => (
+            <motion.li
+              key={point.title}
+              variants={staggerItem}
+              className="group rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-bronze/30 hover:shadow-xl hover:shadow-ink/5"
+            >
+              <span className="grid h-14 w-14 place-items-center rounded-xl bg-cream text-bronze transition-all duration-300 group-hover:scale-105 group-hover:bg-bronze group-hover:text-white">
+                <Icon name={point.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
               </span>
-              <h2 className="mt-5 text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">
-                The accountant ambitious businesses actually enjoy
-              </h2>
-              <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">
-                We pair chartered expertise with genuinely human service. No jargon, no
-                surprise bills — just clear numbers and an adviser who picks up the phone.
-              </p>
+              <h3 className="mt-5 text-lg text-ink">{point.title}</h3>
+              <p className="mt-2.5 text-[0.95rem] leading-relaxed text-muted">{point.description}</p>
+            </motion.li>
+          ))}
+        </motion.ul>
 
-              <div className="mt-8 flex items-start gap-4 border border-line border-l-2 border-l-bronze p-6">
-                <ShieldCheck className="h-6 w-6 shrink-0 text-bronze" strokeWidth={1.4} aria-hidden />
-                <p className="text-sm leading-relaxed text-ink/80">
-                  <span className="font-semibold text-ink">Our promise:</span> a fixed monthly
-                  fee agreed up front, work delivered ahead of deadline, and a response to
-                  every question within one business day.
-                </p>
-              </div>
-
-              <div className="mt-8">
-                <ButtonLink href="/contact" variant="primary" withArrow>
-                  Talk to an Accountant
-                </ButtonLink>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Feature grid */}
-          <motion.ul
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportOnce}
-            className="grid border-t border-l border-line sm:grid-cols-2"
-          >
-            {whyPoints.map((point) => (
-              <motion.li
-                key={point.title}
-                variants={staggerItem}
-                className="group border-r border-b border-line bg-white p-7"
-              >
-                <Icon
-                  name={point.icon as IconName}
-                  className="h-7 w-7 text-bronze"
-                  strokeWidth={1.4}
-                  aria-hidden
-                />
-                <h3 className="mt-5 text-lg font-semibold tracking-tight text-ink">{point.title}</h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted">{point.description}</p>
-              </motion.li>
-            ))}
-          </motion.ul>
+        <div className="mt-14 flex flex-col items-center gap-5 text-center">
+          <p className="text-muted">See for yourself why our clients stay with us year after year.</p>
+          <ButtonLink href="/contact" variant="primary" withArrow>
+            Talk to an Accountant
+          </ButtonLink>
         </div>
       </Container>
     </section>

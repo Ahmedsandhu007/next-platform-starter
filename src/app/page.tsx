@@ -1,5 +1,6 @@
-import { HeroPhoto } from "@/components/HeroPhoto";
+import { HeroPremium } from "@/components/HeroPremium";
 import { TrustedBy } from "@/components/TrustedBy";
+import { Approach } from "@/components/Approach";
 import { Services } from "@/components/Services";
 import { WhyChoose } from "@/components/WhyChoose";
 import { Industries } from "@/components/Industries";
@@ -12,8 +13,9 @@ import { CtaBand } from "@/components/CtaBand";
 export default function Home() {
   return (
     <>
-      <HeroPhoto />
+      <HeroPremium />
       <TrustedBy />
+      <Approach />
       <Services />
       <WhyChoose />
       <Industries />

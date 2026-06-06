@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 /* ============================================================
-   MMR Accountants — Direction 4: Contemporary Private Equity
-   Pure white background · Charcoal black · Rich bronze accent
+   MMR Accountants — Premium UK accountancy
+   White base · Charcoal ink · Rich bronze accent
+   Headings: Manrope ExtraBold · Body: Inter
    ============================================================ */
 @theme {
   /* Charcoal — primary ink */
-  --color-ink: #1a1a1a;
+  --color-ink: #161616;
   --color-ink-soft: #2a2a2a;
 
   /* Rich bronze — accent */
@@ -15,19 +16,22 @@
   --color-bronze-500: #8b6a3d;
   --color-bronze-600: #785a34;
   --color-bronze-700: #5f472a;
+  --color-bronze-50: #f7f1e8;
 
-  /* Warm neutrals (used for hairlines + secondary text only — never as fills) */
-  --color-muted: #5c574e;
-  --color-line: #e7e2d9;
+  /* Warm neutrals */
+  --color-muted: #57534a;
+  --color-line: #e9e4da;
+  --color-cream: #faf8f4;
 
-  /* Subtle reveal */
-  --animate-fade-in: fadeIn 0.6s ease forwards;
+  /* Decorative motion */
+  --animate-float-slow: floatY 12s ease-in-out infinite;
+  --animate-float-med: floatXY 9s ease-in-out infinite;
 }
 
-/* Fonts come from next/font (Inter + Bodoni Moda) */
+/* Fonts come from next/font (Inter + Manrope) */
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-bodoni), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-manrope), var(--font-inter), ui-sans-serif, sans-serif;
 }
 
 /* ============================================================
@@ -35,7 +39,7 @@
    ============================================================ */
 :root {
   --background: #ffffff;
-  --foreground: #1a1a1a;
+  --foreground: #161616;
 }
 
 html {
@@ -48,18 +52,26 @@ body {
   background: #ffffff;
   color: var(--foreground);
   font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Editorial Didone headlines */
+/* Modern Manrope heading system — strong hierarchy, tight tracking */
 h1,
 h2,
 .font-display {
   font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.015em;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 ::selection {
@@ -67,7 +79,6 @@ h2,
   color: #ffffff;
 }
 
-/* On-brand keyboard focus */
 :focus-visible {
   outline: 2px solid var(--color-bronze);
   outline-offset: 2px;
@@ -78,27 +89,56 @@ h2,
   color: var(--color-bronze);
 }
 
-/* Wide-tracked uppercase eyebrow/label, used throughout */
 .eyebrow {
   font-family: var(--font-sans);
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-weight: 600;
+  letter-spacing: 0.18em;
+  font-weight: 700;
   font-size: 0.72rem;
+}
+
+/* ============================================================
+   Premium background effects (kept very low opacity / corporate)
+   ============================================================ */
+
+/* Soft multi-point mesh gradient */
+.bg-mesh {
+  background-image:
+    radial-gradient(38% 50% at 12% 18%, rgba(139, 106, 61, 0.07), transparent 62%),
+    radial-gradient(36% 46% at 88% 8%, rgba(22, 22, 22, 0.05), transparent 60%),
+    radial-gradient(46% 60% at 78% 92%, rgba(139, 106, 61, 0.06), transparent 66%);
+}
+
+/* Faint dot grid, masked so it fades at the edges */
+.bg-dots {
+  background-image: radial-gradient(rgba(22, 22, 22, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 72% 60% at 50% 38%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 72% 60% at 50% 38%, #000 35%, transparent 100%);
+}
+
+/* Soft radial vignette/glow used behind hero + CTAs */
+.bg-radial-bronze {
+  background: radial-gradient(60% 55% at 70% 30%, rgba(139, 106, 61, 0.1), transparent 70%);
+}
+
+/* Glass / blur surface for the sticky header + cards */
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
 }
 
 /* ============================================================
    Keyframes
    ============================================================ */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-22px); }
+}
+@keyframes floatXY {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(16px, -18px); }
 }
 
 /* ============================================================

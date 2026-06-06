@@ -2,54 +2,36 @@
 
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
-import { partners, trustStats } from "@/lib/content";
+import { partners } from "@/lib/content";
 
 export function TrustedBy() {
   return (
-    <section id="trusted" className="relative scroll-mt-24 border-t border-line bg-white py-16 sm:py-20" aria-label="Trusted by UK businesses">
+    <section
+      id="trusted"
+      className="relative scroll-mt-24 border-y border-line bg-cream/50 py-14 sm:py-16"
+      aria-label="Accreditations and integrations"
+    >
       <Container>
         <Reveal className="text-center">
-          <p className="eyebrow text-muted">Trusted by UK businesses · Partnered with leading platforms</p>
+          <p className="eyebrow text-muted">
+            Accredited, regulated &amp; integrated with the platforms you trust
+          </p>
         </Reveal>
 
-        {/* Partner wordmarks */}
         <Reveal delay={0.05}>
-          <ul className="mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <ul className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
             {partners.map((p) => (
               <li
                 key={p}
-                className="flex items-center gap-2.5 border border-line px-4 py-2.5 transition-colors duration-300 hover:border-bronze"
+                className="group flex items-center justify-center gap-2.5 border border-line bg-white px-4 py-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-bronze/40 hover:shadow-sm"
               >
-                <span className="h-1.5 w-1.5 shrink-0 bg-bronze" aria-hidden />
-                <span className="font-sans text-sm font-semibold uppercase tracking-[0.16em] text-ink/70 sm:text-[0.95rem]">
+                <span className="h-1.5 w-1.5 shrink-0 bg-bronze transition-transform duration-300 group-hover:scale-150" aria-hidden />
+                <span className="font-display text-lg font-extrabold tracking-tight text-ink/75 transition-colors duration-300 group-hover:text-ink">
                   {p}
                 </span>
               </li>
             ))}
           </ul>
-        </Reveal>
-
-        {/* Counters */}
-        <Reveal delay={0.1}>
-          <dl className="mt-14 grid grid-cols-2 gap-y-10 border-y border-line py-10 lg:grid-cols-4">
-            {trustStats.map((stat, i) => (
-              <div
-                key={stat.label}
-                className={`px-6 text-center ${i > 0 ? "lg:border-l lg:border-line" : ""}`}
-              >
-                <dd className="font-display text-4xl text-ink sm:text-5xl">
-                  <AnimatedCounter
-                    value={stat.value}
-                    prefix={"prefix" in stat ? stat.prefix : ""}
-                    suffix={stat.suffix}
-                    decimals={"decimals" in stat ? stat.decimals : 0}
-                  />
-                </dd>
-                <dt className="eyebrow mx-auto mt-3 max-w-[12rem] text-muted">{stat.label}</dt>
-              </div>
-            ))}
-          </dl>
         </Reveal>
       </Container>
     </section>

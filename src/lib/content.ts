@@ -27,8 +27,11 @@ export const siteConfig = {
   },
 } as const;
 
+export type ServiceArt = "tax" | "cloud" | "advisory" | "bookkeeping" | "vat" | "payroll" | "formation";
+
 export type Service = {
   slug: string;
+  art: ServiceArt;
   icon: string; // lucide icon name (resolved in the component)
   title: string;
   description: string;
@@ -38,6 +41,7 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "bookkeeping",
+    art: "bookkeeping",
     icon: "BookOpen",
     title: "Bookkeeping & Annual Accounts",
     description:
@@ -46,6 +50,7 @@ export const services: Service[] = [
   },
   {
     slug: "tax-planning",
+    art: "tax",
     icon: "Receipt",
     title: "Tax Planning & Returns",
     description:
@@ -54,6 +59,7 @@ export const services: Service[] = [
   },
   {
     slug: "vat",
+    art: "vat",
     icon: "Percent",
     title: "VAT & Making Tax Digital",
     description:
@@ -62,6 +68,7 @@ export const services: Service[] = [
   },
   {
     slug: "payroll",
+    art: "payroll",
     icon: "Users",
     title: "Payroll & Pensions",
     description:
@@ -70,6 +77,7 @@ export const services: Service[] = [
   },
   {
     slug: "company-formation",
+    art: "formation",
     icon: "Building2",
     title: "Company Formation & Secretarial",
     description:
@@ -78,6 +86,7 @@ export const services: Service[] = [
   },
   {
     slug: "advisory",
+    art: "advisory",
     icon: "TrendingUp",
     title: "Business Advisory & Growth",
     description:
@@ -94,40 +103,68 @@ export type WhyPoint = {
 
 export const whyPoints: WhyPoint[] = [
   {
-    icon: "BadgePoundSterling",
-    title: "Fixed monthly fees",
+    icon: "Award",
+    title: "ACCA Qualified",
     description:
-      "One transparent price covering everything we agreed — no hourly billing and no surprise invoices.",
+      "Chartered-standard, ACCA-qualified accountants held to the highest professional and ethical standards.",
+  },
+  {
+    icon: "BadgePoundSterling",
+    title: "Transparent Pricing",
+    description:
+      "Fixed monthly fees agreed up front — no hourly billing, no hidden charges and no surprise invoices.",
   },
   {
     icon: "UserRound",
-    title: "Your own accountant",
+    title: "Dedicated Accountant",
     description:
-      "A named, qualified accountant who knows your business by name, not a different voice every call.",
+      "A named accountant who knows your business by name and is only ever a phone call away.",
+  },
+  {
+    icon: "Zap",
+    title: "Fast Turnaround",
+    description:
+      "Accounts and returns delivered ahead of deadline, with a reply to every question within one business day.",
   },
   {
     icon: "Cloud",
-    title: "Cloud-first & real-time",
+    title: "Cloud Accounting Experts",
     description:
-      "See your numbers the moment they happen with leading software set up and managed for you.",
+      "Certified partners in Xero, QuickBooks and Sage — your numbers kept live and reconciled in real time.",
   },
   {
-    icon: "Lightbulb",
-    title: "Proactive, not reactive",
+    icon: "MapPin",
+    title: "UK Business Specialists",
     description:
-      "We flag savings and risks before deadlines arrive, so you are never caught out by your tax bill.",
+      "Deep expertise in UK tax, IR35, VAT and CIS, supporting established businesses the length of the country.",
+  },
+];
+
+export type ValueProp = {
+  art: "tax" | "cloud" | "advisory" | "bookkeeping";
+  title: string;
+  description: string;
+};
+
+/** Illustrated value props (replaces the numeric stats band on the home page) */
+export const valueProps: ValueProp[] = [
+  {
+    art: "tax",
+    title: "Proactive tax planning",
+    description:
+      "We don't simply file your taxes — we plan ahead all year to legally lower your bill and keep more profit where it belongs.",
   },
   {
-    icon: "MessagesSquare",
-    title: "Unlimited support",
+    art: "cloud",
+    title: "Cloud-first, always current",
     description:
-      "Ask as many questions as you like across the year — calls and emails are always included.",
+      "Your books live in the cloud and reconcile daily, so you always know exactly where your business stands.",
   },
   {
-    icon: "ShieldCheck",
-    title: "Chartered & insured",
+    art: "advisory",
+    title: "Advice that compounds",
     description:
-      "Regulated, fully insured and held to the standards of a chartered accountancy practice.",
+      "A dedicated adviser who turns your numbers into confident decisions on pricing, cash flow and growth.",
   },
 ];
 
@@ -223,6 +260,20 @@ export const testimonials: Testimonial[] = [
     role: "Owner, Ellison Plumbing & Heating",
     initials: "ME",
   },
+  {
+    quote:
+      "MMR restructured how we pay ourselves and saved us more in the first year than two years of their fees combined. Genuinely proactive advisers.",
+    name: "James Carter",
+    role: "Founder, Carter & Reeve Architects",
+    initials: "JC",
+  },
+  {
+    quote:
+      "Moving our payroll and VAT to MMR took the stress out of month-end completely. Everything is in the cloud and I can see exactly where we stand.",
+    name: "Aisha Khan",
+    role: "Director, Brightway Recruitment",
+    initials: "AK",
+  },
 ];
 
 export type Faq = {
@@ -281,8 +332,16 @@ export const trustStats = [
   { value: 98, suffix: "%", label: "Client retention, year on year" },
 ] as const;
 
-/** Cloud platforms / bodies MMR works with — rendered as a partner strip */
-export const partners = ["Xero", "QuickBooks", "FreeAgent", "Sage", "Dext", "ICAEW"] as const;
+/** Accreditations / integrations — rendered as trust badges under the hero */
+export const partners = ["ACCA", "HMRC", "Xero", "QuickBooks", "FreeAgent", "Sage"] as const;
+
+/** Headline statistics — animated with react-countup on scroll */
+export const stats = [
+  { end: 5000, suffix: "+", label: "Tax returns filed" },
+  { end: 98, suffix: "%", label: "Client retention" },
+  { end: 15, suffix: "+", label: "Years of experience" },
+  { end: 1000, suffix: "+", label: "Businesses supported" },
+] as const;
 
 /* ============================================================
    Navigation — routes with dropdown children (anchor into pages)

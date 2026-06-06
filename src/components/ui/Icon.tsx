@@ -23,6 +23,9 @@ import {
   Settings2,
   LineChart,
   Sparkles,
+  Award,
+  Zap,
+  MapPin,
   type LucideProps,
 } from "lucide-react";
 
@@ -52,6 +55,9 @@ const map = {
   Settings2,
   LineChart,
   Sparkles,
+  Award,
+  Zap,
+  MapPin,
 } as const;
 
 export type IconName = keyof typeof map;

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -11,11 +11,11 @@ import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function Services() {
   return (
-    <section id="services" className="relative scroll-mt-24 border-t border-line bg-white py-20 sm:py-28">
+    <section id="services" className="relative scroll-mt-24 border-b border-line bg-cream/40 py-20 sm:py-28">
       <Container>
         <SectionHeading
           eyebrow="What we do"
-          title="Full-service accountancy, quietly handled"
+          title="Full-service accountancy, expertly handled"
           subtitle="From everyday bookkeeping to board-level advice, MMR covers every number your business needs — so nothing slips and no deadline is missed."
         />
 
@@ -24,40 +24,32 @@ export function Services() {
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="mt-16 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {services.map((service, i) => (
-            <motion.li id={service.slug} key={service.title} variants={staggerItem} className="scroll-mt-28 border-r border-b border-line bg-white">
-              <article className="group relative flex h-full flex-col bg-white p-8">
-                <span className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-bronze transition-transform duration-300 group-hover:scale-x-100" aria-hidden />
+          {services.map((service) => (
+            <motion.li id={service.slug} key={service.title} variants={staggerItem} className="scroll-mt-28">
+              <article className="group flex h-full flex-col rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-2 hover:border-bronze/30 hover:shadow-[0_28px_60px_-24px_rgba(139,106,61,0.3)]">
+                <span className="grid h-14 w-14 place-items-center rounded-xl bg-cream text-bronze transition-all duration-300 group-hover:scale-105 group-hover:bg-ink group-hover:text-white">
+                  <Icon name={service.icon as IconName} className="h-7 w-7" strokeWidth={1.8} aria-hidden />
+                </span>
 
-                <div className="flex items-start justify-between">
-                  <span className="font-display text-2xl text-bronze">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <Icon
-                    name={service.icon as IconName}
-                    className="h-7 w-7 text-ink transition-colors duration-300 group-hover:text-bronze"
-                    strokeWidth={1.4}
-                    aria-hidden
-                  />
-                </div>
+                <h3 className="mt-6 text-xl text-ink">{service.title}</h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-muted">{service.description}</p>
 
-                <h3 className="mt-6 text-xl font-semibold tracking-tight text-ink">{service.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{service.description}</p>
-
-                <ul className="mt-6 flex flex-col gap-2.5 border-t border-line pt-5">
+                <ul className="mt-5 flex flex-col gap-2.5 border-t border-line pt-5">
                   {service.points.map((point) => (
-                    <li key={point} className="flex items-center gap-3 text-sm text-ink/80">
-                      <span className="h-1 w-1 shrink-0 bg-bronze" aria-hidden />
+                    <li key={point} className="flex items-center gap-2.5 text-sm font-medium text-ink/80">
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-bronze-50 text-bronze">
+                        <Check className="h-3 w-3" strokeWidth={3} aria-hidden />
+                      </span>
                       {point}
                     </li>
                   ))}
                 </ul>
 
-                <span className="mt-6 inline-flex items-center gap-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="mt-6 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-ink transition-colors group-hover:text-bronze">
                   Learn more
-                  <ArrowUpRight className="h-3.5 w-3.5 text-bronze" aria-hidden />
+                  <ArrowRight className="h-3.5 w-3.5 text-bronze transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
                 </span>
               </article>
             </motion.li>

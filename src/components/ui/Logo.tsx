@@ -30,7 +30,7 @@ export function Logo({
   return (
     <span className={`inline-flex items-center gap-3 ${className}`}>
       <span
-        className={`font-display font-semibold leading-none ${s.mmr} ${main}`}
+        className={`font-display font-extrabold leading-none ${s.mmr} ${main}`}
         style={{ letterSpacing: "-0.02em" }}
       >
         MMR
@@ -71,7 +71,7 @@ export function LogoMark({
 }) {
   return (
     <span
-      className={`font-display font-semibold leading-none ${
+      className={`font-display font-extrabold leading-none ${
         tone === "light" ? "text-white" : "text-ink"
       } ${className}`}
       style={{ letterSpacing: "-0.02em" }}
