@@ -6,18 +6,14 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
-import { services } from "@/lib/content";
+import { copy, services } from "@/lib/content";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function Services() {
   return (
     <section id="services" className="relative scroll-mt-24 border-b border-line bg-cream/40 py-20 sm:py-28">
       <Container>
-        <SectionHeading
-          eyebrow="What we do"
-          title="Full-service accountancy, expertly handled"
-          subtitle="From everyday bookkeeping to board-level advice, MMR covers every number your business needs — so nothing slips and no deadline is missed."
-        />
+        <SectionHeading {...copy.services.heading} />
 
         <motion.ul
           variants={staggerContainer}
@@ -57,9 +53,9 @@ export function Services() {
         </motion.ul>
 
         <div className="mt-14 flex flex-col items-center gap-5 text-center">
-          <p className="text-muted">Not sure which services you need? We&apos;ll help you decide.</p>
+          <p className="text-muted">{copy.services.ctaText}</p>
           <ButtonLink href="/contact" variant="primary" withArrow>
-            Book a Consultation
+            {copy.services.ctaButton}
           </ButtonLink>
         </div>
       </Container>

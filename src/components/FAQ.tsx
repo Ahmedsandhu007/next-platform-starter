@@ -7,7 +7,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ButtonLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { faqs } from "@/lib/content";
+import { copy, faqs } from "@/lib/content";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -26,13 +26,9 @@ export function FAQ() {
   return (
     <section id="faq" className="relative scroll-mt-24 border-b border-line bg-white py-20 sm:py-28">
       <Container>
-        <SectionHeading
-          eyebrow="FAQ"
-          title="Questions, answered"
-          subtitle="Everything you might want to know before getting in touch. Can't find your answer? We're only a message away."
-        />
+        <SectionHeading {...copy.faq.heading} />
 
-        <div className="mx-auto mt-14 max-w-3xl">
+        <div className="mx-auto mt-16 max-w-3xl">
           <ul className="flex flex-col gap-3">
             {faqs.map((faq, i) => {
               const isOpen = open === i;
@@ -89,12 +85,10 @@ export function FAQ() {
           </ul>
 
           <div className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-line bg-cream/40 p-8 text-center">
-            <p className="font-display text-xl text-ink">Still have a question?</p>
-            <p className="max-w-md text-sm text-muted">
-              Book a free, no-obligation call and we&apos;ll talk through exactly how MMR can help your business.
-            </p>
+            <p className="font-display text-xl text-ink">{copy.faq.stillHaveTitle}</p>
+            <p className="max-w-md text-sm text-muted">{copy.faq.stillHaveText}</p>
             <ButtonLink href="/contact" variant="primary" withArrow>
-              Get in Touch
+              {copy.faq.stillHaveCta}
             </ButtonLink>
           </div>
         </div>

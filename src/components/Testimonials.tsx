@@ -1,28 +1,30 @@
 "use client";
 
+import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { testimonials } from "@/lib/content";
+import { GoogleG, GoogleWordmark, IcaewLogo, AccaLogo, AatLogo } from "@/components/ui/brands";
+import { copy, testimonials } from "@/lib/content";
 
 const avatarTones = [
-  "from-ink to-ink-soft",
-  "from-bronze-500 to-bronze-700",
-  "from-ink-soft to-ink",
-  "from-bronze-400 to-bronze-600",
-  "from-ink to-bronze-700",
-  "from-bronze-600 to-ink",
+  "from-[#8b6a3d] to-[#5f472a]",
+  "from-[#3b4a6b] to-[#26324a]",
+  "from-[#5a7d5a] to-[#3f5a3f]",
+  "from-[#2a2a2a] to-[#161616]",
+  "from-[#9a6a4d] to-[#6b4a34]",
+  "from-[#6b5a7d] to-[#4a3f5a]",
 ];
 
-function Stars() {
+function GoldStars({ className = "h-4 w-4" }: { className?: string }) {
   return (
-    <div className="flex items-center gap-0.5 text-bronze" aria-label="Rated 5 out of 5">
+    <div className="flex items-center gap-0.5 text-[#fbbc05]" aria-label="Rated 5 out of 5">
       {Array.from({ length: 5 }).map((_, s) => (
-        <svg key={s} viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
+        <svg key={s} viewBox="0 0 24 24" className={`${className} fill-current`} aria-hidden>
           <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 7.1-1.01L12 2z" />
         </svg>
       ))}
@@ -31,27 +33,61 @@ function Stars() {
 }
 
 export function Testimonials() {
+  const t = copy.testimonials;
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+
   return (
     <section
       id="testimonials"
-      className="relative scroll-mt-24 overflow-hidden border-b border-line bg-cream/40 py-20 sm:py-28"
-      aria-label="Client testimonials"
+      className="relative scroll-mt-24 overflow-hidden border-b border-line bg-white py-20 sm:py-28"
+      aria-label="Accreditations and client reviews"
     >
       <Container>
-        <SectionHeading
-          eyebrow="Client stories"
-          title="Trusted by business owners across the UK"
-          subtitle="We measure our success by yours. Here is what a few of the businesses we look after have to say about working with MMR."
-        />
+        {/* Regulated by */}
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">{t.regulatedTitle}</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted">{t.regulatedText}</p>
+        </Reveal>
 
-        <Reveal className="mt-16">
+        {/* Accreditation logos (official colours) */}
+        <Reveal delay={0.05}>
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-14 gap-y-9 sm:gap-x-20">
+            <IcaewLogo />
+            <AccaLogo />
+            <AatLogo />
+          </div>
+        </Reveal>
+
+        {/* Google reviews summary */}
+        <Reveal delay={0.05} className="mt-16 flex flex-col items-center text-center">
+          <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-ink">{t.ratingLabel}</p>
+          <div className="mt-2.5">
+            <GoldStars className="h-6 w-6" />
+          </div>
+          <p className="mt-2.5 text-sm text-muted">
+            Based on <span className="font-bold text-ink">{t.reviewsCount}</span> reviews
+          </p>
+          <GoogleWordmark className="mt-2 text-[1.75rem]" />
+        </Reveal>
+
+        {/* Review cards */}
+        <div className="relative mt-12">
           <Swiper
-            modules={[Autoplay, Pagination]}
+            modules={[Autoplay, Navigation, Pagination]}
             spaceBetween={24}
             slidesPerView={1}
             loop
             autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
             pagination={{ clickable: true }}
+            navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
+            onBeforeInit={(swiper) => {
+              const nav = swiper.params.navigation;
+              if (nav && typeof nav !== "boolean") {
+                nav.prevEl = prevRef.current;
+                nav.nextEl = nextRef.current;
+              }
+            }}
             breakpoints={{ 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
             style={
               {
@@ -61,39 +97,55 @@ export function Testimonials() {
                 "--swiper-pagination-bottom": "0px",
               } as React.CSSProperties
             }
-            className="!pb-16 [&_.swiper-slide]:h-auto"
+            className="!pb-14 [&_.swiper-slide]:h-auto"
           >
-            {testimonials.map((t, i) => (
-              <SwiperSlide key={t.name} className="h-auto">
-                <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-ink/5">
-                  <div className="flex items-start justify-between">
-                    <span className="font-display text-5xl leading-none text-bronze/30" aria-hidden>
-                      &ldquo;
-                    </span>
-                    <Stars />
+            {testimonials.map((rev, i) => (
+              <SwiperSlide key={rev.name} className="h-auto">
+                <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-ink/5">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span
+                        className={`grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br ${
+                          avatarTones[i % avatarTones.length]
+                        } font-display text-sm font-extrabold text-white`}
+                        aria-hidden
+                      >
+                        {rev.initials}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate font-display text-sm font-bold text-ink">{rev.name}</p>
+                        <p className="text-xs text-muted">{rev.date}</p>
+                      </div>
+                    </div>
+                    <GoogleG className="h-5 w-5 shrink-0" />
                   </div>
-                  <blockquote className="mt-3 flex-1 text-[1.02rem] leading-relaxed text-ink/85">
-                    {t.quote}
-                  </blockquote>
-                  <figcaption className="mt-7 flex items-center gap-3 border-t border-line pt-6">
-                    <span
-                      className={`grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br ${
-                        avatarTones[i % avatarTones.length]
-                      } font-display text-sm font-extrabold text-white`}
-                      aria-hidden
-                    >
-                      {t.initials}
-                    </span>
-                    <span className="flex flex-col">
-                      <span className="font-display text-[0.95rem] font-bold text-ink">{t.name}</span>
-                      <span className="text-xs text-muted">{t.role}</span>
-                    </span>
-                  </figcaption>
+                  <div className="mt-3.5">
+                    <GoldStars className="h-[18px] w-[18px]" />
+                  </div>
+                  <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-ink/80">{rev.quote}</blockquote>
                 </article>
               </SwiperSlide>
             ))}
           </Swiper>
-        </Reveal>
+
+          {/* Carousel arrows */}
+          <button
+            ref={prevRef}
+            type="button"
+            aria-label="Previous reviews"
+            className="absolute -left-2 top-[42%] z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-md transition-colors duration-300 hover:border-bronze hover:bg-bronze hover:text-white sm:-left-5"
+          >
+            <ChevronLeft className="h-5 w-5" aria-hidden />
+          </button>
+          <button
+            ref={nextRef}
+            type="button"
+            aria-label="Next reviews"
+            className="absolute -right-2 top-[42%] z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-md transition-colors duration-300 hover:border-bronze hover:bg-bronze hover:text-white sm:-right-5"
+          >
+            <ChevronRight className="h-5 w-5" aria-hidden />
+          </button>
+        </div>
       </Container>
     </section>
   );

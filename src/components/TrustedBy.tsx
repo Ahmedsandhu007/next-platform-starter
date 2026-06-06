@@ -2,7 +2,7 @@
 
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { partners } from "@/lib/content";
+import { copy, partners } from "@/lib/content";
 
 export function TrustedBy() {
   return (
@@ -13,9 +13,7 @@ export function TrustedBy() {
     >
       <Container>
         <Reveal className="text-center">
-          <p className="eyebrow text-muted">
-            Accredited, regulated &amp; integrated with the platforms you trust
-          </p>
+          <p className="eyebrow text-muted">{copy.trustedBy.eyebrow}</p>
         </Reveal>
 
         <Reveal delay={0.05}>

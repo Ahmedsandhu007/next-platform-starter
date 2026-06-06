@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
 import { RingAccent } from "@/components/ui/Decorations";
-import { whyPoints } from "@/lib/content";
+import { copy, whyPoints } from "@/lib/content";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function WhyChoose() {
@@ -15,11 +15,7 @@ export function WhyChoose() {
       <RingAccent className="absolute -right-10 top-24 hidden h-40 w-40 lg:block" />
 
       <Container className="relative">
-        <SectionHeading
-          eyebrow="Why MMR"
-          title="Why established businesses choose MMR"
-          subtitle="Chartered-standard expertise with genuinely human service — no jargon, no surprise bills, and an adviser who actually picks up the phone."
-        />
+        <SectionHeading {...copy.why.heading} />
 
         <motion.ul
           variants={staggerContainer}
@@ -34,7 +30,7 @@ export function WhyChoose() {
               variants={staggerItem}
               className="group rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-bronze/30 hover:shadow-xl hover:shadow-ink/5"
             >
-              <span className="grid h-14 w-14 place-items-center rounded-xl bg-cream text-bronze transition-all duration-300 group-hover:scale-105 group-hover:bg-bronze group-hover:text-white">
+              <span className="grid h-14 w-14 place-items-center rounded-xl bg-cream text-bronze transition-all duration-300 group-hover:scale-105 group-hover:bg-ink group-hover:text-white">
                 <Icon name={point.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
               </span>
               <h3 className="mt-5 text-lg text-ink">{point.title}</h3>
@@ -44,9 +40,9 @@ export function WhyChoose() {
         </motion.ul>
 
         <div className="mt-14 flex flex-col items-center gap-5 text-center">
-          <p className="text-muted">See for yourself why our clients stay with us year after year.</p>
+          <p className="text-muted">{copy.why.ctaText}</p>
           <ButtonLink href="/contact" variant="primary" withArrow>
-            Talk to an Accountant
+            {copy.why.ctaButton}
           </ButtonLink>
         </div>
       </Container>

@@ -32,8 +32,8 @@ const socials = [
 /** Fixed vertical social rail on the left edge (wide screens only). */
 export function SocialRail() {
   return (
-    <div className="fixed left-2.5 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center gap-4 xl:flex">
-      <span className="h-14 w-px bg-line" aria-hidden />
+    <div className="fixed left-1 top-1/2 z-40 flex -translate-y-1/2 flex-col items-center gap-3.5 sm:left-2.5 sm:gap-4">
+      <span className="hidden h-14 w-px bg-line sm:block" aria-hidden />
       {socials.map((s) => (
         <a
           key={s.label}
@@ -41,12 +41,12 @@ export function SocialRail() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={s.label}
-          className="text-ink/55 transition-colors duration-300 hover:text-bronze"
+          className="grid h-8 w-8 place-items-center rounded-full bg-white/70 text-ink/55 shadow-sm ring-1 ring-line backdrop-blur transition-colors duration-300 hover:text-bronze sm:h-auto sm:w-auto sm:rounded-none sm:bg-transparent sm:shadow-none sm:ring-0 sm:backdrop-blur-none"
         >
           <s.icon className="h-4 w-4" aria-hidden />
         </a>
       ))}
-      <span className="h-14 w-px bg-line" aria-hidden />
+      <span className="hidden h-14 w-px bg-line sm:block" aria-hidden />
     </div>
   );
 }

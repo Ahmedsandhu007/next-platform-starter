@@ -3,22 +3,20 @@ import { PageHero } from "@/components/PageHero";
 import { HowWeWork } from "@/components/HowWeWork";
 import { CloudAccounting } from "@/components/CloudAccounting";
 import { CtaBand } from "@/components/CtaBand";
+import { copy } from "@/lib/content";
+
+const page = copy.pages.howWeWork;
 
 export const metadata: Metadata = {
-  title: "How We Work",
-  description:
-    "From a free discovery call to seamless onboarding and proactive, cloud-first support — see how MMR Accountants works with you in four simple steps.",
+  title: page.metaTitle,
+  description: page.metaDescription,
   alternates: { canonical: "/how-we-work" },
 };
 
 export default function HowWeWorkPage() {
   return (
     <>
-      <PageHero
-        crumb="How We Work"
-        title="How we work with you"
-        subtitle="Switching to MMR is refreshingly simple. Four straightforward steps take you from first hello to a finance function that just runs."
-      />
+      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} />
       <HowWeWork />
       <CloudAccounting />
       <CtaBand />

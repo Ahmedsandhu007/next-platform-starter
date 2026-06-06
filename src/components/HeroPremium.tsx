@@ -7,6 +7,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import { HeroIllustration } from "@/components/HeroIllustration";
 import { easeOut } from "@/lib/motion";
+import { copy } from "@/lib/content";
 
 const avatars = ["from-ink to-ink-soft", "from-bronze-500 to-bronze-700", "from-bronze-400 to-bronze-600", "from-ink-soft to-ink"];
 
@@ -25,36 +26,24 @@ export function HeroPremium() {
         <div className="grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
           {/* Copy */}
           <motion.div variants={container} initial="hidden" animate="visible">
-            <motion.div variants={item}>
-              <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white/70 px-4 py-1.5 text-xs font-semibold text-ink shadow-sm backdrop-blur">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-bronze/60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-bronze" />
-                </span>
-                Chartered accountants · Trusted UK-wide
-              </span>
-            </motion.div>
-
             <motion.h1
               variants={item}
-              className="mt-6 text-4xl leading-[1.05] text-ink sm:text-5xl lg:text-6xl xl:text-[4.1rem]"
+              className="text-4xl leading-[1.05] text-ink sm:text-5xl lg:text-6xl xl:text-[4.1rem]"
             >
-              Expert accounting for{" "}
-              <span className="text-bronze">ambitious UK businesses</span>
+              {copy.hero.headlineLead}{" "}
+              <span className="text-bronze">{copy.hero.headlineAccent}</span>
             </motion.h1>
 
             <motion.p variants={item} className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              From proactive tax planning to fully-managed payroll, MMR gives established UK
-              companies a cloud-first finance team — fixed monthly fees, a dedicated chartered
-              accountant, and advice that helps you keep more of what you earn.
+              {copy.hero.paragraph}
             </motion.p>
 
             <motion.div variants={item} className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
               <ButtonLink href="/contact" variant="primary" size="lg" withArrow>
-                Book a Free Consultation
+                {copy.hero.primaryCta}
               </ButtonLink>
               <ButtonLink href="/services" variant="ghost" size="lg">
-                Explore Services
+                {copy.hero.secondaryCta}
               </ButtonLink>
             </motion.div>
 
@@ -72,14 +61,14 @@ export function HeroPremium() {
                     ))}
                   </div>
                   <p className="mt-0.5 text-sm text-muted">
-                    Rated <span className="font-bold text-ink">4.9/5</span> by 1,200+ clients
+                    Rated <span className="font-bold text-ink">{copy.hero.ratingScore}</span> {copy.hero.ratingLabel}
                   </p>
                 </div>
               </div>
               <span className="hidden h-10 w-px bg-line sm:block" aria-hidden />
               <span className="inline-flex items-center gap-2 text-sm font-semibold text-ink">
                 <ShieldCheck className="h-5 w-5 text-bronze" strokeWidth={1.75} aria-hidden />
-                ACCA Qualified
+                {copy.hero.badge}
               </span>
             </motion.div>
           </motion.div>

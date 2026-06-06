@@ -3,22 +3,20 @@ import { PageHero } from "@/components/PageHero";
 import { ServicesDetailed } from "@/components/ServicesDetailed";
 import { CloudAccounting } from "@/components/CloudAccounting";
 import { CtaBand } from "@/components/CtaBand";
+import { copy } from "@/lib/content";
+
+const page = copy.pages.services;
 
 export const metadata: Metadata = {
-  title: "Accountancy Services",
-  description:
-    "Bookkeeping, tax planning, VAT & Making Tax Digital, payroll, company formation and business advisory — full-service accountancy for UK businesses on fixed monthly fees.",
+  title: page.metaTitle,
+  description: page.metaDescription,
   alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {
   return (
     <>
-      <PageHero
-        crumb="Services"
-        title="Accountancy services for ambitious businesses"
-        subtitle="Everything your business needs to stay compliant and grow — from everyday bookkeeping to board-level advice, all under one transparent monthly fee."
-      />
+      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} />
       <ServicesDetailed />
       <CloudAccounting />
       <CtaBand />

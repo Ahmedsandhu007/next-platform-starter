@@ -6,13 +6,9 @@ import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SpotArt } from "@/components/ui/SpotArt";
+import { copy } from "@/lib/content";
 
-const features = [
-  { icon: Gauge, title: "Real-time dashboards", desc: "See cash flow, profit and tax the moment money moves." },
-  { icon: FileCheck2, title: "Making Tax Digital ready", desc: "Fully MTD-compliant filing for VAT and beyond." },
-  { icon: Smartphone, title: "Snap receipts on mobile", desc: "Photograph a receipt and we file it automatically." },
-  { icon: RefreshCcw, title: "Automatic bank feeds", desc: "Transactions reconciled daily — no manual entry." },
-];
+const featureIcons = [Gauge, FileCheck2, Smartphone, RefreshCcw];
 
 export function CloudAccounting() {
   const reduce = useReducedMotion();
@@ -70,34 +66,34 @@ export function CloudAccounting() {
             <Reveal>
               <span className="flex items-center gap-3 text-bronze">
                 <span className="h-px w-8 bg-bronze" aria-hidden />
-                <span className="eyebrow">Cloud accounting</span>
+                <span className="eyebrow">{copy.cloud.eyebrow}</span>
               </span>
               <h2 className="mt-5 text-3xl text-ink sm:text-4xl lg:text-[2.7rem] lg:leading-[1.1]">
-                Your finances, live and in the cloud
+                {copy.cloud.title}
               </h2>
-              <p className="mt-5 max-w-lg text-lg leading-relaxed text-muted">
-                We set up and run market-leading cloud software for you, so your numbers are always
-                up to date, always backed up, and available wherever you are — on any device.
-              </p>
+              <p className="mt-5 max-w-lg text-lg leading-relaxed text-muted">{copy.cloud.subtitle}</p>
             </Reveal>
 
             <ul className="mt-8 grid gap-x-6 gap-y-6 sm:grid-cols-2">
-              {features.map((f, i) => (
-                <Reveal as="li" key={f.title} delay={i * 0.08} className="flex items-start gap-3.5">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cream text-bronze">
-                    <f.icon className="h-5 w-5" strokeWidth={1.8} aria-hidden />
-                  </span>
-                  <div>
-                    <h3 className="text-base text-ink">{f.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted">{f.desc}</p>
-                  </div>
-                </Reveal>
-              ))}
+              {copy.cloud.features.map((f, i) => {
+                const FeatureIcon = featureIcons[i];
+                return (
+                  <Reveal as="li" key={f.title} delay={i * 0.08} className="flex items-start gap-3.5">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cream text-bronze">
+                      <FeatureIcon className="h-5 w-5" strokeWidth={1.8} aria-hidden />
+                    </span>
+                    <div>
+                      <h3 className="text-base text-ink">{f.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-muted">{f.description}</p>
+                    </div>
+                  </Reveal>
+                );
+              })}
             </ul>
 
             <Reveal delay={0.1} className="mt-9">
               <ButtonLink href="/contact" variant="primary" withArrow>
-                Move to the Cloud
+                {copy.cloud.ctaButton}
               </ButtonLink>
             </Reveal>
           </div>

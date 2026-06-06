@@ -1,20 +1,28 @@
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, type LucideIcon } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { ContactForm } from "@/components/ContactForm";
-import { siteConfig } from "@/lib/content";
+import { copy, siteConfig } from "@/lib/content";
+
+type ContactRow = {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  href?: string;
+  sub?: { text: string; href: string };
+};
 
 export function Contact() {
-  const phoneHref = `tel:${siteConfig.contact.phone.replace(/\s/g, "")}`;
-  const details = [
-    { icon: Phone, label: "Call us", value: siteConfig.contact.phoneDisplay, href: phoneHref },
-    { icon: Mail, label: "Email us", value: siteConfig.contact.email, href: `mailto:${siteConfig.contact.email}` },
-    {
+  const telHref = (p: string) => `tel:${p.replace(/\s/g, "")}`;
+  const details: ContactRow[] = [
+    ...siteConfig.offices.map((o) => ({
       icon: MapPin,
-      label: "Visit us",
-      value: `${siteConfig.contact.addressLine}, ${siteConfig.contact.city}, ${siteConfig.contact.postcode}`,
-    },
-    { icon: Clock, label: "Opening hours", value: siteConfig.contact.hours },
+      label: `${o.city} office`,
+      value: `${o.addressLine}, ${o.city}, ${o.postcode}`,
+      sub: { text: o.phoneDisplay, href: telHref(o.phone) },
+    })),
+    { icon: Mail, label: copy.contact.labels.email, value: siteConfig.contact.email, href: `mailto:${siteConfig.contact.email}` },
+    { icon: Clock, label: copy.contact.labels.hours, value: siteConfig.contact.hours },
   ];
 
   return (
@@ -26,15 +34,12 @@ export function Contact() {
             <Reveal>
               <span className="flex items-center gap-3 text-bronze">
                 <span className="h-px w-8 bg-bronze" aria-hidden />
-                <span className="eyebrow">Get in touch</span>
+                <span className="eyebrow">{copy.contact.eyebrow}</span>
               </span>
               <h2 className="mt-5 text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">
-                Let&apos;s talk numbers
+                {copy.contact.title}
               </h2>
-              <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">
-                Tell us a little about your business and we&apos;ll come back with a clear,
-                fixed-fee quote — usually within one business day. No pressure, no jargon.
-              </p>
+              <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">{copy.contact.subtitle}</p>
             </Reveal>
 
             <Reveal delay={0.08}>
@@ -54,6 +59,14 @@ export function Contact() {
                       ) : (
                         <p className="mt-1 text-base font-semibold text-ink">{d.value}</p>
                       )}
+                      {d.sub ? (
+                        <a
+                          href={d.sub.href}
+                          className="mt-1.5 inline-block text-sm font-bold text-bronze transition-colors hover:text-ink"
+                        >
+                          {d.sub.text}
+                        </a>
+                      ) : null}
                     </div>
                   </li>
                 ))}
@@ -66,7 +79,7 @@ export function Contact() {
                   <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-bronze opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-bronze" />
                 </span>
-                <span className="eyebrow text-bronze">Accepting new clients this quarter</span>
+                <span className="eyebrow text-bronze">{copy.contact.accepting}</span>
               </div>
             </Reveal>
           </div>

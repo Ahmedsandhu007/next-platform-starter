@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Clock, Menu, Phone, PhoneCall, Plus, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Clock, Menu, Phone, PhoneCall, Plus, X } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { ButtonLink } from "@/components/ui/Button";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { socialLinks } from "@/components/ui/social";
 import { navLinks, siteConfig } from "@/lib/content";
 
@@ -15,6 +16,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState<string | null>(null);
+  const [activeCat, setActiveCat] = useState(0);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -86,9 +88,10 @@ export function Header() {
 
             {/* Desktop nav with dropdowns */}
             <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Primary">
-              {navLinks.map((link) => {
+              {navLinks.map((link, idx) => {
                 const active = pathname === link.href;
-                if (!link.children) {
+                const alignRight = idx >= 2;
+                if (!link.children && !link.mega) {
                   return (
                     <Link
                       key={link.href}
@@ -112,20 +115,73 @@ export function Header() {
                       {link.label}
                       <ChevronDown className="h-3.5 w-3.5 text-bronze transition-transform duration-300 group-hover:rotate-180" aria-hidden />
                     </Link>
-                    <div className="invisible absolute left-0 top-full translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-                      <ul className="w-72 rounded-xl border border-line bg-white p-2 shadow-xl shadow-ink/10">
-                        {link.children.map((child) => (
-                          <li key={child.href}>
-                            <Link
-                              href={child.href}
-                              className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm text-ink/80 transition-colors hover:bg-cream hover:text-bronze"
-                            >
-                              <span className="h-1 w-1 shrink-0 bg-bronze" aria-hidden />
-                              {child.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                    <div
+                      className={`invisible absolute top-full translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 ${
+                        alignRight ? "right-0" : "left-0"
+                      }`}
+                    >
+                      {link.mega ? (
+                        <div className="flex w-[600px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-line bg-white shadow-2xl shadow-ink/10 xl:w-[700px]">
+                          <ul className="w-60 shrink-0 space-y-1 border-r border-line bg-cream/40 p-3">
+                            {link.mega.map((cat, i) => (
+                              <li key={cat.label}>
+                                <button
+                                  type="button"
+                                  onMouseEnter={() => setActiveCat(i)}
+                                  onFocus={() => setActiveCat(i)}
+                                  className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
+                                    activeCat === i ? "bg-white text-bronze shadow-sm" : "text-ink/75 hover:bg-white/70"
+                                  }`}
+                                >
+                                  <span
+                                    className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg transition-colors ${
+                                      activeCat === i ? "bg-bronze text-white" : "bg-white text-bronze ring-1 ring-line"
+                                    }`}
+                                  >
+                                    <Icon name={cat.icon as IconName} className="h-4 w-4" strokeWidth={1.9} aria-hidden />
+                                  </span>
+                                  <span className="flex-1">{cat.label}</span>
+                                  <ChevronRight
+                                    className={`h-4 w-4 shrink-0 transition-opacity ${activeCat === i ? "text-bronze opacity-100" : "opacity-0"}`}
+                                    aria-hidden
+                                  />
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="grid flex-1 grid-cols-2 gap-1 p-3">
+                            {link.mega[activeCat].items.map((it) => (
+                              <Link
+                                key={it.href}
+                                href={it.href}
+                                className="group/i flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-cream"
+                              >
+                                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-cream text-bronze transition-colors group-hover/i:bg-bronze group-hover/i:text-white">
+                                  <Icon name={it.icon as IconName} className="h-[18px] w-[18px]" strokeWidth={1.8} aria-hidden />
+                                </span>
+                                <span className="min-w-0">
+                                  <span className="block text-sm font-semibold text-ink">{it.title}</span>
+                                  <span className="mt-0.5 block text-xs leading-snug text-muted">{it.description}</span>
+                                </span>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <ul className="w-72 rounded-xl border border-line bg-white p-2 shadow-xl shadow-ink/10">
+                          {link.children!.map((child) => (
+                            <li key={child.href}>
+                              <Link
+                                href={child.href}
+                                className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm text-ink/80 transition-colors hover:bg-cream hover:text-bronze"
+                              >
+                                <span className="h-1 w-1 shrink-0 bg-bronze" aria-hidden />
+                                {child.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   </div>
                 );
@@ -165,54 +221,59 @@ export function Header() {
           >
             <Container className="py-4">
               <nav className="flex flex-col divide-y divide-line" aria-label="Mobile">
-                {navLinks.map((link) => (
-                  <div key={link.href} className="py-1">
-                    <div className="flex items-center justify-between">
-                      <Link
-                        href={link.href}
-                        onClick={() => setOpen(false)}
-                        className="py-3 text-sm font-semibold uppercase tracking-[0.08em] text-ink"
-                      >
-                        {link.label}
-                      </Link>
-                      {link.children && (
-                        <button
-                          type="button"
-                          aria-label={`Toggle ${link.label} submenu`}
-                          aria-expanded={openSub === link.href}
-                          onClick={() => setOpenSub(openSub === link.href ? null : link.href)}
-                          className="grid h-9 w-9 place-items-center text-bronze"
+                {navLinks.map((link) => {
+                  const subItems = link.mega
+                    ? link.mega.flatMap((c) => c.items.map((it) => ({ label: it.title, href: it.href })))
+                    : link.children;
+                  return (
+                    <div key={link.href} className="py-1">
+                      <div className="flex items-center justify-between">
+                        <Link
+                          href={link.href}
+                          onClick={() => setOpen(false)}
+                          className="py-3 text-sm font-semibold uppercase tracking-[0.08em] text-ink"
                         >
-                          <Plus className={`h-4 w-4 transition-transform duration-300 ${openSub === link.href ? "rotate-45" : ""}`} />
-                        </button>
-                      )}
+                          {link.label}
+                        </Link>
+                        {subItems && (
+                          <button
+                            type="button"
+                            aria-label={`Toggle ${link.label} submenu`}
+                            aria-expanded={openSub === link.href}
+                            onClick={() => setOpenSub(openSub === link.href ? null : link.href)}
+                            className="grid h-9 w-9 place-items-center text-bronze"
+                          >
+                            <Plus className={`h-4 w-4 transition-transform duration-300 ${openSub === link.href ? "rotate-45" : ""}`} />
+                          </button>
+                        )}
+                      </div>
+                      <AnimatePresence initial={false}>
+                        {subItems && openSub === link.href && (
+                          <motion.ul
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden pb-2 pl-3"
+                          >
+                            {subItems.map((child) => (
+                              <li key={child.href}>
+                                <Link
+                                  href={child.href}
+                                  onClick={() => setOpen(false)}
+                                  className="flex items-center gap-2.5 py-2.5 text-sm text-ink/75"
+                                >
+                                  <span className="h-1 w-1 shrink-0 bg-bronze" aria-hidden />
+                                  {child.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
                     </div>
-                    <AnimatePresence initial={false}>
-                      {link.children && openSub === link.href && (
-                        <motion.ul
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.25 }}
-                          className="overflow-hidden pb-2 pl-3"
-                        >
-                          {link.children.map((child) => (
-                            <li key={child.href}>
-                              <Link
-                                href={child.href}
-                                onClick={() => setOpen(false)}
-                                className="flex items-center gap-2.5 py-2.5 text-sm text-ink/75"
-                              >
-                                <span className="h-1 w-1 shrink-0 bg-bronze" aria-hidden />
-                                {child.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </motion.ul>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ))}
+                  );
+                })}
 
                 <div className="flex flex-col gap-4 pt-5">
                   <a href={phoneHref} className="inline-flex items-center gap-2 text-sm font-semibold text-ink">

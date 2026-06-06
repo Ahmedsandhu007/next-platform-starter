@@ -5,18 +5,14 @@ import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
-import { industries } from "@/lib/content";
+import { copy, industries } from "@/lib/content";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function Industries() {
   return (
     <section id="industries" className="relative scroll-mt-24 border-b border-line bg-cream/40 py-20 sm:py-28">
       <Container>
-        <SectionHeading
-          eyebrow="Industries we serve"
-          title="Specialist knowledge for your sector"
-          subtitle="We speak your industry's language. From IR35 for contractors to CIS for construction, you get advice shaped around how your business actually works."
-        />
+        <SectionHeading {...copy.industries.heading} />
 
         <motion.ul
           variants={staggerContainer}

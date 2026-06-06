@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SpotArt } from "@/components/ui/SpotArt";
 import { DotCluster } from "@/components/ui/Decorations";
-import { valueProps } from "@/lib/content";
+import { copy, valueProps } from "@/lib/content";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function Approach() {
@@ -16,11 +16,7 @@ export function Approach() {
       <DotCluster className="absolute bottom-16 left-6 hidden h-14 w-14 opacity-40 lg:block" />
 
       <Container className="relative">
-        <SectionHeading
-          eyebrow="How we help"
-          title="More than compliance — a partner in your growth"
-          subtitle="Filing on time is the bare minimum. We go further: planning ahead, watching your numbers in real time, and giving you advice that actually moves the needle."
-        />
+        <SectionHeading {...copy.approach.heading} />
 
         <motion.div
           variants={staggerContainer}

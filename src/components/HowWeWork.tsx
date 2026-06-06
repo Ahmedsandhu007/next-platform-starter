@@ -4,18 +4,14 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
-import { processSteps } from "@/lib/content";
+import { copy, processSteps } from "@/lib/content";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function HowWeWork() {
   return (
     <section id="process" className="relative scroll-mt-24 border-b border-line bg-white py-20 sm:py-28">
       <Container>
-        <SectionHeading
-          eyebrow="How we work"
-          title="Getting started is refreshingly simple"
-          subtitle="Four straightforward steps take you from first hello to a finance function that just runs — with no admin headache and no downtime."
-        />
+        <SectionHeading {...copy.process.heading} />
 
         <div className="relative mt-16">
           {/* Connector line (desktop) */}

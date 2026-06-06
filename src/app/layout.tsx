@@ -5,7 +5,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ContactDock } from "@/components/ContactDock";
 import { SocialRail } from "@/components/SocialRail";
-import { QuoteTab } from "@/components/QuoteTab";
 import { ScrollTop } from "@/components/ScrollTop";
 import "./globals.css";
 
@@ -93,7 +92,7 @@ const organizationSchema = {
     postalCode: siteConfig.contact.postcode,
     addressCountry: "GB",
   },
-  openingHours: "Mo-Fr 09:00-17:30",
+  openingHours: "Mo-Sa 09:00-18:00",
   sameAs: Object.values(siteConfig.social),
 };
 
@@ -118,7 +117,6 @@ export default function RootLayout({
         <main id="main">{children}</main>
         <Footer />
         <SocialRail />
-        <QuoteTab />
         <ScrollTop />
         <ContactDock />
         <script
