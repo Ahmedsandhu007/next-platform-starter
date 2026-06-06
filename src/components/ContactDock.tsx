@@ -6,8 +6,8 @@ import { siteConfig } from "@/lib/content";
 import { ChatPanel } from "@/components/ChatPanel";
 
 /**
- * Floating contact speed-dial (bottom-right). Fans out "Call us" and
- * "Live chat" on hover (desktop) or tap (touch). Live chat opens the
+ * Floating contact speed-dial (bottom-right). Fans out a bronze "Call us" and
+ * charcoal "Live chat" on hover (desktop) or tap (touch). Live chat opens the
  * scripted assistant panel.
  */
 export function ContactDock() {
@@ -24,7 +24,7 @@ export function ContactDock() {
       <div className="group fixed bottom-6 right-6 z-50 flex flex-col items-end">
         {/* Fan-out actions */}
         <div
-          className={`mb-3 flex flex-col items-end gap-3 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 ${fanVisible}`}
+          className={`mb-3.5 flex flex-col items-end gap-3.5 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 ${fanVisible}`}
         >
           {/* Live chat */}
           <button
@@ -33,38 +33,46 @@ export function ContactDock() {
               setChatOpen(true);
               setDockOpen(false);
             }}
-            className="flex items-center gap-3"
+            className="group/item flex items-center gap-2.5"
           >
-            <span className="border border-line bg-white px-3 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink shadow-sm">
+            <span className="rounded-full border border-line bg-white px-3.5 py-1.5 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-ink shadow-md">
               Live chat
             </span>
-            <span className="grid h-11 w-11 place-items-center bg-ink text-white transition-colors hover:bg-bronze">
-              <MessageCircle className="h-5 w-5" strokeWidth={1.6} aria-hidden />
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-ink text-white shadow-lg shadow-ink/25 ring-2 ring-white transition-colors duration-300 group-hover/item:bg-ink-soft">
+              <MessageCircle className="h-5 w-5" strokeWidth={1.7} aria-hidden />
             </span>
           </button>
 
-          {/* Call us */}
-          <a href={phoneHref} className="flex items-center gap-3">
-            <span className="border border-line bg-white px-3 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink shadow-sm">
+          {/* Call us — primary, bronze */}
+          <a href={phoneHref} className="group/item flex items-center gap-2.5">
+            <span className="rounded-full border border-bronze/30 bg-white px-3.5 py-1.5 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-bronze shadow-md">
               Call us
             </span>
-            <span className="grid h-11 w-11 place-items-center bg-ink text-white transition-colors hover:bg-bronze">
-              <Phone className="h-5 w-5" strokeWidth={1.6} aria-hidden />
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-bronze text-white shadow-lg shadow-bronze/35 ring-2 ring-white transition-colors duration-300 group-hover/item:bg-bronze-600">
+              <Phone className="h-5 w-5" strokeWidth={1.7} aria-hidden />
             </span>
           </a>
         </div>
 
         {/* Main button */}
-        <button
-          type="button"
-          onClick={() => setDockOpen((v) => !v)}
-          aria-expanded={dockOpen}
-          aria-haspopup="true"
-          aria-label={dockOpen ? "Close contact options" : "Contact options"}
-          className="grid h-14 w-14 place-items-center bg-ink text-white shadow-lg transition-colors duration-300 hover:bg-bronze"
-        >
-          {dockOpen ? <X className="h-6 w-6" /> : <Headset className="h-6 w-6" strokeWidth={1.5} />}
-        </button>
+        <div className="relative">
+          {!dockOpen && (
+            <span
+              className="pointer-events-none absolute inset-0 animate-ping rounded-full bg-bronze/30"
+              aria-hidden
+            />
+          )}
+          <button
+            type="button"
+            onClick={() => setDockOpen((v) => !v)}
+            aria-expanded={dockOpen}
+            aria-haspopup="true"
+            aria-label={dockOpen ? "Close contact options" : "Contact options"}
+            className="relative grid h-14 w-14 place-items-center rounded-full bg-ink text-white shadow-xl shadow-ink/30 ring-2 ring-white transition-all duration-300 hover:scale-105 hover:bg-bronze"
+          >
+            {dockOpen ? <X className="h-6 w-6" /> : <Headset className="h-6 w-6" strokeWidth={1.5} />}
+          </button>
+        </div>
       </div>
 
       <ChatPanel open={chatOpen} onClose={() => setChatOpen(false)} />
