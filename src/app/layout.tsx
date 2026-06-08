@@ -6,7 +6,6 @@ import { Footer } from "@/components/Footer";
 import { ContactDock } from "@/components/ContactDock";
 import { SocialRail } from "@/components/SocialRail";
 import { ScrollTop } from "@/components/ScrollTop";
-import { RevealObserver } from "@/components/RevealObserver";
 import "./globals.css";
 
 const inter = Inter({
@@ -106,6 +105,7 @@ export default function RootLayout({
     <html
       lang="en-GB"
       className={`${inter.variable} ${manrope.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full bg-white text-ink">
         {/* Mark JS as available before content paints, so CSS scroll-reveals
@@ -126,10 +126,19 @@ export default function RootLayout({
         <SocialRail />
         <ScrollTop />
         <ContactDock />
-        <RevealObserver />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        {/* Scroll reveals — plain vanilla (not a React effect), so it runs the
+            same way it does on the working reference site and on iOS Safari.
+            IntersectionObserver toggles .is-visible; setTimeout is a hard
+            fallback so nothing ever stays hidden / un-animated. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var S='[data-reveal],[data-reveal-stagger],[data-reveal-line]';function r(e){e.classList.add('is-visible')}function init(){var els=[].slice.call(document.querySelectorAll(S));if(!els.length)return;if('IntersectionObserver' in window){var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){r(x.target);io.unobserve(x.target)}})},{threshold:0.14,rootMargin:'0px 0px -40px 0px'});els.forEach(function(e){io.observe(e)})}else{els.forEach(r);return}function sweep(){var vh=window.innerHeight;els.forEach(function(e){if(!e.classList.contains('is-visible')&&e.getBoundingClientRect().top<vh*0.9)r(e)})}var t=false;window.addEventListener('scroll',function(){if(t)return;t=true;requestAnimationFrame(function(){sweep();t=false})},{passive:true});sweep();setTimeout(sweep,1500)}document.readyState!=='loading'?init():document.addEventListener('DOMContentLoaded',init)})();",
+          }}
         />
       </body>
     </html>
