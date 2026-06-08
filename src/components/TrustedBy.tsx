@@ -2,7 +2,32 @@
 
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { useTapActivate } from "@/components/ui/useTapActivate";
 import { copy, partners } from "@/lib/content";
+
+function PartnerBadge({ name }: { name: string }) {
+  const { active, bind } = useTapActivate();
+  return (
+    <li
+      {...bind}
+      className={`flex items-center justify-center gap-2.5 border bg-white px-4 py-5 transition-all duration-300 ${
+        active ? "-translate-y-0.5 border-bronze/40 shadow-sm" : "border-line"
+      }`}
+    >
+      <span
+        className={`h-1.5 w-1.5 shrink-0 bg-bronze transition-transform duration-300 ${active ? "scale-150" : ""}`}
+        aria-hidden
+      />
+      <span
+        className={`font-display text-lg font-extrabold tracking-tight transition-colors duration-300 ${
+          active ? "text-ink" : "text-ink/75"
+        }`}
+      >
+        {name}
+      </span>
+    </li>
+  );
+}
 
 export function TrustedBy() {
   return (
@@ -19,15 +44,7 @@ export function TrustedBy() {
         <Reveal delay={0.05}>
           <ul className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
             {partners.map((p) => (
-              <li
-                key={p}
-                className="group flex items-center justify-center gap-2.5 border border-line bg-white px-4 py-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-bronze/40 hover:shadow-sm"
-              >
-                <span className="h-1.5 w-1.5 shrink-0 bg-bronze transition-transform duration-300 group-hover:scale-150" aria-hidden />
-                <span className="font-display text-lg font-extrabold tracking-tight text-ink/75 transition-colors duration-300 group-hover:text-ink">
-                  {p}
-                </span>
-              </li>
+              <PartnerBadge key={p} name={p} />
             ))}
           </ul>
         </Reveal>
