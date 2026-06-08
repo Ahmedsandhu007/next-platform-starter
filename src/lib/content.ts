@@ -481,6 +481,15 @@ export const howMenu: MegaCategory[] = [
 
 export const navLinks: NavLink[] = [
   { label: "Services", href: "/services", mega: serviceMenu },
+  {
+    label: "How we help",
+    href: "/how-we-help",
+    children: [
+      { label: "Proactive Tax Planning", href: "/how-we-help/proactive-tax-planning" },
+      { label: "Cloud-First Accounting", href: "/how-we-help/cloud-accounting" },
+      { label: "Advisory & Growth", href: "/how-we-help/advisory-partnership" },
+    ],
+  },
   { label: "Why MMR", href: "/why-mmr", mega: whyMenu },
   { label: "Industries", href: "/industries", mega: industryMenu },
   { label: "How We Work", href: "/how-we-work", mega: howMenu },

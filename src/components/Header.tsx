@@ -109,7 +109,7 @@ export function Header() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`px-3.5 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-bronze ${
+                      className={`px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-bronze ${
                         active ? "text-bronze" : "text-ink/80"
                       }`}
                     >
@@ -121,7 +121,7 @@ export function Header() {
                   <div key={link.href} className="group relative">
                     <Link
                       href={link.href}
-                      className={`flex items-center gap-1 px-3.5 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-bronze ${
+                      className={`flex items-center gap-1 px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-bronze ${
                         active ? "text-bronze" : "text-ink/80"
                       }`}
                     >
@@ -201,7 +201,7 @@ export function Header() {
               })}
             </nav>
 
-            <div className="hidden items-center gap-3 lg:flex">
+            <div className="hidden items-center gap-3 xl:flex">
               <ButtonLink href="/contact" variant="primary" withArrow>
                 Get a Quote
               </ButtonLink>
