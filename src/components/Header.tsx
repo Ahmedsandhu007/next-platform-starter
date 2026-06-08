@@ -82,7 +82,20 @@ export function Header() {
       >
         <Container>
           <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? "h-16" : "h-[4.75rem]"}`}>
-            <Link href="/" aria-label={`${siteConfig.name} home`} className="shrink-0" onClick={() => setOpen(false)}>
+            <Link
+              href="/"
+              aria-label={`${siteConfig.name} home`}
+              className="shrink-0"
+              onClick={(e) => {
+                setOpen(false);
+                // On the home page a <Link href="/"> is a no-op, so scroll to
+                // the top instead of appearing to do nothing.
+                if (window.location.pathname === "/") {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
+            >
               <Logo size="md" />
             </Link>
 
