@@ -8,22 +8,35 @@ export function PageHero({
   title,
   subtitle,
   crumb,
+  parent,
 }: {
   title: ReactNode;
   subtitle?: ReactNode;
   crumb: string;
+  /** Optional middle breadcrumb (e.g. Home / Services / This page). */
+  parent?: { label: string; href: string };
 }) {
   return (
     <section className="relative border-b border-line bg-white pt-32 pb-14 sm:pt-36 sm:pb-16">
       <Container>
         <Reveal>
-          <nav className="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em]" aria-label="Breadcrumb">
+          <nav className="flex flex-wrap items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em]" aria-label="Breadcrumb">
             <Link href="/" className="text-muted transition-colors hover:text-bronze">
               Home
             </Link>
             <span className="text-bronze" aria-hidden>
               /
             </span>
+            {parent ? (
+              <>
+                <Link href={parent.href} className="text-muted transition-colors hover:text-bronze">
+                  {parent.label}
+                </Link>
+                <span className="text-bronze" aria-hidden>
+                  /
+                </span>
+              </>
+            ) : null}
             <span className="text-ink">{crumb}</span>
           </nav>
 

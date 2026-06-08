@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SpotArt } from "@/components/ui/SpotArt";
-import { InteractiveCard } from "@/components/ui/InteractiveCard";
 import { DotCluster } from "@/components/ui/Decorations";
+import { InteractiveCard } from "@/components/ui/InteractiveCard";
 import { copy, valueProps } from "@/lib/content";
 
 export function Approach() {
@@ -24,27 +25,24 @@ export function Approach() {
                 {(active) => (
                   <>
                     <div
-                      className={`rounded-xl p-5 transition-colors duration-300 ${
-                        active ? "bg-bronze-50" : "bg-cream"
-                      }`}
+                      className={`rounded-xl p-5 transition-colors duration-300 ${active ? "bg-bronze-50" : "bg-cream"}`}
                     >
                       <SpotArt name={v.art} className="mx-auto max-w-[230px]" />
                     </div>
                     <h3 className="mt-7 text-xl text-ink">{v.title}</h3>
                     <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-muted">{v.description}</p>
-                    <span
-                      className={`mt-5 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-bronze transition-opacity duration-300 ${
-                        active ? "opacity-100" : "opacity-0"
+                    <Link
+                      href={`/how-we-help/${v.slug}`}
+                      className={`mt-5 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] transition-colors ${
+                        active ? "text-bronze" : "text-ink hover:text-bronze"
                       }`}
                     >
                       Learn more
                       <ArrowRight
-                        className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                          active ? "translate-x-1" : ""
-                        }`}
+                        className={`h-3.5 w-3.5 text-bronze transition-transform duration-300 ${active ? "translate-x-1" : ""}`}
                         aria-hidden
                       />
-                    </span>
+                    </Link>
                   </>
                 )}
               </InteractiveCard>

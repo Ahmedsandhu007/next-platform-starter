@@ -160,6 +160,7 @@ export const whyPoints: WhyPoint[] = [
 ];
 
 export type ValueProp = {
+  slug: string;
   art: "tax" | "cloud" | "advisory" | "bookkeeping";
   title: string;
   description: string;
@@ -168,18 +169,21 @@ export type ValueProp = {
 /** Illustrated value props (replaces the numeric stats band on the home page) */
 export const valueProps: ValueProp[] = [
   {
+    slug: "proactive-tax-planning",
     art: "tax",
     title: "Proactive tax planning",
     description:
       "We don't simply file your taxes — we plan ahead all year to legally lower your bill and keep more profit where it belongs.",
   },
   {
+    slug: "cloud-accounting",
     art: "cloud",
     title: "Cloud-first, always current",
     description:
       "Your books live in the cloud and reconcile daily, so you always know exactly where your business stands.",
   },
   {
+    slug: "advisory-partnership",
     art: "advisory",
     title: "Advice that compounds",
     description:
@@ -383,28 +387,28 @@ export const serviceMenu: MegaCategory[] = [
     label: "Accounts & Compliance",
     icon: "BookOpen",
     items: [
-      { title: "Bookkeeping & Annual Accounts", description: "Tidy cloud books and year-end accounts, filed early.", icon: "BookOpen", href: "/services#bookkeeping" },
-      { title: "VAT & Making Tax Digital", description: "The right scheme, accurate returns, no missed deadlines.", icon: "Percent", href: "/services#vat" },
-      { title: "Payroll & Pensions", description: "Fully managed RTI payroll and auto-enrolment.", icon: "Users", href: "/services#payroll" },
+      { title: "Bookkeeping & Annual Accounts", description: "Tidy cloud books and year-end accounts, filed early.", icon: "BookOpen", href: "/services/bookkeeping" },
+      { title: "VAT & Making Tax Digital", description: "The right scheme, accurate returns, no missed deadlines.", icon: "Percent", href: "/services/vat" },
+      { title: "Payroll & Pensions", description: "Fully managed RTI payroll and auto-enrolment.", icon: "Users", href: "/services/payroll" },
     ],
   },
   {
     label: "Tax & Advisory",
     icon: "TrendingUp",
     items: [
-      { title: "Tax Planning & Returns", description: "Forward-looking planning that protects your profit.", icon: "Receipt", href: "/services#tax-planning" },
-      { title: "Business Advisory & Growth", description: "Management accounts, forecasts and a dedicated adviser.", icon: "LineChart", href: "/services#advisory" },
-      { title: "Company Formation", description: "Fast set-up, registered office and secretarial.", icon: "Building2", href: "/services#company-formation" },
+      { title: "Tax Planning & Returns", description: "Forward-looking planning that protects your profit.", icon: "Receipt", href: "/services/tax-planning" },
+      { title: "Business Advisory & Growth", description: "Management accounts, forecasts and a dedicated adviser.", icon: "LineChart", href: "/services/advisory" },
+      { title: "Company Formation", description: "Fast set-up, registered office and secretarial.", icon: "Building2", href: "/services/company-formation" },
     ],
   },
   {
     label: "Industries We Serve",
     icon: "Building2",
     items: [
-      { title: "Contractors & Freelancers", description: "IR35-aware advice and take-home that works.", icon: "Laptop", href: "/industries#contractors" },
-      { title: "Startups & Tech", description: "Investor-ready accounts and R&D tax relief.", icon: "Rocket", href: "/industries#startups" },
-      { title: "Construction & CIS", description: "CIS deductions and subcontractor returns handled.", icon: "HardHat", href: "/industries#construction" },
-      { title: "Landlords & Property", description: "Portfolio structuring and property tax planning.", icon: "Home", href: "/industries#landlords" },
+      { title: "Contractors & Freelancers", description: "IR35-aware advice and take-home that works.", icon: "Laptop", href: "/industries/contractors" },
+      { title: "Startups & Tech", description: "Investor-ready accounts and R&D tax relief.", icon: "Rocket", href: "/industries/startups" },
+      { title: "Construction & CIS", description: "CIS deductions and subcontractor returns handled.", icon: "HardHat", href: "/industries/construction" },
+      { title: "Landlords & Property", description: "Portfolio structuring and property tax planning.", icon: "Home", href: "/industries/landlords" },
     ],
   },
 ];
@@ -435,20 +439,20 @@ export const industryMenu: MegaCategory[] = [
     label: "Professional & digital",
     icon: "Laptop",
     items: [
-      { title: "Contractors & Freelancers", description: "IR35-aware advice and take-home that works.", icon: "Laptop", href: "/industries#contractors" },
-      { title: "Startups & Tech", description: "Investor-ready accounts and R&D tax relief.", icon: "Rocket", href: "/industries#startups" },
-      { title: "Creative & Agencies", description: "Project profitability and cash flow you can see.", icon: "Palette", href: "/industries#creative" },
-      { title: "Healthcare & Locums", description: "Specialist support for medical professionals.", icon: "Stethoscope", href: "/industries#healthcare" },
+      { title: "Contractors & Freelancers", description: "IR35-aware advice and take-home that works.", icon: "Laptop", href: "/industries/contractors" },
+      { title: "Startups & Tech", description: "Investor-ready accounts and R&D tax relief.", icon: "Rocket", href: "/industries/startups" },
+      { title: "Creative & Agencies", description: "Project profitability and cash flow you can see.", icon: "Palette", href: "/industries/creative" },
+      { title: "Healthcare & Locums", description: "Specialist support for medical professionals.", icon: "Stethoscope", href: "/industries/healthcare" },
     ],
   },
   {
     label: "Trade & property",
     icon: "Building2",
     items: [
-      { title: "E-commerce & Retail", description: "Multi-channel sales, stock and VAT, simplified.", icon: "ShoppingCart", href: "/industries#ecommerce" },
-      { title: "Hospitality", description: "Tight margins managed with clear weekly numbers.", icon: "UtensilsCrossed", href: "/industries#hospitality" },
-      { title: "Construction & CIS", description: "CIS deductions and subcontractor returns handled.", icon: "HardHat", href: "/industries#construction" },
-      { title: "Landlords & Property", description: "Portfolio structuring and property tax planning.", icon: "Home", href: "/industries#landlords" },
+      { title: "E-commerce & Retail", description: "Multi-channel sales, stock and VAT, simplified.", icon: "ShoppingCart", href: "/industries/ecommerce" },
+      { title: "Hospitality", description: "Tight margins managed with clear weekly numbers.", icon: "UtensilsCrossed", href: "/industries/hospitality" },
+      { title: "Construction & CIS", description: "CIS deductions and subcontractor returns handled.", icon: "HardHat", href: "/industries/construction" },
+      { title: "Landlords & Property", description: "Portfolio structuring and property tax planning.", icon: "Home", href: "/industries/landlords" },
     ],
   },
 ];
@@ -468,7 +472,7 @@ export const howMenu: MegaCategory[] = [
     label: "Cloud & support",
     icon: "Cloud",
     items: [
-      { title: "Cloud accounting", description: "Live numbers in Xero, QuickBooks or Sage.", icon: "Cloud", href: "/how-we-work#cloud" },
+      { title: "Cloud accounting", description: "Live numbers in Xero, QuickBooks or Sage.", icon: "Cloud", href: "/how-we-help/cloud-accounting" },
       { title: "Switch to MMR", description: "We move you from your old accountant, paperless.", icon: "Zap", href: "/how-we-work#process" },
       { title: "Year-round support", description: "A dedicated accountant, only a call away.", icon: "MessagesSquare", href: "/why-mmr#why" },
     ],
@@ -844,3 +848,11 @@ export const legalPages: LegalPage[] = [
     ],
   },
 ];
+
+/* ============================================================
+   Detail pages (Services / Industries / How we help)
+   SEO-rich, CMS-editable content lives in src/content/*.json,
+   is assembled in detailContent.ts, and re-exported here so
+   @/lib/content remains the single import surface.
+   ============================================================ */
+export * from "./detailContent";

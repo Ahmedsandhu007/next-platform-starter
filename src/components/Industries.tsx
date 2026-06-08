@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -16,7 +17,7 @@ export function Industries() {
         <ul data-reveal-stagger className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {industries.map((industry) => (
             <li id={industry.slug} key={industry.title} className="scroll-mt-28">
-              <InteractiveCard className="relative h-full overflow-hidden rounded-2xl border border-line bg-white p-6">
+              <InteractiveCard className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white p-6">
                 {(active) => (
                   <>
                     <ArrowUpRight
@@ -33,7 +34,19 @@ export function Industries() {
                       <Icon name={industry.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
                     </span>
                     <h3 className="mt-5 text-base text-ink">{industry.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted">{industry.description}</p>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{industry.description}</p>
+                    <Link
+                      href={`/industries/${industry.slug}`}
+                      className={`mt-4 inline-flex items-center gap-1.5 text-[0.7rem] font-bold uppercase tracking-[0.16em] transition-colors ${
+                        active ? "text-bronze" : "text-ink hover:text-bronze"
+                      }`}
+                    >
+                      Learn more
+                      <ArrowRight
+                        className={`h-3 w-3 text-bronze transition-transform duration-300 ${active ? "translate-x-1" : ""}`}
+                        aria-hidden
+                      />
+                    </Link>
                   </>
                 )}
               </InteractiveCard>

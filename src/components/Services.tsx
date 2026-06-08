@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -31,7 +32,7 @@ export function Services() {
                     <h3 className="mt-6 text-xl text-ink">{service.title}</h3>
                     <p className="mt-2.5 text-sm leading-relaxed text-muted">{service.description}</p>
 
-                    <ul className="mt-5 flex flex-col gap-2.5 border-t border-line pt-5">
+                    <ul className="mt-5 flex flex-1 flex-col gap-2.5 border-t border-line pt-5">
                       {service.points.map((point) => (
                         <li key={point} className="flex items-center gap-2.5 text-sm font-medium text-ink/80">
                           <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-bronze-50 text-bronze">
@@ -42,19 +43,18 @@ export function Services() {
                       ))}
                     </ul>
 
-                    <span
+                    <Link
+                      href={`/services/${service.slug}`}
                       className={`mt-6 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] transition-colors ${
-                        active ? "text-bronze" : "text-ink"
+                        active ? "text-bronze" : "text-ink hover:text-bronze"
                       }`}
                     >
                       Learn more
                       <ArrowRight
-                        className={`h-3.5 w-3.5 text-bronze transition-transform duration-300 ${
-                          active ? "translate-x-1" : ""
-                        }`}
+                        className={`h-3.5 w-3.5 text-bronze transition-transform duration-300 ${active ? "translate-x-1" : ""}`}
                         aria-hidden
                       />
-                    </span>
+                    </Link>
                   </>
                 )}
               </InteractiveCard>

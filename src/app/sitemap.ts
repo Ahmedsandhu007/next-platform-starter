@@ -1,14 +1,31 @@
 import type { MetadataRoute } from "next";
-import { legalPages, siteConfig } from "@/lib/content";
+import { legalPages, siteConfig, allDetailPages, detailHref } from "@/lib/content";
 
-const routes = ["", "/services", "/why-mmr", "/industries", "/how-we-work", "/faq", "/contact"];
+const routes = [
+  "",
+  "/services",
+  "/why-mmr",
+  "/industries",
+  "/how-we-work",
+  "/how-we-help",
+  "/faq",
+  "/contact",
+];
 const legalRoutes = legalPages.map((p) => `/${p.slug}`);
+const detailRoutes = allDetailPages.map((p) => detailHref(p.kind, p.slug));
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [...routes, ...legalRoutes].map((route) => ({
+  const lastModified = new Date();
+  const entry = (route: string, priority: number) => ({
     url: `${siteConfig.url}${route}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly",
-    priority: route === "" ? 1 : legalRoutes.includes(route) ? 0.3 : 0.8,
-  }));
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority,
+  });
+
+  return [
+    ...routes.map((r) => entry(r, r === "" ? 1 : 0.8)),
+    ...detailRoutes.map((r) => entry(r, 0.7)),
+    ...legalRoutes.map((r) => entry(r, 0.3)),
+  ];
 }

@@ -46,8 +46,11 @@ export function ServicesDetailed() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-8">
-                    <ButtonLink href="/contact" variant="primary" withArrow>
+                  <div className="mt-8 flex flex-wrap items-center gap-4">
+                    <ButtonLink href={`/services/${service.slug}`} variant="primary" withArrow>
+                      Learn more
+                    </ButtonLink>
+                    <ButtonLink href="/contact" variant="ghost">
                       Get a Quote
                     </ButtonLink>
                   </div>
