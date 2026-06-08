@@ -16,7 +16,11 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState<string | null>(null);
-  const [activeCat, setActiveCat] = useState(0);
+  // Active mega-menu category is tracked PER menu (keyed by href). A single
+  // shared index used to leak across menus: hovering the 3rd Services category
+  // (index 2) then opening a 2-category menu evaluated `mega[2].items` →
+  // crash. Keying by href keeps each menu's index in its own range.
+  const [activeCat, setActiveCat] = useState<Record<string, number>>({});
   const pathname = usePathname();
 
   useEffect(() => {
@@ -104,6 +108,8 @@ export function Header() {
               {navLinks.map((link, idx) => {
                 const active = pathname === link.href;
                 const alignRight = idx >= 2;
+
+                // Plain links (no dropdown data) render normally.
                 if (!link.children && !link.mega) {
                   return (
                     <Link
@@ -117,6 +123,15 @@ export function Header() {
                     </Link>
                   );
                 }
+
+                // ── Safe mega-menu access ──────────────────────────────────
+                // Guard against a category index that doesn't exist for THIS
+                // menu (the cause of the crash). Falls back to 0 / [].
+                const cats = link.mega ?? [];
+                const rawCat = activeCat[link.href] ?? 0;
+                const currentCat = rawCat >= 0 && rawCat < cats.length ? rawCat : 0;
+                const megaItems = cats[currentCat]?.items ?? [];
+
                 return (
                   <div key={link.href} className="group relative">
                     <Link
@@ -136,26 +151,26 @@ export function Header() {
                       {link.mega ? (
                         <div className="flex w-[600px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-line bg-white shadow-2xl shadow-ink/10 xl:w-[700px]">
                           <ul className="w-60 shrink-0 space-y-1 border-r border-line bg-cream/40 p-3">
-                            {link.mega.map((cat, i) => (
+                            {cats.map((cat, i) => (
                               <li key={cat.label}>
                                 <button
                                   type="button"
-                                  onMouseEnter={() => setActiveCat(i)}
-                                  onFocus={() => setActiveCat(i)}
+                                  onMouseEnter={() => setActiveCat((prev) => ({ ...prev, [link.href]: i }))}
+                                  onFocus={() => setActiveCat((prev) => ({ ...prev, [link.href]: i }))}
                                   className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
-                                    activeCat === i ? "bg-white text-bronze shadow-sm" : "text-ink/75 hover:bg-white/70"
+                                    currentCat === i ? "bg-white text-bronze shadow-sm" : "text-ink/75 hover:bg-white/70"
                                   }`}
                                 >
                                   <span
                                     className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg transition-colors ${
-                                      activeCat === i ? "bg-ink text-white" : "bg-white text-bronze ring-1 ring-line"
+                                      currentCat === i ? "bg-ink text-white" : "bg-white text-bronze ring-1 ring-line"
                                     }`}
                                   >
                                     <Icon name={cat.icon as IconName} className="h-4 w-4" strokeWidth={1.9} aria-hidden />
                                   </span>
                                   <span className="flex-1">{cat.label}</span>
                                   <ChevronRight
-                                    className={`h-4 w-4 shrink-0 transition-opacity ${activeCat === i ? "text-bronze opacity-100" : "opacity-0"}`}
+                                    className={`h-4 w-4 shrink-0 transition-opacity ${currentCat === i ? "text-bronze opacity-100" : "opacity-0"}`}
                                     aria-hidden
                                   />
                                 </button>
@@ -163,7 +178,7 @@ export function Header() {
                             ))}
                           </ul>
                           <div className="grid flex-1 grid-cols-2 gap-1 p-3">
-                            {link.mega[activeCat].items.map((it) => (
+                            {megaItems.map((it) => (
                               <Link
                                 key={it.title}
                                 href={it.href}
@@ -182,7 +197,7 @@ export function Header() {
                         </div>
                       ) : (
                         <ul className="w-72 rounded-xl border border-line bg-white p-2 shadow-xl shadow-ink/10">
-                          {link.children!.map((child) => (
+                          {(link.children ?? []).map((child) => (
                             <li key={child.href}>
                               <Link
                                 href={child.href}
@@ -235,9 +250,12 @@ export function Header() {
             <Container className="py-4">
               <nav className="flex flex-col divide-y divide-line" aria-label="Mobile">
                 {navLinks.map((link) => {
+                  // Flatten mega categories → items; fall back to children; guard
+                  // every level so a missing `items`/`children` can't crash.
                   const subItems = link.mega
-                    ? link.mega.flatMap((c) => c.items.map((it) => ({ label: it.title, href: it.href })))
-                    : link.children;
+                    ? link.mega.flatMap((c) => (c.items ?? []).map((it) => ({ label: it.title, href: it.href })))
+                    : link.children ?? [];
+                  const hasSub = subItems.length > 0;
                   return (
                     <div key={link.href} className="py-1">
                       <div className="flex items-center justify-between">
@@ -248,7 +266,7 @@ export function Header() {
                         >
                           {link.label}
                         </Link>
-                        {subItems && (
+                        {hasSub && (
                           <button
                             type="button"
                             aria-label={`Toggle ${link.label} submenu`}
@@ -261,7 +279,7 @@ export function Header() {
                         )}
                       </div>
                       <AnimatePresence initial={false}>
-                        {subItems && openSub === link.href && (
+                        {hasSub && openSub === link.href && (
                           <motion.ul
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
