@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
+import { InteractiveCard } from "@/components/ui/InteractiveCard";
 import { RingAccent } from "@/components/ui/Decorations";
 import { copy, whyPoints } from "@/lib/content";
 
@@ -17,15 +18,22 @@ export function WhyChoose() {
 
         <ul data-reveal-stagger className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {whyPoints.map((point) => (
-            <li
-              key={point.title}
-              className="group rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-bronze/30 hover:shadow-xl hover:shadow-ink/5"
-            >
-              <span className="grid h-14 w-14 place-items-center rounded-xl bg-cream text-bronze transition-all duration-300 group-hover:scale-105 group-hover:bg-ink group-hover:text-white">
-                <Icon name={point.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
-              </span>
-              <h3 className="mt-5 text-lg text-ink">{point.title}</h3>
-              <p className="mt-2.5 text-[0.95rem] leading-relaxed text-muted">{point.description}</p>
+            <li key={point.title}>
+              <InteractiveCard className="h-full rounded-2xl border border-line bg-white p-7">
+                {(active) => (
+                  <>
+                    <span
+                      className={`grid h-14 w-14 place-items-center rounded-xl transition-all duration-300 ${
+                        active ? "scale-105 bg-ink text-white" : "bg-cream text-bronze"
+                      }`}
+                    >
+                      <Icon name={point.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
+                    </span>
+                    <h3 className="mt-5 text-lg text-ink">{point.title}</h3>
+                    <p className="mt-2.5 text-[0.95rem] leading-relaxed text-muted">{point.description}</p>
+                  </>
+                )}
+              </InteractiveCard>
             </li>
           ))}
         </ul>

@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
+import { InteractiveCard } from "@/components/ui/InteractiveCard";
 import { copy, industries } from "@/lib/content";
 
 export function Industries() {
@@ -15,14 +16,27 @@ export function Industries() {
         <ul data-reveal-stagger className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {industries.map((industry) => (
             <li id={industry.slug} key={industry.title} className="scroll-mt-28">
-              <article className="group relative h-full overflow-hidden rounded-2xl border border-line bg-white p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-bronze/30 hover:shadow-xl hover:shadow-ink/5">
-                <ArrowUpRight className="absolute right-5 top-5 h-5 w-5 text-line transition-colors duration-300 group-hover:text-bronze" aria-hidden />
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-cream text-bronze transition-all duration-300 group-hover:scale-105 group-hover:bg-ink group-hover:text-white">
-                  <Icon name={industry.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
-                </span>
-                <h3 className="mt-5 text-base text-ink">{industry.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{industry.description}</p>
-              </article>
+              <InteractiveCard className="relative h-full overflow-hidden rounded-2xl border border-line bg-white p-6">
+                {(active) => (
+                  <>
+                    <ArrowUpRight
+                      className={`absolute right-5 top-5 h-5 w-5 transition-colors duration-300 ${
+                        active ? "text-bronze" : "text-line"
+                      }`}
+                      aria-hidden
+                    />
+                    <span
+                      className={`grid h-12 w-12 place-items-center rounded-xl transition-all duration-300 ${
+                        active ? "scale-105 bg-ink text-white" : "bg-cream text-bronze"
+                      }`}
+                    >
+                      <Icon name={industry.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
+                    </span>
+                    <h3 className="mt-5 text-base text-ink">{industry.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted">{industry.description}</p>
+                  </>
+                )}
+              </InteractiveCard>
             </li>
           ))}
         </ul>
