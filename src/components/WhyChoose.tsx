@@ -1,13 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
 import { RingAccent } from "@/components/ui/Decorations";
 import { copy, whyPoints } from "@/lib/content";
-import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function WhyChoose() {
   return (
@@ -17,17 +15,10 @@ export function WhyChoose() {
       <Container className="relative">
         <SectionHeading {...copy.why.heading} />
 
-        <motion.ul
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
+        <ul data-reveal-stagger className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {whyPoints.map((point) => (
-            <motion.li
+            <li
               key={point.title}
-              variants={staggerItem}
               className="group rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-bronze/30 hover:shadow-xl hover:shadow-ink/5"
             >
               <span className="grid h-14 w-14 place-items-center rounded-xl bg-cream text-bronze transition-all duration-300 group-hover:scale-105 group-hover:bg-ink group-hover:text-white">
@@ -35,9 +26,9 @@ export function WhyChoose() {
               </span>
               <h3 className="mt-5 text-lg text-ink">{point.title}</h3>
               <p className="mt-2.5 text-[0.95rem] leading-relaxed text-muted">{point.description}</p>
-            </motion.li>
+            </li>
           ))}
-        </motion.ul>
+        </ul>
 
         <div className="mt-14 flex flex-col items-center gap-5 text-center">
           <p className="text-muted">{copy.why.ctaText}</p>

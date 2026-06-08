@@ -1,19 +1,7 @@
-"use client";
+import { type CSSProperties, type ReactNode, createElement } from "react";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { type ReactNode, createElement } from "react";
-import { easeOut, viewportOnce } from "@/lib/motion";
-
-const motionTags = {
-  div: motion.div,
-  li: motion.li,
-  ul: motion.ul,
-  span: motion.span,
-  section: motion.section,
-  p: motion.p,
-} as const;
-
-type Tag = keyof typeof motionTags;
+const tags = ["div", "li", "ul", "section", "span", "p"] as const;
+type Tag = (typeof tags)[number];
 
 type RevealProps = {
   children: ReactNode;
@@ -26,34 +14,23 @@ type RevealProps = {
 };
 
 /**
- * Fade + slide-in once the element scrolls into view.
- * Falls back to a static, fully-visible render when the user
- * prefers reduced motion.
+ * Fade + slide-in once the element scrolls into view — driven by CSS
+ * transitions (see globals.css) and the page-level RevealObserver. Content is
+ * visible by default; the hidden state only applies when JS is running and the
+ * user allows motion, so it works reliably on iOS/WebKit and degrades safely.
  */
-export function Reveal({
-  children,
-  className,
-  delay = 0,
-  y = 24,
-  as = "div",
-}: RevealProps) {
-  const reduce = useReducedMotion();
+export function Reveal({ children, className = "", delay = 0, y, as = "div" }: RevealProps) {
+  const style: CSSProperties = {};
+  if (delay) (style as Record<string, string>)["--reveal-delay"] = `${delay}s`;
+  if (y != null) (style as Record<string, string>)["--reveal-y"] = `${y}px`;
 
-  if (reduce) {
-    return createElement(as, { className }, children);
-  }
-
-  const MotionTag = motionTags[as];
-
-  return (
-    <MotionTag
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={viewportOnce}
-      transition={{ duration: 0.6, ease: easeOut, delay }}
-    >
-      {children}
-    </MotionTag>
+  return createElement(
+    as,
+    {
+      "data-reveal": "",
+      className,
+      ...(Object.keys(style).length ? { style } : {}),
+    },
+    children,
   );
 }

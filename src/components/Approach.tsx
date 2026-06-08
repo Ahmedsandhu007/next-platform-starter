@@ -1,13 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SpotArt } from "@/components/ui/SpotArt";
 import { DotCluster } from "@/components/ui/Decorations";
 import { copy, valueProps } from "@/lib/content";
-import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function Approach() {
   return (
@@ -18,17 +16,10 @@ export function Approach() {
       <Container className="relative">
         <SectionHeading {...copy.approach.heading} />
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="mt-16 grid gap-6 md:grid-cols-3"
-        >
+        <div data-reveal-stagger className="mt-16 grid gap-6 md:grid-cols-3">
           {valueProps.map((v) => (
-            <motion.article
+            <article
               key={v.title}
-              variants={staggerItem}
               className="group relative flex flex-col rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-bronze/30 hover:shadow-xl hover:shadow-ink/5"
             >
               <div className="rounded-xl bg-cream p-5 transition-colors duration-300 group-hover:bg-bronze-50">
@@ -40,9 +31,9 @@ export function Approach() {
                 Learn more
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
               </span>
-            </motion.article>
+            </article>
           ))}
-        </motion.div>
+        </div>
       </Container>
     </section>
   );

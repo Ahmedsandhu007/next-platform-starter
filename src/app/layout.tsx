@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { ContactDock } from "@/components/ContactDock";
 import { SocialRail } from "@/components/SocialRail";
 import { ScrollTop } from "@/components/ScrollTop";
+import { RevealObserver } from "@/components/RevealObserver";
 import "./globals.css";
 
 const inter = Inter({
@@ -107,6 +108,12 @@ export default function RootLayout({
       className={`${inter.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-white text-ink">
+        {/* Mark JS as available before content paints, so CSS scroll-reveals
+            stay hidden only when they can actually be animated (no flash, and
+            content is visible if JS is off). */}
+        <script
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
@@ -119,6 +126,7 @@ export default function RootLayout({
         <SocialRail />
         <ScrollTop />
         <ContactDock />
+        <RevealObserver />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}

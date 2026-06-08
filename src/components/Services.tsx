@@ -1,13 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
 import { copy, services } from "@/lib/content";
-import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 export function Services() {
   return (
@@ -15,15 +13,9 @@ export function Services() {
       <Container>
         <SectionHeading {...copy.services.heading} />
 
-        <motion.ul
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
+        <ul data-reveal-stagger className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
-            <motion.li id={service.slug} key={service.title} variants={staggerItem} className="scroll-mt-28">
+            <li id={service.slug} key={service.title} className="scroll-mt-28">
               <article className="group flex h-full flex-col rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-2 hover:border-bronze/30 hover:shadow-[0_28px_60px_-24px_rgba(139,106,61,0.3)]">
                 <span className="grid h-14 w-14 place-items-center rounded-xl bg-cream text-bronze transition-all duration-300 group-hover:scale-105 group-hover:bg-ink group-hover:text-white">
                   <Icon name={service.icon as IconName} className="h-7 w-7" strokeWidth={1.8} aria-hidden />
@@ -48,9 +40,9 @@ export function Services() {
                   <ArrowRight className="h-3.5 w-3.5 text-bronze transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
                 </span>
               </article>
-            </motion.li>
+            </li>
           ))}
-        </motion.ul>
+        </ul>
 
         <div className="mt-14 flex flex-col items-center gap-5 text-center">
           <p className="text-muted">{copy.services.ctaText}</p>
