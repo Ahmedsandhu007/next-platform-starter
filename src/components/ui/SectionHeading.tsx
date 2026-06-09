@@ -26,7 +26,7 @@ export function SectionHeading({
         <span className="eyebrow">{eyebrow}</span>
         {isCenter && <span className="h-px w-8 bg-bronze" aria-hidden />}
       </span>
-      <h2 className="mt-5 max-w-3xl text-balance text-3xl text-ink sm:text-4xl lg:text-[2.9rem] lg:leading-[1.12]">
+      <h2 className="mt-5 max-w-3xl text-balance text-[2.1rem] text-ink sm:text-[2.55rem] lg:text-[3.15rem] lg:leading-[1.08]">
         {title}
       </h2>
       {subtitle ? (

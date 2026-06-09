@@ -362,8 +362,10 @@ export const trustStats = [
   { value: 98, suffix: "%", label: "Client retention, year on year" },
 ] as const;
 
-/** Accreditations / integrations — rendered as trust badges under the hero */
-export const partners = ["ACCA", "HMRC", "Xero", "QuickBooks", "FreeAgent", "Sage"] as const;
+/** Regulators & software platforms — trust badges under the hero. (Professional-
+ *  body accreditations ICAEW / ACCA / AAT are shown in the Testimonials section
+ *  instead, so ACCA is not duplicated here.) */
+export const partners = ["Companies House", "HMRC", "Xero", "QuickBooks", "FreeAgent", "Sage"] as const;
 
 /** Headline statistics — animated with react-countup on scroll */
 export const stats = [

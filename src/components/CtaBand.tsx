@@ -15,7 +15,7 @@ export function CtaBand() {
   return (
     <section className="bg-white py-20 sm:py-28">
       <Container>
-        <div className="relative overflow-hidden rounded-3xl bg-ink px-6 py-16 text-center sm:px-12 lg:py-20">
+        <div className="relative overflow-hidden rounded-3xl bg-navy px-6 py-16 text-center sm:px-12 lg:py-20">
           {/* Continuously animated glow + sheen */}
           <div aria-hidden className="pointer-events-none absolute inset-0">
             {/* Static glows — animating large blur surfaces is too GPU-heavy */}

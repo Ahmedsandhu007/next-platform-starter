@@ -10,7 +10,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden bg-ink text-white/65">
+    <footer className="relative overflow-hidden bg-navy text-white/65">
       <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-bronze/10 blur-3xl" aria-hidden />
       <Container className="relative py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.7fr_1fr_1fr_1.3fr]">
@@ -41,7 +41,7 @@ export function Footer() {
 
           {/* Services */}
           <nav aria-label="Services">
-            <h2 className="eyebrow text-bronze-400">{copy.footer.columns.services}</h2>
+            <h2 className="text-[0.95rem] font-extrabold uppercase tracking-[0.14em] text-white">{copy.footer.columns.services}</h2>
             <ul className="mt-5 flex flex-col gap-3 text-sm">
               {services.map((s) => (
                 <li key={s.title}>
@@ -55,7 +55,7 @@ export function Footer() {
 
           {/* Quick links */}
           <nav aria-label="Quick links">
-            <h2 className="eyebrow text-bronze-400">{copy.footer.columns.quickLinks}</h2>
+            <h2 className="text-[0.95rem] font-extrabold uppercase tracking-[0.14em] text-white">{copy.footer.columns.quickLinks}</h2>
             <ul className="mt-5 flex flex-col gap-3 text-sm">
               {navLinks.map((l) => (
                 <li key={l.href}>
@@ -74,7 +74,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h2 className="eyebrow text-bronze-400">{copy.footer.columns.contact}</h2>
+            <h2 className="text-[0.95rem] font-extrabold uppercase tracking-[0.14em] text-white">{copy.footer.columns.contact}</h2>
             <ul className="mt-5 flex flex-col gap-5 text-sm">
               {siteConfig.offices.map((o) => (
                 <li key={o.city} className="flex items-start gap-3">

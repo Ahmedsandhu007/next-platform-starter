@@ -10,23 +10,13 @@ import servicesRaw from "@/content/services.json";
 import industries1Raw from "@/content/industries-1.json";
 import industries2Raw from "@/content/industries-2.json";
 import approachRaw from "@/content/approach.json";
+import type { DetailFaq, DetailSection, RawDetail } from "./detailSchema";
 
-export type DetailFaq = { question: string; answer: string };
-export type DetailSection = { heading: string; body: string[]; bullets?: string[] };
+// The editable shape (RawDetail) and its validators now live in ./detailSchema
+// so the CMS can validate saves against the same contract. Re-exported here to
+// keep `@/lib/content` the single import surface for the rest of the app.
+export type { DetailFaq, DetailSection } from "./detailSchema";
 export type DetailKind = "service" | "industry" | "approach";
-
-/** Shape of each object authored in the JSON content files. */
-type RawDetail = {
-  slug: string;
-  metaTitle: string;
-  metaDescription: string;
-  eyebrow: string;
-  title: string;
-  intro: string;
-  highlights: string[];
-  sections: DetailSection[];
-  faqs: DetailFaq[];
-};
 
 export type RelatedLink = { label: string; href: string };
 

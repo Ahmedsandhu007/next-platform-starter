@@ -1,10 +1,20 @@
 import { type SVGProps } from "react";
 
 /**
- * Accreditation + platform marks in their official brand colours.
- * NOTE: these are clean SVG/typographic reconstructions for layout fidelity.
- * For production, swap in the official ICAEW / ACCA / AAT / Google logo files.
+ * Accreditation + platform marks.
+ *
+ * NOTE: the ICAEW / ACCA / AAT marks below are clean typographic RECONSTRUCTIONS
+ * for layout fidelity — they are NOT the official logos. To show the real
+ * artwork, drop the licensed file into `public/brand/` and set its path in
+ * OFFICIAL_ASSETS below; the component then renders that file instead of the
+ * reconstruction. Leave a value as `null` to keep the reconstruction.
+ * See public/brand/README.txt for the expected filenames.
  */
+const OFFICIAL_ASSETS: Record<"icaew" | "acca" | "aat", string | null> = {
+  icaew: "/brand/ICAEW.png",
+  acca: "/brand/ACCA.png",
+  aat: "/brand/AAT.png",
+};
 
 /** Google "G" — official four-colour mark. */
 export function GoogleG(props: SVGProps<SVGSVGElement>) {
@@ -54,6 +64,16 @@ export function GoogleWordmark({ className = "" }: { className?: string }) {
 
 /** ICAEW — Chartered Accountants lockup. */
 export function IcaewLogo({ className = "" }: { className?: string }) {
+  if (OFFICIAL_ASSETS.icaew) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return (
+      <img
+        src={OFFICIAL_ASSETS.icaew}
+        alt="ICAEW Chartered Accountants"
+        className={`h-12 w-auto object-contain ${className}`}
+      />
+    );
+  }
   return (
     <span className={`flex flex-col items-center justify-center ${className}`} aria-label="ICAEW Chartered Accountants">
       <span className="font-display text-2xl font-extrabold tracking-[0.04em] text-[#2b2b2b]">ICAEW</span>
@@ -66,6 +86,12 @@ export function IcaewLogo({ className = "" }: { className?: string }) {
 
 /** ACCA — red mark + "Think Ahead". */
 export function AccaLogo({ className = "" }: { className?: string }) {
+  if (OFFICIAL_ASSETS.acca) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return (
+      <img src={OFFICIAL_ASSETS.acca} alt="ACCA" className={`h-12 w-auto object-contain ${className}`} />
+    );
+  }
   return (
     <span className={`flex items-center gap-2.5 ${className}`} aria-label="ACCA Think Ahead">
       <span className="grid h-10 w-10 place-items-center rounded-[3px] bg-[#E4002B] text-[0.62rem] font-extrabold leading-none tracking-tight text-white">
@@ -82,6 +108,10 @@ export function AccaLogo({ className = "" }: { className?: string }) {
 
 /** AAT — green wordmark. */
 export function AatLogo({ className = "" }: { className?: string }) {
+  if (OFFICIAL_ASSETS.aat) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={OFFICIAL_ASSETS.aat} alt="AAT" className={`h-10 w-auto object-contain ${className}`} />;
+  }
   return (
     <span
       className={`font-display text-[2.1rem] font-extrabold lowercase leading-none tracking-[-0.03em] text-[#5fb246] ${className}`}

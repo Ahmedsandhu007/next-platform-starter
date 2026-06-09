@@ -12,10 +12,12 @@ const sizes = {
 };
 
 const variants: Record<Variant, string> = {
-  primary: "bg-ink text-white hover:bg-bronze",
-  bronze: "bg-bronze text-white hover:bg-bronze-600",
-  ghost: "border border-ink text-ink hover:bg-ink hover:text-white",
-  light: "border border-white/40 text-white hover:bg-white hover:text-ink",
+  // Accent lives on the BORDER with a transparent fill; the fill appears on hover
+  // (reference-style outline buttons).
+  primary: "border border-bronze text-ink hover:bg-bronze hover:text-white",
+  bronze: "border border-bronze-400 text-white hover:border-bronze hover:bg-bronze hover:text-white",
+  ghost: "border border-ink/30 text-ink hover:bg-ink hover:text-white",
+  light: "border border-white/45 text-white hover:bg-white hover:text-navy",
 };
 
 type ButtonLinkProps = ComponentProps<"a"> & {

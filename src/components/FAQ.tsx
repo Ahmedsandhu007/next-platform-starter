@@ -38,7 +38,7 @@ export function FAQ() {
                 <Reveal as="li" key={faq.question} delay={i * 0.03}>
                   <div
                     className={`overflow-hidden rounded-2xl border transition-colors duration-300 ${
-                      isOpen ? "border-bronze/30 bg-cream/40 shadow-sm" : "border-line bg-white"
+                      isOpen ? "border-blue/40 bg-blue/5 shadow-sm" : "border-line bg-white"
                     }`}
                   >
                     <h3>
@@ -50,12 +50,12 @@ export function FAQ() {
                         onClick={() => setOpen(isOpen ? null : i)}
                         className="flex w-full items-center justify-between gap-5 px-6 py-5 text-left"
                       >
-                        <span className={`text-base font-bold transition-colors sm:text-lg ${isOpen ? "text-bronze" : "text-ink"}`}>
+                        <span className={`text-base font-bold transition-colors sm:text-lg ${isOpen ? "text-navy" : "text-ink"}`}>
                           {faq.question}
                         </span>
                         <span
                           className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors duration-300 ${
-                            isOpen ? "bg-bronze text-white" : "bg-cream text-bronze"
+                            isOpen ? "bg-blue text-white" : "bg-blue/10 text-blue"
                           }`}
                         >
                           <Plus className={`h-4 w-4 transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`} strokeWidth={2} aria-hidden />

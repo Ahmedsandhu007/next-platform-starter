@@ -2,7 +2,7 @@
 
 /* ============================================================
    MMR Accountants — Premium UK accountancy
-   White base · Charcoal ink · Rich bronze accent
+   White base · Charcoal ink · Navy surfaces · Rich bronze accent
    Headings: Manrope ExtraBold · Body: Inter
    ============================================================ */
 @theme {
@@ -10,7 +10,7 @@
   --color-ink: #161616;
   --color-ink-soft: #2a2a2a;
 
-  /* Rich bronze — accent */
+  /* Rich bronze — accent (unchanged) */
   --color-bronze: #8b6a3d;
   --color-bronze-400: #a6855a;
   --color-bronze-500: #8b6a3d;
@@ -18,10 +18,16 @@
   --color-bronze-700: #5f472a;
   --color-bronze-50: #f7f1e8;
 
-  /* Warm neutrals */
+  /* Crowe navy + blue — dark brand surfaces & secondary */
+  --color-navy: #073d7f;
+  --color-navy-700: #04285a;
+  --color-blue: #6491de;
+  --color-blue-300: #9cb9e9;
+
+  /* Cool neutrals */
   --color-muted: #57534a;
-  --color-line: #d8d0c0;
-  --color-cream: #faf8f4;
+  --color-line: #dbe1e8;
+  --color-cream: #f1f2f4;
 
   /* Decorative motion */
   --animate-float-slow: floatY 12s ease-in-out infinite;
@@ -104,14 +110,14 @@ h4 {
 /* Soft multi-point mesh gradient */
 .bg-mesh {
   background-image:
-    radial-gradient(38% 50% at 12% 18%, rgba(139, 106, 61, 0.07), transparent 62%),
-    radial-gradient(36% 46% at 88% 8%, rgba(22, 22, 22, 0.05), transparent 60%),
-    radial-gradient(46% 60% at 78% 92%, rgba(139, 106, 61, 0.06), transparent 66%);
+    radial-gradient(38% 50% at 12% 18%, rgba(100, 145, 222, 0.1), transparent 62%),
+    radial-gradient(36% 46% at 88% 8%, rgba(7, 61, 127, 0.06), transparent 60%),
+    radial-gradient(46% 60% at 78% 92%, rgba(139, 106, 61, 0.07), transparent 66%);
 }
 
 /* Faint dot grid, masked so it fades at the edges */
 .bg-dots {
-  background-image: radial-gradient(rgba(22, 22, 22, 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(7, 61, 127, 0.06) 1px, transparent 1px);
   background-size: 22px 22px;
   -webkit-mask-image: radial-gradient(ellipse 72% 60% at 50% 38%, #000 35%, transparent 100%);
   mask-image: radial-gradient(ellipse 72% 60% at 50% 38%, #000 35%, transparent 100%);

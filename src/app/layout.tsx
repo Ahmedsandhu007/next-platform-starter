@@ -1,12 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { siteConfig } from "@/lib/content";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { ContactDock } from "@/components/ContactDock";
-import { SocialRail } from "@/components/SocialRail";
-import { ScrollTop } from "@/components/ScrollTop";
-import { RevealManager } from "@/components/RevealManager";
+import { SiteChrome } from "@/components/SiteChrome";
 import "./globals.css";
 
 const inter = Inter({
@@ -121,15 +116,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <SocialRail />
-        <ScrollTop />
-        <ContactDock />
-        {/* Re-runs scroll reveals on client-side navigation (the inline script
-            below only fires on the initial document load). */}
-        <RevealManager />
+        <SiteChrome>{children}</SiteChrome>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
