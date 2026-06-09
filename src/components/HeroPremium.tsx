@@ -20,8 +20,8 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-navy pt-32 pb-24 text-white sm:pt-36 lg:pt-44 lg:pb-32"
-      style={{ clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 2.75rem), 0 100%)" }}
+      className="relative overflow-hidden bg-navy pt-32 pb-28 text-white sm:pt-36 lg:pt-44 lg:pb-36"
+      style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5.5rem))" }}
     >
       {/* Navy → blue gradient + soft glows + faint dot grid */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -35,7 +35,7 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
       </div>
 
       <Container className="relative">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+        <div className="grid items-center gap-14 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10">
           {/* Copy */}
           <motion.div variants={container} initial="hidden" animate="visible">
             <motion.h1
@@ -91,7 +91,7 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
             initial={reduce ? false : { opacity: 0, scale: 0.96, y: 20 }}
             animate={reduce ? {} : { opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, ease: easeOut, delay: 0.2 }}
-            className="relative mx-auto w-full max-w-xl lg:max-w-none"
+            className="relative mx-auto w-full max-w-2xl lg:max-w-none"
           >
             {cutoutSrc ? (
               <div className="relative">
