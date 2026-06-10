@@ -10,6 +10,8 @@ import { validateFile } from "@/lib/detailSchema";
 import { validateReviews } from "@/lib/cms/schemas";
 import { validateSettings, validateCopy } from "@/lib/cms/siteSchema";
 import { validateSections } from "@/lib/cms/itemsSchema";
+import { validateNav } from "@/lib/cms/navSchema";
+import { validateLegal } from "@/lib/cms/legalSchema";
 
 export type CollectionMode = "list" | "object";
 
@@ -27,6 +29,8 @@ export const collections: Collection[] = [
   { id: "settings", label: "Site & contact details", group: "Site-wide", file: "src/content/settings.json", mode: "object", validate: validateSettings, editPath: "/admin/settings" },
   { id: "copy", label: "Section text & headings", group: "Site-wide", file: "src/content/copy.json", mode: "object", validate: validateCopy, editPath: "/admin/copy" },
   { id: "sections", label: "Section items (services, industries, FAQs…)", group: "Site-wide", file: "src/content/sections.json", mode: "object", validate: validateSections, editPath: "/admin/sections" },
+  { id: "nav", label: "Navigation & menus", group: "Site-wide", file: "src/content/nav.json", mode: "object", validate: validateNav, editPath: "/admin/nav" },
+  { id: "legal", label: "Legal pages (privacy, terms, cookies)", group: "Site-wide", file: "src/content/legal.json", mode: "object", validate: validateLegal, editPath: "/admin/legal" },
   { id: "reviews", label: "Google reviews", group: "Home page", file: "src/content/reviews.json", mode: "object", validate: validateReviews, editPath: "/admin/reviews" },
   { id: "services", label: "Services", group: "Detail pages", file: "src/content/services.json", mode: "list", validate: validateFile },
   { id: "industries-1", label: "Industries — set A", group: "Detail pages", file: "src/content/industries-1.json", mode: "list", validate: validateFile },

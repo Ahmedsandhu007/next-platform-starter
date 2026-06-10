@@ -42,6 +42,22 @@ The dashboard groups everything into **Site-wide**, **Home page** and **Detail p
   web addresses (slugs) and the number of cards are locked — you edit the content
   and reorder them. The other lists can be added to, removed from and reordered.
 
+**Site-wide → Navigation & menus** (`nav.json`)
+
+- The top navigation links, their dropdowns and the two-pane mega-menus — labels,
+  web addresses (hrefs), category names and the items inside each (title,
+  description, icon, link). Icons are chosen from a dropdown. The top-level links
+  are fixed in number (the header layout depends on it) but you can edit and
+  reorder them, and add / remove / reorder categories and items within a dropdown.
+
+**Site-wide → Legal pages** (`legal.json`)
+
+- The Privacy, Terms and Cookie pages — breadcrumb, title, intro, "last reviewed"
+  date, SEO listing, and the body sections (heading + paragraphs + optional
+  bullets, add / remove / reorder). The web addresses (slugs) are locked. *These
+  are standard templates — have your solicitor review the wording before relying
+  on it.*
+
 **Home page → Google reviews** (`reviews.json`)
 
 - Section heading + intro, the rating summary, and each review (text, star rating
@@ -139,10 +155,16 @@ the real artwork, see **`public/brand/README.txt`**.
 
 ## Scope / future
 
-Editable today (all backed by JSON files in `src/content/`): the 17 detail pages,
-the Google reviews, the site-wide **settings** (`settings.json`), the section
-**text** (`copy.json`) and the section **item lists** (`sections.json` — services,
-industries, why, approach, process, FAQs, trust badges, business types).
+The whole-site CMS is now complete — everything below is editable, all backed by
+JSON files in `src/content/` and committed through the same registry + object-editor
+pattern:
 
-Not yet editable here (a follow-up, using the same registry + object-editor pattern):
-the **navigation / mega-menus** and the **legal pages** (Privacy / Terms / Cookies).
+- **17 detail pages** (`services.json`, `industries-1/2.json`, `approach.json`)
+- **Google reviews** (`reviews.json`)
+- **Site & contact details** (`settings.json`) and **section text** (`copy.json`)
+- **Section item lists** (`sections.json` — services, industries, why, approach,
+  process, FAQs, trust badges, business types)
+- **Navigation & menus** (`nav.json`) and **legal pages** (`legal.json`)
+
+The only content still hard-coded is structural/visual scaffolding (illustrations,
+the icon set itself, layout) — appropriately developer-owned.
