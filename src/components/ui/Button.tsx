@@ -12,14 +12,14 @@ const sizes = {
 };
 
 const variants: Record<Variant, string> = {
-  // Profitwise rebrand: solid dark primary that fills orange on hover.
-  primary: "bg-ink text-white hover:bg-bronze",
-  // Solid orange — the prominent CTA (used on dark surfaces); darkens on hover.
+  // Solid orange fill, white text — primary CTAs (darkens on hover).
+  primary: "bg-bronze text-white hover:bg-bronze-600",
+  // Solid orange fill — the prominent CTA.
   bronze: "bg-bronze text-white hover:bg-bronze-600",
-  // Secondary: white/transparent with a dark border; fills orange on hover.
-  ghost: "border border-ink/25 text-ink hover:border-bronze hover:bg-bronze hover:text-white",
-  // On dark surfaces: white outline that fills white (dark text) on hover.
-  light: "border border-white/50 text-white hover:bg-white hover:text-navy",
+  // Orange border + white fill + orange text; fills orange on hover — secondary.
+  ghost: "border border-bronze bg-white text-bronze hover:bg-bronze hover:text-white",
+  // Secondary on the hero / dark surfaces: same white-fill + orange-border treatment.
+  light: "border border-bronze bg-white text-bronze hover:bg-bronze hover:text-white",
 };
 
 type ButtonLinkProps = ComponentProps<"a"> & {

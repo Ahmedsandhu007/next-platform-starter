@@ -43,7 +43,7 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
               className="text-[2.7rem] leading-[1.02] text-white sm:text-[3.3rem] lg:text-[4rem] xl:text-[4.7rem]"
             >
               {copy.hero.headlineLead}{" "}
-              <span className="text-bronze-400">{copy.hero.headlineAccent}</span>
+              <span>{copy.hero.headlineAccent}</span>
             </motion.h1>
 
             <motion.p variants={item} className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">

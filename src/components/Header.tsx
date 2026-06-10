@@ -80,8 +80,8 @@ export function Header() {
 
       {/* Main navigation */}
       <div
-        className={`glass border-b transition-all duration-300 ${
-          scrolled || open ? "border-line shadow-sm shadow-ink/5" : "border-line/60"
+        className={`border-b bg-white transition-all duration-300 ${
+          scrolled || open ? "border-line shadow-md shadow-ink/5" : "border-transparent"
         }`}
       >
         <Container>
