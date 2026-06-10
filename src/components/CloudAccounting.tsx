@@ -79,7 +79,7 @@ export function CloudAccounting() {
                 const FeatureIcon = featureIcons[i];
                 return (
                   <Reveal as="li" key={f.title} delay={i * 0.08} className="flex items-start gap-3.5">
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cream text-bronze">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-blue text-bronze">
                       <FeatureIcon className="h-5 w-5" strokeWidth={1.8} aria-hidden />
                     </span>
                     <div>

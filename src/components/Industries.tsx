@@ -28,7 +28,7 @@ export function Industries() {
                     />
                     <span
                       className={`grid h-12 w-12 place-items-center rounded-xl transition-all duration-300 ${
-                        active ? "scale-105 bg-ink text-white" : "bg-cream text-bronze"
+                        active ? "scale-105 bg-ink text-white" : "bg-blue text-bronze"
                       }`}
                     >
                       <Icon name={industry.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />

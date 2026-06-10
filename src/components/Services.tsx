@@ -23,7 +23,7 @@ export function Services() {
                   <>
                     <span
                       className={`grid h-14 w-14 place-items-center rounded-xl transition-all duration-300 ${
-                        active ? "scale-105 bg-ink text-white" : "bg-cream text-bronze"
+                        active ? "scale-105 bg-ink text-white" : "bg-blue text-bronze"
                       }`}
                     >
                       <Icon name={service.icon as IconName} className="h-7 w-7" strokeWidth={1.8} aria-hidden />

@@ -27,7 +27,7 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div
           className="absolute inset-0"
-          style={{ backgroundImage: "radial-gradient(85% 120% at 12% 0%, #0b4f97 0%, #073d7f 46%, #04285a 100%)" }}
+          style={{ backgroundImage: "radial-gradient(85% 120% at 12% 0%, #2f343a 0%, #24282b 46%, #16191b 100%)" }}
         />
         <div className="absolute -right-32 -top-28 h-[34rem] w-[34rem] rounded-full bg-blue/25 blur-3xl motion-safe:animate-[floatY_15s_ease-in-out_infinite]" />
         <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-bronze/15 blur-3xl" />

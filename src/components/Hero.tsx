@@ -141,7 +141,7 @@ function StatementCard({ reduce }: { reduce: boolean }) {
         <motion.polyline
           points={line}
           fill="none"
-          stroke="#1a1a1a"
+          stroke="#24282b"
           strokeWidth="1.75"
           strokeLinejoin="round"
           strokeLinecap="round"
@@ -150,7 +150,7 @@ function StatementCard({ reduce }: { reduce: boolean }) {
           viewport={{ once: true }}
           transition={{ duration: 1.4, ease: easeOut }}
         />
-        <circle cx={last[0]} cy={last[1]} r="3.5" fill="#8b6a3d" />
+        <circle cx={last[0]} cy={last[1]} r="3.5" fill="#ee5935" />
       </svg>
 
       <div className="mt-6 divide-y divide-line border-y border-line">

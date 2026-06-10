@@ -2,32 +2,42 @@
 
 /* ============================================================
    MMR Accountants — Premium UK accountancy
-   White base · Charcoal ink · Navy surfaces · Rich bronze accent
+   White base · Dark #24282B surfaces · Orange #EE5935 accent · Light-blue accents
    Headings: Manrope ExtraBold · Body: Inter
    ============================================================ */
 @theme {
-  /* Charcoal — primary ink */
-  --color-ink: #161616;
-  --color-ink-soft: #2a2a2a;
+  /* ------------------------------------------------------------
+     Profitwise rebrand — exact palette from the brand reference.
+     The token NAMES are inherited from the previous brand
+     (bronze / navy / blue); their VALUES are now the new palette,
+     so the whole site re-skins through the existing utility classes:
+       bronze* = Accent Orange   navy* = Primary Dark   blue* = Light Blue
+     ------------------------------------------------------------ */
 
-  /* Rich bronze — accent (unchanged) */
-  --color-bronze: #8b6a3d;
-  --color-bronze-400: #a6855a;
-  --color-bronze-500: #8b6a3d;
-  --color-bronze-600: #785a34;
-  --color-bronze-700: #5f472a;
-  --color-bronze-50: #f7f1e8;
+  /* Primary dark (#24282B) — ink / text + dark surfaces */
+  --color-ink: #24282b;
+  --color-ink-soft: #3a3f43;
 
-  /* Crowe navy + blue — dark brand surfaces & secondary */
-  --color-navy: #073d7f;
-  --color-navy-700: #04285a;
-  --color-blue: #6491de;
-  --color-blue-300: #9cb9e9;
+  /* Accent orange (#EE5935) — utility name kept as `bronze` */
+  --color-bronze: #ee5935;
+  --color-bronze-400: #f47a60;
+  --color-bronze-500: #ee5935;
+  --color-bronze-600: #d8472a;
+  --color-bronze-700: #b5381f;
+  --color-bronze-50: #fdeee9;
 
-  /* Cool neutrals */
-  --color-muted: #57534a;
-  --color-line: #dbe1e8;
-  --color-cream: #f1f2f4;
+  /* Dark brand surfaces (#24282B) — utility name kept as `navy` */
+  --color-navy: #24282b;
+  --color-navy-700: #16191b;
+
+  /* Light blue accent (#ECF5FE) — utility name kept as `blue` */
+  --color-blue: #ecf5fe;
+  --color-blue-300: #cfe6fb;
+
+  /* Neutrals — cool gray text, border gray, light-gray surfaces */
+  --color-muted: #545a60;
+  --color-line: #e5e7eb;
+  --color-cream: #f5f7fa;
 
   /* Decorative motion */
   --animate-float-slow: floatY 12s ease-in-out infinite;
@@ -45,7 +55,7 @@
    ============================================================ */
 :root {
   --background: #ffffff;
-  --foreground: #161616;
+  --foreground: #24282b;
 }
 
 html {
@@ -110,14 +120,14 @@ h4 {
 /* Soft multi-point mesh gradient */
 .bg-mesh {
   background-image:
-    radial-gradient(38% 50% at 12% 18%, rgba(100, 145, 222, 0.1), transparent 62%),
-    radial-gradient(36% 46% at 88% 8%, rgba(7, 61, 127, 0.06), transparent 60%),
-    radial-gradient(46% 60% at 78% 92%, rgba(139, 106, 61, 0.07), transparent 66%);
+    radial-gradient(38% 50% at 12% 18%, rgba(236, 245, 254, 0.75), transparent 62%),
+    radial-gradient(36% 46% at 88% 8%, rgba(207, 230, 251, 0.5), transparent 60%),
+    radial-gradient(46% 60% at 78% 92%, rgba(238, 89, 53, 0.06), transparent 66%);
 }
 
 /* Faint dot grid, masked so it fades at the edges */
 .bg-dots {
-  background-image: radial-gradient(rgba(7, 61, 127, 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(36, 40, 43, 0.07) 1px, transparent 1px);
   background-size: 22px 22px;
   -webkit-mask-image: radial-gradient(ellipse 72% 60% at 50% 38%, #000 35%, transparent 100%);
   mask-image: radial-gradient(ellipse 72% 60% at 50% 38%, #000 35%, transparent 100%);
@@ -125,7 +135,7 @@ h4 {
 
 /* Soft radial vignette/glow used behind hero + CTAs */
 .bg-radial-bronze {
-  background: radial-gradient(60% 55% at 70% 30%, rgba(139, 106, 61, 0.1), transparent 70%);
+  background: radial-gradient(60% 55% at 70% 30%, rgba(238, 89, 53, 0.1), transparent 70%);
 }
 
 /* Glass / blur surface for the sticky header + cards */

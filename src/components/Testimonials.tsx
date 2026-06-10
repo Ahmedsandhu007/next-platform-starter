@@ -13,12 +13,12 @@ import { GoogleG, GoogleWordmark, IcaewLogo, AccaLogo, AatLogo } from "@/compone
 import { reviews, reviewsMeta } from "@/lib/content";
 
 const avatarTones = [
-  "from-[#8b6a3d] to-[#5f472a]",
-  "from-[#3b4a6b] to-[#26324a]",
-  "from-[#5a7d5a] to-[#3f5a3f]",
-  "from-[#2a2a2a] to-[#161616]",
-  "from-[#9a6a4d] to-[#6b4a34]",
-  "from-[#6b5a7d] to-[#4a3f5a]",
+  "from-[#24282b] to-[#16191b]",
+  "from-[#ee5935] to-[#d8472a]",
+  "from-[#3a3f43] to-[#24282b]",
+  "from-[#f47a60] to-[#ee5935]",
+  "from-[#4a5158] to-[#2f3438]",
+  "from-[#ee5935] to-[#b5381f]",
 ];
 
 function GoldStars({ value = 5, className = "h-4 w-4" }: { value?: number; className?: string }) {
@@ -94,8 +94,8 @@ export function Testimonials() {
             breakpoints={{ 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
             style={
               {
-                "--swiper-pagination-color": "#8b6a3d",
-                "--swiper-pagination-bullet-inactive-color": "#161616",
+                "--swiper-pagination-color": "#ee5935",
+                "--swiper-pagination-bullet-inactive-color": "#24282b",
                 "--swiper-pagination-bullet-inactive-opacity": "0.18",
                 "--swiper-pagination-bottom": "0px",
               } as React.CSSProperties

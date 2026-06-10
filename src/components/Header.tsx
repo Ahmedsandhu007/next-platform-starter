@@ -184,7 +184,7 @@ export function Header() {
                                 href={it.href}
                                 className="group/i flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-cream"
                               >
-                                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-cream text-bronze transition-colors group-hover/i:bg-ink group-hover/i:text-white">
+                                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-blue text-bronze transition-colors group-hover/i:bg-ink group-hover/i:text-white">
                                   <Icon name={it.icon as IconName} className="h-[18px] w-[18px]" strokeWidth={1.8} aria-hidden />
                                 </span>
                                 <span className="min-w-0">

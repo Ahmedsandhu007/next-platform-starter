@@ -10,10 +10,10 @@ export function Seal({ id = "seal", className = "" }: { id?: string; className?:
         <defs>
           <path id={pathId} d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" />
         </defs>
-        <circle cx="60" cy="60" r="58" fill="none" stroke="#8b6a3d" strokeWidth="1" />
-        <circle cx="60" cy="60" r="30" fill="none" stroke="#8b6a3d" strokeWidth="1" />
+        <circle cx="60" cy="60" r="58" fill="none" stroke="#ee5935" strokeWidth="1" />
+        <circle cx="60" cy="60" r="30" fill="none" stroke="#ee5935" strokeWidth="1" />
         <text
-          fill="#1a1a1a"
+          fill="#24282b"
           style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3.5px", textTransform: "uppercase" }}
         >
           <textPath href={`#${pathId}`} startOffset="0%">

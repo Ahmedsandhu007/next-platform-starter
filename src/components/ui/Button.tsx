@@ -12,12 +12,14 @@ const sizes = {
 };
 
 const variants: Record<Variant, string> = {
-  // Accent lives on the BORDER with a transparent fill; the fill appears on hover
-  // (reference-style outline buttons).
-  primary: "border border-bronze text-ink hover:bg-bronze hover:text-white",
-  bronze: "border border-bronze-400 text-white hover:border-bronze hover:bg-bronze hover:text-white",
-  ghost: "border border-ink/30 text-ink hover:bg-ink hover:text-white",
-  light: "border border-white/45 text-white hover:bg-white hover:text-navy",
+  // Profitwise rebrand: solid dark primary that fills orange on hover.
+  primary: "bg-ink text-white hover:bg-bronze",
+  // Solid orange — the prominent CTA (used on dark surfaces); darkens on hover.
+  bronze: "bg-bronze text-white hover:bg-bronze-600",
+  // Secondary: white/transparent with a dark border; fills orange on hover.
+  ghost: "border border-ink/25 text-ink hover:border-bronze hover:bg-bronze hover:text-white",
+  // On dark surfaces: white outline that fills white (dark text) on hover.
+  light: "border border-white/50 text-white hover:bg-white hover:text-navy",
 };
 
 type ButtonLinkProps = ComponentProps<"a"> & {

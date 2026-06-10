@@ -6,11 +6,11 @@ import { easeOut } from "@/lib/motion";
 import { useTapActivate } from "@/components/ui/useTapActivate";
 
 /* Resting + active visuals driven by Framer Motion (transform / shadow / border).
-   Hex values mirror the @theme tokens in globals.css. */
-const LINE = "#d8d0c0"; // --color-line
-const ACTIVE_BORDER = "rgba(139, 106, 61, 0.4)"; // bronze @ 40%
-const GLOW = "0 26px 60px -24px rgba(139, 106, 61, 0.38)";
-const NO_GLOW = "0 26px 60px -24px rgba(139, 106, 61, 0)";
+   Hex values mirror the @theme tokens in globals.css (Profitwise rebrand). */
+const LINE = "#e5e7eb"; // --color-line (border gray)
+const ACTIVE_BORDER = "rgba(238, 89, 53, 0.4)"; // accent orange @ 40%
+const GLOW = "0 24px 50px -26px rgba(238, 89, 53, 0.3)"; // soft orange lift
+const NO_GLOW = "0 24px 50px -26px rgba(238, 89, 53, 0)";
 
 type InteractiveCardProps = {
   /** Render-prop so children can mirror the hover/tap state with their own styles. */
