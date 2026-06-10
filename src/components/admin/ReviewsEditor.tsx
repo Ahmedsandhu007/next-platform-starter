@@ -14,7 +14,7 @@ function StarSelect({ value, onChange }: { value: number; onChange: (v: number) 
           type="button"
           onClick={() => onChange(n)}
           aria-label={`${n} star${n > 1 ? "s" : ""}`}
-          className={`text-2xl leading-none transition-colors hover:text-[#ee5935] ${n <= value ? "text-[#ee5935]" : "text-line"}`}
+          className={`text-2xl leading-none transition-colors hover:text-[#fbbc05] ${n <= value ? "text-[#fbbc05]" : "text-line"}`}
         >
           ★
         </button>

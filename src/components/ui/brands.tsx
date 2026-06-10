@@ -40,25 +40,15 @@ export function GoogleG(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-const googleLetters: [string, string][] = [
-  ["G", "#4285F4"],
-  ["o", "#EA4335"],
-  ["o", "#FBBC05"],
-  ["g", "#4285F4"],
-  ["l", "#34A853"],
-  ["e", "#EA4335"],
-];
-
-/** "Google" wordmark with per-letter brand colours. */
+/** "Google" wordmark — official four-colour artwork from public/brand/. */
 export function GoogleWordmark({ className = "" }: { className?: string }) {
+  // eslint-disable-next-line @next/next/no-img-element
   return (
-    <span className={`font-display font-bold tracking-[-0.02em] ${className}`} aria-label="Google">
-      {googleLetters.map(([c, color], i) => (
-        <span key={i} style={{ color }}>
-          {c}
-        </span>
-      ))}
-    </span>
+    <img
+      src="/brand/Google%201.png"
+      alt="Google"
+      className={`inline-block h-[18px] w-auto object-contain align-middle ${className}`}
+    />
   );
 }
 
