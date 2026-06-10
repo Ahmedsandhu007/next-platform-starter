@@ -20,12 +20,21 @@ const COLLECTIONS: { file: string; label: string; pages: ListItem[] }[] = [
 export default function AdminDashboard() {
   const canSave = githubConfigured();
 
+  // Object-mode collections grouped by their registry `group`, in first-seen order.
+  const objectGroups: { group: string; items: typeof objectCollections }[] = [];
+  for (const c of objectCollections) {
+    const existing = objectGroups.find((g) => g.group === c.group);
+    if (existing) existing.items.push(c);
+    else objectGroups.push({ group: c.group, items: [c] });
+  }
+
   return (
     <div>
       <h1 className="font-display text-3xl font-extrabold text-ink">Content</h1>
       <p className="mt-2 max-w-2xl text-muted">
-        Edit your service, industry and “how we help” pages. Saving commits to the site’s repository and
-        publishes automatically in about 1–2 minutes, once the site rebuilds.
+        Edit your site-wide details and text, the home-page reviews, and your service, industry and
+        “how we help” pages. Saving commits to the site’s repository and publishes automatically in
+        about 1–2 minutes, once the site rebuilds.
       </p>
 
       {!canSave && (
@@ -39,11 +48,11 @@ export default function AdminDashboard() {
       )}
 
       <div className="mt-8 space-y-8">
-        {objectCollections.length > 0 && (
-          <section>
-            <h2 className="font-display text-xs font-bold uppercase tracking-[0.16em] text-muted">Home page</h2>
+        {objectGroups.map((grp) => (
+          <section key={grp.group}>
+            <h2 className="font-display text-xs font-bold uppercase tracking-[0.16em] text-muted">{grp.group}</h2>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-              {objectCollections.map((c) => (
+              {grp.items.map((c) => (
                 <li key={c.id}>
                   <Link
                     href={c.editPath ?? "#"}
@@ -56,7 +65,7 @@ export default function AdminDashboard() {
               ))}
             </ul>
           </section>
-        )}
+        ))}
         {COLLECTIONS.map((collection) => (
           <section key={collection.file}>
             <h2 className="font-display text-xs font-bold uppercase tracking-[0.16em] text-muted">

@@ -1,6 +1,7 @@
 # MMR CMS — content editing guide
 
-A lightweight admin at **`/admin`** lets you edit the site's detail pages
+A lightweight admin at **`/admin`** lets you edit most of the site's content —
+your site-wide details and text, the home-page reviews, and the detail pages
 (Services, Industries and "How we help"). Saving commits the change to the
 GitHub repo, which triggers a Netlify rebuild — your edit is live in about
 **1–2 minutes**.
@@ -13,7 +14,29 @@ before.
 
 ## What you can edit
 
-For each of the 17 detail pages:
+The dashboard groups everything into **Site-wide**, **Home page** and **Detail pages**.
+
+**Site-wide → Site & contact details** (`settings.json`)
+
+- **Business identity** — name, short name, company number, website URL and the SEO description
+- **Hero image** — upload the home-page hero cut-out (leave empty to use the built-in default)
+- **Primary contact** — phone (call-link + display), email, address and opening hours
+- **Offices** — the address + phone for each office (add / remove / reorder)
+- **Social links** — LinkedIn, Twitter/X and Facebook
+
+**Site-wide → Section text & headings** (`copy.json`)
+
+- Every eyebrow, heading, subtitle, paragraph and button label across the site,
+  grouped by section (Hero, Services, Why MMR, Cloud accounting, FAQ, Footer, …)
+  with a jump-nav at the top. Includes the breadcrumb / banner title / SEO listing
+  for each sub-page.
+
+**Home page → Google reviews** (`reviews.json`)
+
+- Section heading + intro, the rating summary, and each review (text, star rating
+  and an optional uploaded photo).
+
+**Detail pages** — for each of the 17 Services / Industries / "How we help" pages:
 
 - **Basics** — page title, eyebrow, intro (the URL/slug is fixed and shown read-only)
 - **Search engine listing** — meta title & description (with length hints)
@@ -105,6 +128,11 @@ the real artwork, see **`public/brand/README.txt`**.
 
 ## Scope / future
 
-v1 edits the 17 detail-page JSON files in `src/content/`. Other content
-(`content.ts` — site config, section copy, menus, testimonials) is not yet
-editable here; it can be added as a follow-up using the same pattern.
+Editable today (all backed by JSON files in `src/content/`): the 17 detail pages,
+the Google reviews, the site-wide **settings** (`settings.json`) and the section
+**text** (`copy.json`).
+
+Not yet editable here (a follow-up, using the same registry + object-editor pattern):
+the section **item lists** that are still typed data in `content.ts` (the service /
+industry / why / process / FAQ cards), the **navigation / mega-menus**, and the
+**legal pages** (Privacy / Terms / Cookies).

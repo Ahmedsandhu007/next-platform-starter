@@ -1,5 +1,6 @@
 import { existsSync } from "fs";
 import path from "path";
+import { siteConfig } from "@/lib/content";
 import { HeroPremium } from "@/components/HeroPremium";
 import { TrustedBy } from "@/components/TrustedBy";
 import { Approach } from "@/components/Approach";
@@ -13,9 +14,17 @@ import { FAQ } from "@/components/FAQ";
 import { CtaBand } from "@/components/CtaBand";
 
 export default function Home() {
-  // If a transparent cut-out is provided at public/hero.png, the hero renders it
-  // frameless on the navy (like the reference); otherwise it frames the photo.
-  const cutoutSrc = existsSync(path.join(process.cwd(), "public", "hero.png")) ? "/hero.png" : null;
+  // Hero cut-out source, in priority order:
+  //   1. A CMS-set image (settings.json → heroImage), uploaded via /admin/settings.
+  //   2. The bundled transparent cut-out at public/hero.png, if present.
+  //   3. None → the hero frames the fallback /hero.jpg photo instead.
+  // A cut-out renders frameless on the navy (like the reference).
+  const cmsHero = siteConfig.heroImage?.trim();
+  const cutoutSrc = cmsHero
+    ? cmsHero
+    : existsSync(path.join(process.cwd(), "public", "hero.png"))
+      ? "/hero.png"
+      : null;
   return (
     <>
       <HeroPremium cutoutSrc={cutoutSrc} />
