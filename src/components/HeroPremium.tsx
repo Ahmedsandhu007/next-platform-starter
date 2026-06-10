@@ -25,13 +25,28 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
     >
       {/* Navy → blue gradient + soft glows + faint dot grid */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
+        {/* base blue gradient */}
         <div
           className="absolute inset-0"
           style={{ backgroundImage: "radial-gradient(85% 120% at 12% 0%, #2f86d8 0%, #1d66ba 46%, #134d92 100%)" }}
         />
-        <div className="absolute -right-32 -top-28 h-[34rem] w-[34rem] rounded-full bg-blue/25 blur-3xl motion-safe:animate-[floatY_15s_ease-in-out_infinite]" />
+        {/* subtle white dot-grid pattern, faded toward the edges */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1px)",
+            backgroundSize: "24px 24px",
+            WebkitMaskImage: "radial-gradient(ellipse 95% 85% at 50% 35%, #000 25%, transparent 100%)",
+            maskImage: "radial-gradient(ellipse 95% 85% at 50% 35%, #000 25%, transparent 100%)",
+          }}
+        />
+        {/* abstract concentric rings (decorative geometry, behind the content) */}
+        <div className="absolute -right-28 -top-24 h-[30rem] w-[30rem] rounded-full border border-white/10" />
+        <div className="absolute -right-10 top-16 h-72 w-72 rounded-full border border-white/[0.08]" />
+        <div className="absolute -left-20 bottom-4 h-64 w-64 rounded-full border border-white/[0.07]" />
+        {/* soft glows */}
+        <div className="absolute -right-32 -top-28 h-[34rem] w-[34rem] rounded-full bg-white/10 blur-3xl motion-safe:animate-[floatY_15s_ease-in-out_infinite]" />
         <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-bronze/15 blur-3xl" />
-        <div className="absolute inset-0 bg-dots opacity-[0.06]" />
       </div>
 
       <Container className="relative">

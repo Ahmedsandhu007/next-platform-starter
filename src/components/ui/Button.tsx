@@ -17,9 +17,9 @@ const variants: Record<Variant, string> = {
   // Solid orange fill — the prominent CTA.
   bronze: "bg-bronze text-white hover:bg-bronze-600",
   // Orange border + white fill + orange text; fills orange on hover — secondary.
-  ghost: "border border-bronze bg-white text-bronze hover:bg-bronze hover:text-white",
+  ghost: "border border-bronze bg-white text-ink hover:bg-bronze hover:text-white",
   // Secondary on the hero / dark surfaces: same white-fill + orange-border treatment.
-  light: "border border-bronze bg-white text-bronze hover:bg-bronze hover:text-white",
+  light: "border border-bronze bg-white text-ink hover:bg-bronze hover:text-white",
 };
 
 type ButtonLinkProps = ComponentProps<"a"> & {
