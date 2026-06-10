@@ -157,7 +157,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="group mt-7 inline-flex w-full items-center justify-center gap-2.5 bg-ink px-7 py-4 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-bronze disabled:cursor-not-allowed disabled:opacity-70"
+        className="group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-md bg-bronze px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.13em] text-white transition-colors duration-300 hover:bg-bronze-600 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {status === "submitting" ? (
           <>

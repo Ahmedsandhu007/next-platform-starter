@@ -4,11 +4,11 @@ import { type ComponentProps, type ReactNode } from "react";
 type Variant = "primary" | "bronze" | "ghost" | "light";
 
 const base =
-  "group inline-flex items-center justify-center gap-2.5 rounded-md font-sans text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60";
+  "group inline-flex items-center justify-center gap-2 rounded-md font-sans text-[0.7rem] font-semibold uppercase tracking-[0.13em] transition-colors duration-300 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60";
 
 const sizes = {
-  md: "px-7 py-3.5",
-  lg: "px-9 py-4 text-[0.74rem]",
+  md: "px-5 py-2.5",
+  lg: "px-6 py-3",
 };
 
 const variants: Record<Variant, string> = {
