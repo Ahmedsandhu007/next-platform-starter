@@ -9,6 +9,22 @@ import { useEffect, useState, type ReactNode } from "react";
  * Used by the Settings, Section-text and Reviews editors.
  */
 
+export type Path = (string | number)[];
+
+/** Immutable deep-set: returns a copy of `obj` with `path` set to `value`.
+ *  Walks plain objects and arrays; used by the field-binding editors. */
+export function setIn<T>(obj: T, path: Path, value: unknown): T {
+  if (path.length === 0) return value as T;
+  const [head, ...rest] = path;
+  if (Array.isArray(obj)) {
+    const copy = obj.slice() as unknown[];
+    copy[head as number] = setIn(copy[head as number], rest, value);
+    return copy as T;
+  }
+  const o = obj as Record<string, unknown>;
+  return { ...o, [head]: setIn(o[head as string], rest, value) } as T;
+}
+
 export type LoadState = "loading" | "ready" | "error";
 
 export function useObjectEditor<T>(id: string) {

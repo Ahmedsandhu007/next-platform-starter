@@ -69,8 +69,9 @@ export function RowControls({
   index: number;
   count: number;
   onMove: (to: number) => void;
-  onRemove: () => void;
-  removeTitle: string;
+  /** Omit to make the row reorder-only (no remove button) — e.g. slug-locked lists. */
+  onRemove?: () => void;
+  removeTitle?: string;
 }) {
   return (
     <div className="flex shrink-0 gap-1">
@@ -80,9 +81,11 @@ export function RowControls({
       <MiniBtn title="Move down" onClick={() => onMove(index + 1)} disabled={index === count - 1}>
         ↓
       </MiniBtn>
-      <MiniBtn title={removeTitle} onClick={onRemove} danger>
-        ✕
-      </MiniBtn>
+      {onRemove && (
+        <MiniBtn title={removeTitle ?? "Remove"} onClick={onRemove} danger>
+          ✕
+        </MiniBtn>
+      )}
     </div>
   );
 }

@@ -62,6 +62,14 @@ const map = {
 
 export type IconName = keyof typeof map;
 
+/** Runtime list of allowed icon names — for CMS pickers and validation. */
+export const iconNames = Object.keys(map) as IconName[];
+
+/** Whether a string is a known (renderable) icon name. */
+export function isIconName(value: unknown): value is IconName {
+  return typeof value === "string" && value in map;
+}
+
 export function Icon({ name, ...props }: { name: IconName } & LucideProps) {
   const Cmp = map[name];
   return <Cmp {...props} />;

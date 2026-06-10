@@ -3,22 +3,7 @@
 import type { ReactNode } from "react";
 import type { SiteCopy } from "@/lib/cms/siteSchema";
 import { AddButton, fieldClass, Labeled, moveItem, RowControls, StringList } from "@/components/admin/fields";
-import { Card, EditorHeader, LoadGate, SaveBtn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
-
-type Path = (string | number)[];
-
-/** Immutable deep-set: returns a copy of `obj` with `path` set to `value`. */
-function setIn<T>(obj: T, path: Path, value: unknown): T {
-  if (path.length === 0) return value as T;
-  const [head, ...rest] = path;
-  if (Array.isArray(obj)) {
-    const copy = obj.slice() as unknown[];
-    copy[head as number] = setIn(copy[head as number], rest, value);
-    return copy as T;
-  }
-  const o = obj as Record<string, unknown>;
-  return { ...o, [head]: setIn(o[head as string], rest, value) } as T;
-}
+import { Card, EditorHeader, LoadGate, type Path, SaveBtn, setIn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
 
 /** Sections, in page order — drives both the jump-nav and the card anchors. */
 const SECTIONS = [

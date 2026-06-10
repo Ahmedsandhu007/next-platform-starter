@@ -31,6 +31,17 @@ The dashboard groups everything into **Site-wide**, **Home page** and **Detail p
   with a jump-nav at the top. Includes the breadcrumb / banner title / SEO listing
   for each sub-page.
 
+**Site-wide → Section items** (`sections.json`)
+
+- The card / list content for the main sections: **Services**, **Industries**,
+  **Why MMR** reasons, **Approach** value props, **How we work** steps, **FAQs**,
+  the **trust badges** strip and the contact-form **business types**.
+- Each card picks its icon (and, where used, its illustration) from a dropdown of
+  the available options, so you can't choose one the site can't draw.
+- Services, Industries and Approach cards are tied to their detail pages, so their
+  web addresses (slugs) and the number of cards are locked — you edit the content
+  and reorder them. The other lists can be added to, removed from and reordered.
+
 **Home page → Google reviews** (`reviews.json`)
 
 - Section heading + intro, the rating summary, and each review (text, star rating
@@ -129,10 +140,9 @@ the real artwork, see **`public/brand/README.txt`**.
 ## Scope / future
 
 Editable today (all backed by JSON files in `src/content/`): the 17 detail pages,
-the Google reviews, the site-wide **settings** (`settings.json`) and the section
-**text** (`copy.json`).
+the Google reviews, the site-wide **settings** (`settings.json`), the section
+**text** (`copy.json`) and the section **item lists** (`sections.json` — services,
+industries, why, approach, process, FAQs, trust badges, business types).
 
 Not yet editable here (a follow-up, using the same registry + object-editor pattern):
-the section **item lists** that are still typed data in `content.ts` (the service /
-industry / why / process / FAQ cards), the **navigation / mega-menus**, and the
-**legal pages** (Privacy / Terms / Cookies).
+the **navigation / mega-menus** and the **legal pages** (Privacy / Terms / Cookies).

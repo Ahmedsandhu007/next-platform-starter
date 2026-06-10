@@ -2,7 +2,14 @@
  * Custom flat "spot" illustrations — consistent charcoal/bronze/cream style,
  * no stock imagery. Used to give sections a bespoke, hand-made feel.
  */
-type Name = "tax" | "cloud" | "advisory" | "bookkeeping" | "vat" | "payroll" | "formation";
+/** Runtime list of available illustration keys — for CMS pickers and validation. */
+export const artNames = ["tax", "cloud", "advisory", "bookkeeping", "vat", "payroll", "formation"] as const;
+export type Name = (typeof artNames)[number];
+
+/** Whether a string is a known illustration key. */
+export function isArtName(value: unknown): value is Name {
+  return typeof value === "string" && (artNames as readonly string[]).includes(value);
+}
 
 export function SpotArt({ name, className = "" }: { name: Name; className?: string }) {
   const common = { className: `h-auto w-full ${className}`, fill: "none", role: "img" as const };
