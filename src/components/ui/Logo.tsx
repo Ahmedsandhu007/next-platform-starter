@@ -23,6 +23,14 @@ export function Logo({
   size?: Size;
   className?: string;
 }) {
+  // Use the uploaded linear brand logo on light surfaces. It's a blue mark, so the
+  // typographic white lockup is kept for dark surfaces (e.g. the footer falls back).
+  if (siteConfig.logoLinear && tone !== "light") {
+    const h = size === "lg" ? "h-12" : size === "sm" ? "h-7" : "h-9";
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={siteConfig.logoLinear} alt={siteConfig.name} className={`${h} w-auto object-contain ${className}`} />;
+  }
+
   const s = sizes[size];
   const main = tone === "light" ? "text-white" : "text-ink";
   const sub = tone === "light" ? "text-white/85" : "text-ink";

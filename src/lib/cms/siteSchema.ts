@@ -27,6 +27,9 @@ export type SiteSettings = {
   description: string;
   /** "" = use the bundled default hero (public/hero.png); otherwise an uploaded path. */
   heroImage: string;
+  /** Brand logos ("" = fall back to the typographic lockup). linear = header, circular = footer badge. */
+  logoLinear: string;
+  logoCircular: string;
   contact: {
     phone: string;
     phoneDisplay: string;
@@ -149,8 +152,10 @@ export function validateSettings(value: unknown): ValidationResult {
   for (const p of ["name", "shortName", "companyNumber", "url", "description"]) {
     reqStr(value, p, errors);
   }
-  // heroImage may be "" (use default) — must still be a string.
+  // heroImage / logos may be "" (use default) — must still be strings.
   if (!isStr(value.heroImage)) errors.push("heroImage: must be a string (use \"\" for the default hero)");
+  if (!isStr(value.logoLinear)) errors.push("logoLinear: must be a string (use \"\" for the typographic logo)");
+  if (!isStr(value.logoCircular)) errors.push("logoCircular: must be a string (use \"\" for the typographic logo)");
 
   reqStrArray(value, "pillars", errors);
 

@@ -81,6 +81,25 @@ export function SettingsEditor() {
             </Card>
 
             <Card
+              title="Brand logos"
+              description="The linear logo shown in the header and the circular logo badge in the footer. Leave empty to use the built-in typographic lockup. A transparent PNG/SVG works best."
+            >
+              <ImageField
+                label="Linear logo (header)"
+                dir="brand"
+                value={data.logoLinear}
+                onChange={(path) => mutate((d) => ({ ...d, logoLinear: path }))}
+              />
+              <ImageField
+                label="Circular logo (footer)"
+                dir="brand"
+                round
+                value={data.logoCircular}
+                onChange={(path) => mutate((d) => ({ ...d, logoCircular: path }))}
+              />
+            </Card>
+
+            <Card
               title="Primary contact"
               description="Used in the header, the call buttons and search-engine data. This is your main (Manchester) office."
             >

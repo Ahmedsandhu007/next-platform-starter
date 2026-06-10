@@ -16,7 +16,16 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.7fr_1fr_1fr_1.3fr]">
           {/* Brand */}
           <div>
-            <Logo tone="light" size="md" />
+            {siteConfig.logoCircular ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={siteConfig.logoCircular}
+                alt={siteConfig.name}
+                className="h-16 w-16 rounded-full bg-white object-contain p-2"
+              />
+            ) : (
+              <Logo tone="light" size="md" />
+            )}
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/55">{copy.footer.blurb}</p>
             <div className="mt-7">
               <ButtonLink href="/contact" variant="bronze" withArrow>
