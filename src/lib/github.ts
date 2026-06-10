@@ -83,23 +83,57 @@ export async function getJsonFile<T = unknown>(filePath: string): Promise<{ data
 export async function putJsonFile(
   filePath: string,
   data: unknown,
-  sha: string,
+  sha: string | null | undefined,
   message: string,
 ): Promise<{ blobSha: string | undefined; commitSha: string | undefined }> {
   const config = getConfig();
   if (!config) throw new Error("GitHub is not configured.");
+  const body: Record<string, unknown> = {
+    message,
+    content: encodeBase64(JSON.stringify(data, null, 2) + "\n"),
+    branch: config.branch,
+  };
+  if (sha) body.sha = sha; // omit on create
   const res = await request(`/repos/${config.repo}/contents/${encodePath(filePath)}`, {
     method: "PUT",
-    body: JSON.stringify({
-      message,
-      content: encodeBase64(JSON.stringify(data, null, 2) + "\n"),
-      sha,
-      branch: config.branch,
-    }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) {
     throw new Error(`GitHub PUT ${filePath} failed (${res.status}): ${await res.text()}`);
   }
   const json = (await res.json()) as { content?: { sha?: string }; commit?: { sha?: string } };
   return { blobSha: json.content?.sha, commitSha: json.commit?.sha };
+}
+
+/** Current blob sha for a path, or null if the file doesn't exist yet. */
+export async function getFileSha(filePath: string): Promise<string | null> {
+  const config = getConfig();
+  if (!config) throw new Error("GitHub is not configured.");
+  const res = await request(
+    `/repos/${config.repo}/contents/${encodePath(filePath)}?ref=${encodeURIComponent(config.branch)}`,
+  );
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`GitHub GET sha ${filePath} failed (${res.status}): ${await res.text()}`);
+  const json = (await res.json()) as { sha?: string };
+  return typeof json.sha === "string" ? json.sha : null;
+}
+
+/** Commit a file from already-base64-encoded content (text or binary, e.g. an upload). */
+export async function putRawFile(
+  filePath: string,
+  base64Content: string,
+  message: string,
+  sha?: string | null,
+): Promise<{ commitSha: string | undefined; path: string }> {
+  const config = getConfig();
+  if (!config) throw new Error("GitHub is not configured.");
+  const body: Record<string, unknown> = { message, content: base64Content, branch: config.branch };
+  if (sha) body.sha = sha;
+  const res = await request(`/repos/${config.repo}/contents/${encodePath(filePath)}`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`GitHub PUT ${filePath} failed (${res.status}): ${await res.text()}`);
+  const json = (await res.json()) as { commit?: { sha?: string } };
+  return { commitSha: json.commit?.sha, path: filePath };
 }

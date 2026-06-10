@@ -4,6 +4,7 @@ import servicesRaw from "@/content/services.json";
 import industries1Raw from "@/content/industries-1.json";
 import industries2Raw from "@/content/industries-2.json";
 import approachRaw from "@/content/approach.json";
+import { objectCollections } from "@/lib/cms/registry";
 
 export const dynamic = "force-dynamic";
 
@@ -38,6 +39,24 @@ export default function AdminDashboard() {
       )}
 
       <div className="mt-8 space-y-8">
+        {objectCollections.length > 0 && (
+          <section>
+            <h2 className="font-display text-xs font-bold uppercase tracking-[0.16em] text-muted">Home page</h2>
+            <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+              {objectCollections.map((c) => (
+                <li key={c.id}>
+                  <Link
+                    href={c.editPath ?? "#"}
+                    className="flex items-center justify-between gap-3 border border-line bg-white px-4 py-3 text-sm transition-colors hover:border-bronze"
+                  >
+                    <span className="font-semibold text-ink">{c.label}</span>
+                    <span className="shrink-0 font-mono text-xs text-muted">edit →</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         {COLLECTIONS.map((collection) => (
           <section key={collection.file}>
             <h2 className="font-display text-xs font-bold uppercase tracking-[0.16em] text-muted">

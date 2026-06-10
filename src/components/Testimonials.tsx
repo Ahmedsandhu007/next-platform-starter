@@ -10,7 +10,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { GoogleG, GoogleWordmark, IcaewLogo, AccaLogo, AatLogo } from "@/components/ui/brands";
-import { copy, testimonials } from "@/lib/content";
+import { reviews, reviewsMeta } from "@/lib/content";
 
 const avatarTones = [
   "from-[#8b6a3d] to-[#5f472a]",
@@ -21,11 +21,12 @@ const avatarTones = [
   "from-[#6b5a7d] to-[#4a3f5a]",
 ];
 
-function GoldStars({ className = "h-4 w-4" }: { className?: string }) {
+function GoldStars({ value = 5, className = "h-4 w-4" }: { value?: number; className?: string }) {
+  const filled = Math.max(0, Math.min(5, Math.round(value)));
   return (
-    <div className="flex items-center gap-0.5 text-[#fbbc05]" aria-label="Rated 5 out of 5">
+    <div className="flex items-center gap-0.5" aria-label={`Rated ${filled} out of 5`}>
       {Array.from({ length: 5 }).map((_, s) => (
-        <svg key={s} viewBox="0 0 24 24" className={`${className} fill-current`} aria-hidden>
+        <svg key={s} viewBox="0 0 24 24" className={`${className} ${s < filled ? "fill-[#fbbc05]" : "fill-line"}`} aria-hidden>
           <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 7.1-1.01L12 2z" />
         </svg>
       ))}
@@ -34,7 +35,7 @@ function GoldStars({ className = "h-4 w-4" }: { className?: string }) {
 }
 
 export function Testimonials() {
-  const t = copy.testimonials;
+  const t = reviewsMeta;
   const swiperRef = useRef<SwiperClass | null>(null);
 
   return (
@@ -47,8 +48,8 @@ export function Testimonials() {
         {/* Accreditations */}
         <Reveal className="mx-auto max-w-3xl text-center">
           <span className="eyebrow text-bronze">{t.eyebrow}</span>
-          <h2 className="mt-4 text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">{t.regulatedTitle}</h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted">{t.regulatedText}</p>
+          <h2 className="mt-4 text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">{t.title}</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted">{t.intro}</p>
         </Reveal>
 
         {/* Accreditation logos (official colours) */}
@@ -64,15 +65,15 @@ export function Testimonials() {
         <Reveal delay={0.05} className="mt-14 flex justify-center">
           <div className="flex flex-col items-center gap-4 rounded-2xl border border-line bg-cream/50 px-8 py-5 text-center sm:flex-row sm:gap-7 sm:text-left">
             <div className="flex items-center gap-3">
-              <span className="font-display text-[2.6rem] font-extrabold leading-none text-ink">{t.ratingScore}</span>
+              <span className="font-display text-[2.6rem] font-extrabold leading-none text-ink">{t.rating.score}</span>
               <div>
                 <GoldStars className="h-[18px] w-[18px]" />
-                <p className="mt-1 text-xs text-muted">out of {t.ratingOutOf}</p>
+                <p className="mt-1 text-xs text-muted">out of {t.rating.outOf}</p>
               </div>
             </div>
             <span className="hidden h-12 w-px bg-line sm:block" aria-hidden />
             <p className="text-sm leading-relaxed text-muted">
-              from <span className="font-bold text-ink">{t.reviewsCount}+</span> verified reviews on{" "}
+              from <span className="font-bold text-ink">{t.rating.count}+</span> verified reviews on{" "}
               <GoogleWordmark className="align-middle text-base" />
             </p>
           </div>
@@ -101,19 +102,28 @@ export function Testimonials() {
             }
             className="!pb-14 [&_.swiper-slide]:h-auto"
           >
-            {testimonials.map((rev, i) => (
-              <SwiperSlide key={rev.name} className="h-auto">
+            {reviews.map((rev, i) => (
+              <SwiperSlide key={`${rev.name}-${i}`} className="h-auto">
                 <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-ink/5">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <span
-                        className={`grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br ${
-                          avatarTones[i % avatarTones.length]
-                        } font-display text-sm font-extrabold text-white`}
-                        aria-hidden
-                      >
-                        {rev.initials}
-                      </span>
+                      {rev.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={rev.image}
+                          alt={rev.name}
+                          className="h-11 w-11 shrink-0 rounded-full border border-line object-cover"
+                        />
+                      ) : (
+                        <span
+                          className={`grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br ${
+                            avatarTones[i % avatarTones.length]
+                          } font-display text-sm font-extrabold text-white`}
+                          aria-hidden
+                        >
+                          {rev.initials}
+                        </span>
+                      )}
                       <div className="min-w-0">
                         <p className="truncate font-display text-sm font-bold text-ink">{rev.name}</p>
                         <p className="text-xs text-muted">{rev.date}</p>
@@ -122,7 +132,7 @@ export function Testimonials() {
                     <GoogleG className="h-5 w-5 shrink-0" />
                   </div>
                   <div className="mt-3.5">
-                    <GoldStars className="h-[18px] w-[18px]" />
+                    <GoldStars value={rev.rating} className="h-[18px] w-[18px]" />
                   </div>
                   <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-ink/80">{rev.quote}</blockquote>
                 </article>

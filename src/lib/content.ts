@@ -3,6 +3,8 @@
  * Keeping copy here keeps components clean and lets JSON-LD / nav reuse the same source.
  * All copy below is original.
  */
+import reviewsData from "@/content/reviews.json";
+import type { Review } from "@/lib/cms/schemas";
 
 export const siteConfig = {
   name: "MMR Accountants",
@@ -247,64 +249,15 @@ export const processSteps: ProcessStep[] = [
   },
 ];
 
-export type Testimonial = {
-  quote: string;
-  name: string;
-  role: string;
-  initials: string;
-  date: string;
+/** Google reviews + rating summary — CMS-editable in src/content/reviews.json */
+export type { Review } from "@/lib/cms/schemas";
+export const reviews: Review[] = reviewsData.reviews as Review[];
+export const reviewsMeta = {
+  eyebrow: reviewsData.eyebrow,
+  title: reviewsData.title,
+  intro: reviewsData.intro,
+  rating: reviewsData.rating,
 };
-
-export const testimonials: Testimonial[] = [
-  {
-    quote:
-      "Switching to MMR was the easiest business decision we made. Our books are finally clear, and they spotted reliefs our old accountant never mentioned.",
-    name: "Sarah Whitfield",
-    role: "Director, Northgate Interiors Ltd",
-    initials: "SW",
-    date: "14 May 2026",
-  },
-  {
-    quote:
-      "As a contractor I just want to be paid correctly and pay the right tax. MMR handle all of it and reply within the hour — I genuinely never worry about it.",
-    name: "Daniel Osei",
-    role: "IT Consultant",
-    initials: "DO",
-    date: "2 May 2026",
-  },
-  {
-    quote:
-      "Their cash-flow forecasts helped us raise our first round with confidence. It feels like having a finance director without the full-time cost.",
-    name: "Priya Nair",
-    role: "Co-founder, Loophapp",
-    initials: "PN",
-    date: "28 April 2026",
-  },
-  {
-    quote:
-      "Fixed fees mean no nasty surprises, and the year-end was done weeks early for the first time ever. Highly recommended for any small limited company.",
-    name: "Mark Ellison",
-    role: "Owner, Ellison Plumbing & Heating",
-    initials: "ME",
-    date: "19 April 2026",
-  },
-  {
-    quote:
-      "MMR restructured how we pay ourselves and saved us more in the first year than two years of their fees combined. Genuinely proactive advisers.",
-    name: "James Carter",
-    role: "Founder, Carter & Reeve Architects",
-    initials: "JC",
-    date: "8 April 2026",
-  },
-  {
-    quote:
-      "Moving our payroll and VAT to MMR took the stress out of month-end completely. Everything is in the cloud and I can see exactly where we stand.",
-    name: "Aisha Khan",
-    role: "Director, Brightway Recruitment",
-    initials: "AK",
-    date: "30 March 2026",
-  },
-];
 
 export type Faq = {
   question: string;
@@ -576,22 +529,6 @@ export const copy = {
       subtitle:
         "Four straightforward steps take you from first hello to a finance function that just runs — with no admin headache and no downtime.",
     },
-  },
-  testimonials: {
-    heading: {
-      eyebrow: "Client stories",
-      title: "Trusted by business owners across the UK",
-      subtitle:
-        "We measure our success by yours. Here is what a few of the businesses we look after have to say about working with MMR.",
-    },
-    eyebrow: "Accredited & reviewed",
-    regulatedTitle: "Qualified, regulated and trusted",
-    regulatedText:
-      "Every client is looked after by qualified accountants who belong to the UK's leading professional bodies — the ICAEW, ACCA and AAT. That means chartered-standard expertise, strict ethical oversight and fully insured advice you can count on.",
-    ratingScore: "4.9",
-    ratingOutOf: "5",
-    reviewsCount: 240,
-    reviewsPlatform: "Google",
   },
   faq: {
     heading: {

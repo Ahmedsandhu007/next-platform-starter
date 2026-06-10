@@ -1,0 +1,62 @@
+{
+  "eyebrow": "Accredited & reviewed",
+  "title": "Qualified, regulated and trusted",
+  "intro": "Every client is looked after by qualified accountants who belong to the UK's leading professional bodies — the ICAEW, ACCA and AAT. That means chartered-standard expertise, strict ethical oversight and fully insured advice you can count on.",
+  "rating": { "score": "4.9", "outOf": "5", "count": 240, "platform": "Google" },
+  "reviews": [
+    {
+      "name": "Sarah Whitfield",
+      "role": "Director, Northgate Interiors Ltd",
+      "date": "14 May 2026",
+      "rating": 5,
+      "image": "",
+      "initials": "SW",
+      "quote": "Switching to MMR was the easiest business decision we made. Our books are finally clear, and they spotted reliefs our old accountant never mentioned."
+    },
+    {
+      "name": "Daniel Osei",
+      "role": "IT Consultant",
+      "date": "2 May 2026",
+      "rating": 5,
+      "image": "",
+      "initials": "DO",
+      "quote": "As a contractor I just want to be paid correctly and pay the right tax. MMR handle all of it and reply within the hour — I genuinely never worry about it."
+    },
+    {
+      "name": "Priya Nair",
+      "role": "Co-founder, Loophapp",
+      "date": "28 April 2026",
+      "rating": 5,
+      "image": "",
+      "initials": "PN",
+      "quote": "Their cash-flow forecasts helped us raise our first round with confidence. It feels like having a finance director without the full-time cost."
+    },
+    {
+      "name": "Mark Ellison",
+      "role": "Owner, Ellison Plumbing & Heating",
+      "date": "19 April 2026",
+      "rating": 5,
+      "image": "",
+      "initials": "ME",
+      "quote": "Fixed fees mean no nasty surprises, and the year-end was done weeks early for the first time ever. Highly recommended for any small limited company."
+    },
+    {
+      "name": "James Carter",
+      "role": "Founder, Carter & Reeve Architects",
+      "date": "8 April 2026",
+      "rating": 5,
+      "image": "",
+      "initials": "JC",
+      "quote": "MMR restructured how we pay ourselves and saved us more in the first year than two years of their fees combined. Genuinely proactive advisers."
+    },
+    {
+      "name": "Aisha Khan",
+      "role": "Director, Brightway Recruitment",
+      "date": "30 March 2026",
+      "rating": 5,
+      "image": "",
+      "initials": "AK",
+      "quote": "Moving our payroll and VAT to MMR took the stress out of month-end completely. Everything is in the cloud and I can see exactly where we stand."
+    }
+  ]
+}

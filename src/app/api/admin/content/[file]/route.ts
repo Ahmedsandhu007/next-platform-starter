@@ -1,32 +1,26 @@
 import { NextResponse } from "next/server";
-import { getJsonFile, githubConfigured, putJsonFile } from "@/lib/github";
-import { type RawDetail, validateFile } from "@/lib/detailSchema";
+import { getCollection } from "@/lib/cms/registry";
+import { getFileSha, getJsonFile, githubConfigured, putJsonFile } from "@/lib/github";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/** Editable content files (allowlist — also guards against path traversal). */
-const FILES = ["services", "industries-1", "industries-2", "approach"] as const;
-type ContentFile = (typeof FILES)[number];
+const fileName = (path: string) => path.split("/").pop() ?? path;
 
-const isContentFile = (value: string): value is ContentFile => (FILES as readonly string[]).includes(value);
-const pathFor = (file: ContentFile) => `src/content/${file}.json`;
-
-/** GET — return the current pages array (read fresh from GitHub) for editing. */
+/** GET — load a collection's JSON (fresh from GitHub) for editing. */
 export async function GET(_request: Request, { params }: { params: Promise<{ file: string }> }) {
   const { file } = await params;
-  if (!isContentFile(file)) {
-    return NextResponse.json({ error: "unknown_file" }, { status: 404 });
-  }
+  const col = getCollection(file);
+  if (!col) return NextResponse.json({ error: "unknown_collection" }, { status: 404 });
   if (!githubConfigured()) {
     return NextResponse.json(
-      { error: "not_configured", message: "Saving/loading needs GITHUB_TOKEN and GITHUB_REPO." },
+      { error: "not_configured", message: "Loading/saving needs GITHUB_TOKEN and GITHUB_REPO." },
       { status: 503 },
     );
   }
   try {
-    const { data, sha } = await getJsonFile<RawDetail[]>(pathFor(file));
-    return NextResponse.json({ file, pages: data, sha });
+    const { data, sha } = await getJsonFile(col.file);
+    return NextResponse.json({ id: col.id, mode: col.mode, data, sha });
   } catch (error) {
     return NextResponse.json(
       { error: "github_error", message: error instanceof Error ? error.message : String(error) },
@@ -35,57 +29,50 @@ export async function GET(_request: Request, { params }: { params: Promise<{ fil
   }
 }
 
-/** PUT — replace ONE page (matched by slug) in the file, validate the whole
- *  file, then commit. Slugs cannot be created or changed here. */
+/** PUT — object mode: replace the whole file; list mode: replace one entry by slug. Validated, then committed. */
 export async function PUT(request: Request, { params }: { params: Promise<{ file: string }> }) {
   const { file } = await params;
-  if (!isContentFile(file)) {
-    return NextResponse.json({ error: "unknown_file" }, { status: 404 });
-  }
+  const col = getCollection(file);
+  if (!col) return NextResponse.json({ error: "unknown_collection" }, { status: 404 });
   if (!githubConfigured()) {
-    return NextResponse.json(
-      { error: "not_configured", message: "Saving needs GITHUB_TOKEN and GITHUB_REPO." },
-      { status: 503 },
-    );
+    return NextResponse.json({ error: "not_configured", message: "Saving needs GITHUB_TOKEN and GITHUB_REPO." }, { status: 503 });
   }
 
-  let page: RawDetail;
+  let body: { data?: unknown; page?: ({ slug?: unknown; title?: unknown } & Record<string, unknown>) | null };
   try {
-    const body = (await request.json()) as { page?: RawDetail };
-    if (!body.page || typeof body.page !== "object") throw new Error("missing page");
-    page = body.page;
+    body = (await request.json()) as typeof body;
   } catch {
-    return NextResponse.json({ error: "bad_request", message: "Expected a { page } body." }, { status: 400 });
-  }
-
-  if (typeof page.slug !== "string" || page.slug.trim() === "") {
-    return NextResponse.json({ error: "bad_request", message: "Page is missing a slug." }, { status: 400 });
+    return NextResponse.json({ error: "bad_request" }, { status: 400 });
   }
 
   try {
-    const { data: pages, sha } = await getJsonFile<RawDetail[]>(pathFor(file));
-    const index = pages.findIndex((p) => p.slug === page.slug);
+    if (col.mode === "object") {
+      const result = col.validate(body.data);
+      if (!result.ok) return NextResponse.json({ error: "invalid", errors: result.errors }, { status: 422 });
+      const sha = await getFileSha(col.file);
+      const commit = await putJsonFile(col.file, body.data, sha, `CMS: update ${fileName(col.file)}`);
+      return NextResponse.json({ ok: true, commitSha: commit.commitSha });
+    }
+
+    // list mode — replace the one entry matched by slug
+    const page = body.page;
+    if (!page || typeof page !== "object" || typeof page.slug !== "string" || page.slug.trim() === "") {
+      return NextResponse.json({ error: "bad_request", message: "Expected a { page } with a slug." }, { status: 400 });
+    }
+    const { data, sha } = await getJsonFile<Array<{ slug: string }>>(col.file);
+    if (!Array.isArray(data)) {
+      return NextResponse.json({ error: "github_error", message: "Collection file is not a list." }, { status: 502 });
+    }
+    const index = data.findIndex((p) => p.slug === page.slug);
     if (index === -1) {
-      return NextResponse.json(
-        { error: "not_found", message: `No page with slug "${page.slug}" in ${file}.json.` },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: "not_found", message: `No entry with slug "${String(page.slug)}".` }, { status: 404 });
     }
-
-    const next = pages.slice();
-    next[index] = page;
-
-    const result = validateFile(next);
-    if (!result.ok) {
-      return NextResponse.json({ error: "invalid", errors: result.errors }, { status: 422 });
-    }
-
-    const commit = await putJsonFile(
-      pathFor(file),
-      next,
-      sha,
-      `CMS: update ${file}.json (${page.title})`,
-    );
+    const next = data.slice();
+    next[index] = page as (typeof next)[number];
+    const result = col.validate(next);
+    if (!result.ok) return NextResponse.json({ error: "invalid", errors: result.errors }, { status: 422 });
+    const title = typeof page.title === "string" ? page.title : page.slug;
+    const commit = await putJsonFile(col.file, next, sha, `CMS: update ${fileName(col.file)} (${title})`);
     return NextResponse.json({ ok: true, commitSha: commit.commitSha });
   } catch (error) {
     return NextResponse.json(

@@ -38,8 +38,8 @@ export function PageEditor({ file, slug }: { file: string; slug: string }) {
           }
           return;
         }
-        const data = (await res.json()) as { pages: RawDetail[] };
-        const found = data.pages.find((p) => p.slug === slug);
+        const body = (await res.json()) as { data: RawDetail[] };
+        const found = body.data.find((p) => p.slug === slug);
         if (!found) {
           if (active) {
             setLoad("error");
