@@ -10,7 +10,7 @@ import { copy, industries } from "@/lib/content";
 
 export function Industries() {
   return (
-    <section id="industries" className="relative scroll-mt-24 border-b border-line bg-cream/40 py-20 sm:py-28">
+    <section id="industries" className="relative scroll-mt-24 border-b border-line bg-blue py-20 sm:py-28">
       <Container>
         <SectionHeading {...copy.industries.heading} />
 

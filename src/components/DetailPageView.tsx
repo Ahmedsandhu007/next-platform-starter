@@ -145,7 +145,7 @@ export function DetailPageView({ page }: { page: DetailPage }) {
       </section>
 
       {page.faqs.length ? (
-        <section className="border-y border-line bg-cream/40 py-16 sm:py-20">
+        <section className="border-y border-line bg-blue py-16 sm:py-20">
           <Container>
             <div className="mx-auto max-w-3xl">
               <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-bronze">FAQ</p>

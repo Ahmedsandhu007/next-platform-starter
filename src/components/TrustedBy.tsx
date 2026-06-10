@@ -33,7 +33,7 @@ export function TrustedBy() {
   return (
     <section
       id="trusted"
-      className="relative scroll-mt-24 border-y border-line bg-cream/50 py-14 sm:py-16"
+      className="relative scroll-mt-24 border-y border-line bg-blue py-14 sm:py-16"
       aria-label="Accreditations and integrations"
     >
       <Container>

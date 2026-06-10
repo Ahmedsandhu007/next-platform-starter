@@ -11,7 +11,7 @@ import { copy, services } from "@/lib/content";
 
 export function Services() {
   return (
-    <section id="services" className="relative scroll-mt-24 border-b border-line bg-cream/40 py-20 sm:py-28">
+    <section id="services" className="relative scroll-mt-24 border-b border-line bg-blue py-20 sm:py-28">
       <Container>
         <SectionHeading {...copy.services.heading} />
 

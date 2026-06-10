@@ -27,7 +27,7 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div
           className="absolute inset-0"
-          style={{ backgroundImage: "radial-gradient(85% 120% at 12% 0%, #2f343a 0%, #24282b 46%, #16191b 100%)" }}
+          style={{ backgroundImage: "radial-gradient(85% 120% at 12% 0%, #2f86d8 0%, #1d66ba 46%, #134d92 100%)" }}
         />
         <div className="absolute -right-32 -top-28 h-[34rem] w-[34rem] rounded-full bg-blue/25 blur-3xl motion-safe:animate-[floatY_15s_ease-in-out_infinite]" />
         <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-bronze/15 blur-3xl" />
@@ -63,7 +63,7 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2.5" aria-hidden>
                   {avatars.map((g, i) => (
-                    <span key={i} className={`h-9 w-9 rounded-full border-2 border-navy bg-gradient-to-br ${g}`} />
+                    <span key={i} className={`h-9 w-9 rounded-full border-2 border-white bg-gradient-to-br ${g}`} />
                   ))}
                 </div>
                 <div>
