@@ -1,11 +1,21 @@
 <html>
     <head></head>
     <body>
-        <form name="feedback" data-netlify="true" hidden>
-            <input type="hidden" name="form-name" value="feedback" />
+        <!--
+          Hidden static form so Netlify's deploy-time bot can detect the "contact"
+          form and register its fields. The real, styled, validated form lives in
+          src/components/ContactForm.tsx and submits to this path via fetch().
+          Field names here MUST stay in sync with that component. Do not delete.
+        -->
+        <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+            <input type="hidden" name="form-name" value="contact" />
             <input name="name" type="text" />
-            <input name="email" type="text" />
-            <input name="message" type="text" />
+            <input name="email" type="email" />
+            <input name="phone" type="tel" />
+            <input name="businessType" type="text" />
+            <textarea name="message"></textarea>
+            <input name="consent" type="text" />
+            <input name="bot-field" type="text" />
         </form>
     </body>
 </html>

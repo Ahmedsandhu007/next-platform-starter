@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Check, Loader2, Send } from "lucide-react";
-import { businessTypes } from "@/lib/content";
+import { AlertCircle, Check, Loader2, Send } from "lucide-react";
+import { businessTypes, siteConfig } from "@/lib/content";
 
 type Errors = Partial<Record<"name" | "email" | "message" | "consent", string>>;
-type Status = "idle" | "submitting" | "success";
+type Status = "idle" | "submitting" | "success" | "error";
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -31,19 +31,39 @@ export function ContactForm() {
     return next;
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const data = new FormData(form);
     const found = validate(data);
     setErrors(found);
     if (Object.keys(found).length > 0) {
       const first = Object.keys(found)[0];
-      formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
-    // NOTE: front-end demo — wire to a server action / email service to deliver.
+
+    // Deliver via Netlify Forms (zero-config on Netlify). The matching hidden form
+    // in public/__forms.html lets Netlify detect the fields at deploy time; here we
+    // POST the submission to it over AJAX so the page never reloads.
     setStatus("submitting");
-    window.setTimeout(() => setStatus("success"), 900);
+    try {
+      const body = new URLSearchParams();
+      data.forEach((value, key) => body.append(key, typeof value === "string" ? value : ""));
+      body.set("form-name", "contact");
+
+      const res = await fetch("/__forms.html", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString(),
+      });
+      if (!res.ok) throw new Error(`Submission failed (${res.status})`);
+
+      form.reset();
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   }
 
   if (status === "success") {
@@ -73,7 +93,26 @@ export function ContactForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} noValidate className="border border-line bg-white p-7 sm:p-8">
+    <form
+      ref={formRef}
+      name="contact"
+      method="POST"
+      action="/__forms.html"
+      data-netlify="true"
+      onSubmit={handleSubmit}
+      noValidate
+      className="border border-line bg-white p-7 sm:p-8"
+    >
+      {/* Netlify Forms identifier (supports the no-JS native POST fallback). */}
+      <input type="hidden" name="form-name" value="contact" />
+      {/* Honeypot: hidden from real users; bots that fill it are silently rejected. */}
+      <p className="hidden" aria-hidden="true">
+        <label>
+          Leave this field empty
+          <input name="bot-field" tabIndex={-1} autoComplete="off" />
+        </label>
+      </p>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Full name" htmlFor="name" error={errors.name} required>
           <input
@@ -153,6 +192,32 @@ export function ContactForm() {
           </p>
         )}
       </div>
+
+      {status === "error" && (
+        <div
+          role="alert"
+          className="mt-6 flex items-start gap-3 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
+        >
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" strokeWidth={1.6} aria-hidden />
+          <span>
+            Sorry — we couldn&apos;t send your message just now. Please email{" "}
+            <a
+              href={`mailto:${siteConfig.contact.email}`}
+              className="font-semibold underline underline-offset-2 hover:no-underline"
+            >
+              {siteConfig.contact.email}
+            </a>{" "}
+            or call{" "}
+            <a
+              href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}
+              className="font-semibold underline underline-offset-2 hover:no-underline"
+            >
+              {siteConfig.contact.phoneDisplay}
+            </a>{" "}
+            and we&apos;ll be glad to help.
+          </span>
+        </div>
+      )}
 
       <button
         type="submit"
