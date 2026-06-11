@@ -19,12 +19,12 @@ export function CloudAccounting() {
           {/* Visual */}
           <Reveal className="order-2 lg:order-1">
             <div className="relative mx-auto max-w-md lg:mx-0">
-              <div className="absolute -inset-5 -z-10 rounded-[2.5rem] bg-bronze/10 blur-2xl" aria-hidden />
+              <div className="absolute -inset-5 -z-10 rounded-[2.5rem] bg-accent/10 blur-2xl" aria-hidden />
               <div className="rounded-3xl border border-line bg-white p-6 shadow-xl shadow-ink/5 sm:p-8">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-bold text-ink">Cloud dashboard</p>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-cream px-3 py-1 text-[0.7rem] font-bold uppercase tracking-wider text-bronze">
-                    <span className="h-1.5 w-1.5 rounded-full bg-bronze" /> Live
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-cream px-3 py-1 text-[0.7rem] font-bold uppercase tracking-wider text-accent">
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Live
                   </span>
                 </div>
                 <div className="mt-4 rounded-2xl bg-cream p-4">
@@ -37,7 +37,7 @@ export function CloudAccounting() {
                   ].map((row) => (
                     <div key={row.label} className="flex items-center justify-between rounded-xl border border-line px-4 py-3">
                       <span className="flex items-center gap-2.5 text-sm text-ink/80">
-                        <span className="grid h-5 w-5 place-items-center rounded-full bg-bronze-50 text-bronze">
+                        <span className="grid h-5 w-5 place-items-center rounded-full bg-accent-50 text-accent">
                           <Check className="h-3 w-3" strokeWidth={3} aria-hidden />
                         </span>
                         {row.label}
@@ -54,7 +54,7 @@ export function CloudAccounting() {
                 transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
               >
                 <div className="flex items-center gap-2">
-                  <Smartphone className="h-4 w-4 text-bronze" aria-hidden />
+                  <Smartphone className="h-4 w-4 text-accent" aria-hidden />
                   <span className="text-xs font-bold text-ink">Receipt captured</span>
                 </div>
               </motion.div>
@@ -64,8 +64,8 @@ export function CloudAccounting() {
           {/* Copy */}
           <div className="order-1 lg:order-2">
             <Reveal>
-              <span className="flex items-center gap-3 text-bronze">
-                <span className="h-px w-8 bg-bronze" aria-hidden />
+              <span className="flex items-center gap-3 text-accent">
+                <span className="h-px w-8 bg-accent" aria-hidden />
                 <span className="eyebrow">{copy.cloud.eyebrow}</span>
               </span>
               <h2 className="mt-5 text-3xl text-ink sm:text-4xl lg:text-[2.7rem] lg:leading-[1.1]">
@@ -79,7 +79,7 @@ export function CloudAccounting() {
                 const FeatureIcon = featureIcons[i];
                 return (
                   <Reveal as="li" key={f.title} delay={i * 0.08} className="flex items-start gap-3.5">
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-blue text-bronze">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-blue text-accent">
                       <FeatureIcon className="h-5 w-5" strokeWidth={1.8} aria-hidden />
                     </span>
                     <div>

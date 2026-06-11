@@ -20,7 +20,7 @@ export function FaqAccordion({ faqs }: { faqs: DetailFaq[] }) {
           <li key={faq.question}>
             <div
               className={`overflow-hidden rounded-2xl border transition-colors duration-300 ${
-                isOpen ? "border-bronze/30 bg-bronze-50 shadow-sm" : "border-line bg-white"
+                isOpen ? "border-accent/30 bg-accent-50 shadow-sm" : "border-line bg-white"
               }`}
             >
               <h3>
@@ -32,12 +32,12 @@ export function FaqAccordion({ faqs }: { faqs: DetailFaq[] }) {
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="flex w-full items-center justify-between gap-5 px-6 py-5 text-left"
                 >
-                  <span className={`text-base font-bold transition-colors sm:text-lg ${isOpen ? "text-bronze" : "text-ink"}`}>
+                  <span className={`text-base font-bold transition-colors sm:text-lg ${isOpen ? "text-accent" : "text-ink"}`}>
                     {faq.question}
                   </span>
                   <span
                     className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors duration-300 ${
-                      isOpen ? "bg-bronze text-white" : "bg-blue text-navy"
+                      isOpen ? "bg-accent text-white" : "bg-blue text-navy"
                     }`}
                   >
                     <Plus className={`h-4 w-4 transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`} strokeWidth={2} aria-hidden />

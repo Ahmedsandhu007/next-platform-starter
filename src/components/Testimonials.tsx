@@ -14,11 +14,11 @@ import { reviews, reviewsMeta } from "@/lib/content";
 
 const avatarTones = [
   "from-[#24282b] to-[#16191b]",
-  "from-[#ee5935] to-[#d8472a]",
+  "from-[#1d66ba] to-[#d8472a]",
   "from-[#3a3f43] to-[#24282b]",
-  "from-[#f47a60] to-[#ee5935]",
+  "from-[#f47a60] to-[#1d66ba]",
   "from-[#4a5158] to-[#2f3438]",
-  "from-[#ee5935] to-[#b5381f]",
+  "from-[#1d66ba] to-[#b5381f]",
 ];
 
 function GoldStars({ value = 5, className = "h-4 w-4" }: { value?: number; className?: string }) {
@@ -47,7 +47,7 @@ export function Testimonials() {
       <Container>
         {/* Accreditations */}
         <Reveal className="mx-auto max-w-3xl text-center">
-          <span className="eyebrow text-bronze">{t.eyebrow}</span>
+          <span className="eyebrow text-accent">{t.eyebrow}</span>
           <h2 className="mt-4 text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">{t.title}</h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted">{t.intro}</p>
         </Reveal>
@@ -94,7 +94,7 @@ export function Testimonials() {
             breakpoints={{ 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
             style={
               {
-                "--swiper-pagination-color": "#ee5935",
+                "--swiper-pagination-color": "#1d66ba",
                 "--swiper-pagination-bullet-inactive-color": "#24282b",
                 "--swiper-pagination-bullet-inactive-opacity": "0.18",
                 "--swiper-pagination-bottom": "0px",
@@ -145,7 +145,7 @@ export function Testimonials() {
             type="button"
             onClick={() => swiperRef.current?.slidePrev()}
             aria-label="Previous reviews"
-            className="absolute -left-2 top-[42%] z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-md transition-colors duration-300 hover:border-bronze hover:bg-bronze hover:text-white sm:-left-5"
+            className="absolute -left-2 top-[42%] z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-md transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-white sm:-left-5"
           >
             <ChevronLeft className="h-5 w-5" aria-hidden />
           </button>
@@ -153,7 +153,7 @@ export function Testimonials() {
             type="button"
             onClick={() => swiperRef.current?.slideNext()}
             aria-label="Next reviews"
-            className="absolute -right-2 top-[42%] z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-md transition-colors duration-300 hover:border-bronze hover:bg-bronze hover:text-white sm:-right-5"
+            className="absolute -right-2 top-[42%] z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-white text-ink shadow-md transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-white sm:-right-5"
           >
             <ChevronRight className="h-5 w-5" aria-hidden />
           </button>

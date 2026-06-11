@@ -25,7 +25,7 @@ export function CtaBand() {
             <div className="absolute -left-16 -bottom-24 h-72 w-72 rounded-full border border-white/[0.08]" />
             {/* Static glows — animating large blur surfaces is too GPU-heavy */}
             <div className="absolute -left-20 -top-24 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
-            <div className="absolute -bottom-28 -right-16 h-96 w-96 rounded-full bg-bronze/15 blur-3xl" />
+            <div className="absolute -bottom-28 -right-16 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
             {/* Opacity-only breathing glow (compositor-cheap — no re-rasterising the blur) */}
             <motion.div
               className="absolute -top-10 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-white/10 blur-3xl"
@@ -59,10 +59,10 @@ export function CtaBand() {
           </motion.div>
 
           <Reveal className="relative mx-auto flex max-w-2xl flex-col items-center">
-            <span className="flex items-center gap-3 text-bronze-400">
-              <span className="h-px w-8 bg-bronze-400" aria-hidden />
+            <span className="flex items-center gap-3 text-blue-300">
+              <span className="h-px w-8 bg-blue-300/70" aria-hidden />
               <span className="eyebrow">{copy.cta.eyebrow}</span>
-              <span className="h-px w-8 bg-bronze-400" aria-hidden />
+              <span className="h-px w-8 bg-blue-300/70" aria-hidden />
             </span>
             <h2 className="mt-5 text-3xl text-white sm:text-4xl lg:text-[2.9rem] lg:leading-[1.1]">
               {copy.cta.title}

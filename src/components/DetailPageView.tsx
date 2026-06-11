@@ -117,7 +117,7 @@ export function DetailPageView({ page }: { page: DetailPage }) {
         <BackgroundFX variant="subtle" />
         <Container className="relative">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="eyebrow text-bronze">{page.eyebrow}</p>
+            <p className="eyebrow text-accent">{page.eyebrow}</p>
             <h2 className="mt-3 font-display text-2xl text-ink sm:text-3xl">What&apos;s involved</h2>
             <p className="mt-4 text-[0.95rem] leading-relaxed text-muted">
               Here&apos;s exactly what&apos;s involved — and how your own named accountant handles each part for you.
@@ -128,9 +128,9 @@ export function DetailPageView({ page }: { page: DetailPage }) {
             {page.sections.map((s) => (
               <article
                 key={s.heading}
-                className="group flex flex-col items-center rounded-2xl border border-line bg-white p-7 text-center shadow-sm shadow-ink/[0.02] transition-all duration-300 hover:-translate-y-1.5 hover:border-bronze/30 hover:shadow-xl hover:shadow-ink/5"
+                className="group flex flex-col items-center rounded-2xl border border-line bg-white p-7 text-center shadow-sm shadow-ink/[0.02] transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/30 hover:shadow-xl hover:shadow-ink/5"
               >
-                <span className="grid h-16 w-16 place-items-center rounded-2xl bg-blue text-bronze transition-all duration-300 group-hover:bg-ink group-hover:text-white group-hover:shadow-lg group-hover:shadow-ink/15">
+                <span className="grid h-16 w-16 place-items-center rounded-2xl bg-blue text-accent transition-all duration-300 group-hover:bg-ink group-hover:text-white group-hover:shadow-lg group-hover:shadow-ink/15">
                   <Icon name={sectionIcon(s.heading, pageIcon)} className="h-8 w-8" strokeWidth={1.5} aria-hidden />
                 </span>
                 <h3 className="mt-5 font-display text-lg text-ink">{s.heading}</h3>
@@ -153,7 +153,7 @@ export function DetailPageView({ page }: { page: DetailPage }) {
                   <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2">
                     {page.highlights.map((h) => (
                       <li key={h} className="flex items-start gap-2.5 text-sm leading-relaxed text-ink/80">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-bronze" strokeWidth={3} aria-hidden />
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" strokeWidth={3} aria-hidden />
                         <span>{h}</span>
                       </li>
                     ))}
@@ -175,11 +175,11 @@ export function DetailPageView({ page }: { page: DetailPage }) {
                   <Link
                     key={r.href}
                     href={r.href}
-                    className="group flex items-center justify-between gap-3 rounded-2xl border border-line bg-white px-5 py-4 text-sm font-semibold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-bronze/30 hover:shadow-lg hover:shadow-ink/5"
+                    className="group flex items-center justify-between gap-3 rounded-2xl border border-line bg-white px-5 py-4 text-sm font-semibold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:shadow-lg hover:shadow-ink/5"
                   >
                     <span>{r.label}</span>
                     <ArrowRight
-                      className="h-4 w-4 shrink-0 text-bronze transition-transform duration-300 group-hover:translate-x-1"
+                      className="h-4 w-4 shrink-0 text-accent transition-transform duration-300 group-hover:translate-x-1"
                       aria-hidden
                     />
                   </Link>
@@ -199,7 +199,7 @@ export function DetailPageView({ page }: { page: DetailPage }) {
         <section className="border-y border-line bg-blue py-16 sm:py-20">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-bronze">FAQ</p>
+              <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-accent">FAQ</p>
               <h2 className="mt-3 text-center font-display text-2xl text-ink sm:text-3xl">Frequently asked questions</h2>
               <div className="mt-10">
                 <FaqAccordion faqs={page.faqs} />

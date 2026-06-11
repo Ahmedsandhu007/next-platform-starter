@@ -32,16 +32,16 @@ export default function HowWeHelpPage() {
               <li key={p.slug}>
                 <Link
                   href={detailHref(p.kind, p.slug)}
-                  className="group flex h-full flex-col rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-bronze/30 hover:shadow-xl hover:shadow-ink/5"
+                  className="group flex h-full flex-col rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/30 hover:shadow-xl hover:shadow-ink/5"
                 >
-                  <span className="grid h-14 w-14 place-items-center rounded-xl bg-cream text-bronze transition-all duration-300 group-hover:scale-105 group-hover:bg-ink group-hover:text-white">
+                  <span className="grid h-14 w-14 place-items-center rounded-xl bg-cream text-accent transition-all duration-300 group-hover:scale-105 group-hover:bg-ink group-hover:text-white">
                     <Icon name={p.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
                   </span>
                   <h2 className="mt-5 text-lg text-ink">{p.crumb}</h2>
                   <p className="mt-2.5 flex-1 text-[0.95rem] leading-relaxed text-muted">{p.intro}</p>
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-ink transition-colors group-hover:text-bronze">
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-ink transition-colors group-hover:text-accent">
                     Learn more
-                    <ArrowRight className="h-3.5 w-3.5 text-bronze transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
+                    <ArrowRight className="h-3.5 w-3.5 text-accent transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
                   </span>
                 </Link>
               </li>

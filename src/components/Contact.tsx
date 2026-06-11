@@ -32,8 +32,8 @@ export function Contact() {
           {/* Info */}
           <div>
             <Reveal>
-              <span className="flex items-center gap-3 text-bronze">
-                <span className="h-px w-8 bg-bronze" aria-hidden />
+              <span className="flex items-center gap-3 text-accent">
+                <span className="h-px w-8 bg-accent" aria-hidden />
                 <span className="eyebrow">{copy.contact.eyebrow}</span>
               </span>
               <h2 className="mt-5 text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">
@@ -46,13 +46,13 @@ export function Contact() {
               <ul className="mt-9 divide-y divide-line border-y border-line">
                 {details.map((d) => (
                   <li key={d.label} className="flex items-start gap-4 py-5">
-                    <d.icon className="mt-0.5 h-5 w-5 shrink-0 text-bronze" strokeWidth={1.4} aria-hidden />
+                    <d.icon className="mt-0.5 h-5 w-5 shrink-0 text-accent" strokeWidth={1.4} aria-hidden />
                     <div>
                       <p className="eyebrow text-muted">{d.label}</p>
                       {d.href ? (
                         <a
                           href={d.href}
-                          className="mt-1 block text-base font-semibold text-ink transition-colors hover:text-bronze"
+                          className="mt-1 block text-base font-semibold text-ink transition-colors hover:text-accent"
                         >
                           {d.value}
                         </a>
@@ -62,7 +62,7 @@ export function Contact() {
                       {d.sub ? (
                         <a
                           href={d.sub.href}
-                          className="mt-1.5 inline-block text-sm font-bold text-bronze transition-colors hover:text-ink"
+                          className="mt-1.5 inline-block text-sm font-bold text-accent transition-colors hover:text-ink"
                         >
                           {d.sub.text}
                         </a>
@@ -74,12 +74,12 @@ export function Contact() {
             </Reveal>
 
             <Reveal delay={0.12}>
-              <div className="mt-8 inline-flex items-center gap-2.5 border border-bronze px-4 py-2">
+              <div className="mt-8 inline-flex items-center gap-2.5 border border-accent px-4 py-2">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-bronze opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-bronze" />
+                  <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-accent opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
                 </span>
-                <span className="eyebrow text-bronze">{copy.contact.accepting}</span>
+                <span className="eyebrow text-accent">{copy.contact.accepting}</span>
               </div>
             </Reveal>
           </div>

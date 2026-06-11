@@ -40,7 +40,7 @@ export function PageHero({
         <div className="absolute -right-10 top-16 h-72 w-72 rounded-full border border-white/[0.08]" />
         <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full border border-white/[0.06]" />
         <div className="absolute -right-32 -top-28 h-[34rem] w-[34rem] rounded-full bg-white/10 blur-3xl motion-safe:animate-[floatY_15s_ease-in-out_infinite]" />
-        <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-bronze/15 blur-3xl" />
+        <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
       </div>
 
       <Container className="relative">
@@ -53,7 +53,7 @@ export function PageHero({
               <Link href="/" className="text-white/65 transition-colors hover:text-white">
                 Home
               </Link>
-              <span className="text-bronze-400" aria-hidden>
+              <span className="text-blue-300" aria-hidden>
                 /
               </span>
               {parent ? (
@@ -61,7 +61,7 @@ export function PageHero({
                   <Link href={parent.href} className="text-white/65 transition-colors hover:text-white">
                     {parent.label}
                   </Link>
-                  <span className="text-bronze-400" aria-hidden>
+                  <span className="text-blue-300" aria-hidden>
                     /
                   </span>
                 </>
@@ -88,10 +88,10 @@ export function PageHero({
                   ) : (
                     <div className="relative aspect-[220/180] bg-blue">
                       {/* accent dots echo the spot-illustration style */}
-                      <span className="absolute right-8 top-8 h-3 w-3 rounded-full bg-bronze/50" aria-hidden />
+                      <span className="absolute right-8 top-8 h-3 w-3 rounded-full bg-accent/50" aria-hidden />
                       <span className="absolute left-8 bottom-8 h-2.5 w-2.5 rounded-full bg-ink/10" aria-hidden />
                       <div className="grid h-full w-full place-items-center">
-                        <Icon name={icon!} className="h-24 w-24 text-bronze" strokeWidth={1.3} aria-hidden />
+                        <Icon name={icon!} className="h-24 w-24 text-accent" strokeWidth={1.3} aria-hidden />
                       </div>
                     </div>
                   )}

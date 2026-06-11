@@ -23,7 +23,7 @@ export function ServicesDetailed() {
                 {/* Illustration */}
                 <Reveal className={reversed ? "lg:order-2" : ""} y={20}>
                   <div className="relative mx-auto max-w-md">
-                    <div className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-bronze/10 blur-2xl" aria-hidden />
+                    <div className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-accent/10 blur-2xl" aria-hidden />
                     <DotCluster className="absolute -right-4 -top-6 hidden h-14 w-14 opacity-50 sm:block" />
                     <div className="rounded-3xl border border-line bg-cream p-8 shadow-sm">
                       <SpotArt name={service.art} className="mx-auto max-w-[280px]" />
@@ -33,13 +33,13 @@ export function ServicesDetailed() {
 
                 {/* Content */}
                 <Reveal className={reversed ? "lg:order-1" : ""} y={24}>
-                  <span className="eyebrow text-bronze">Service {String(i + 1).padStart(2, "0")}</span>
+                  <span className="eyebrow text-accent">Service {String(i + 1).padStart(2, "0")}</span>
                   <h2 className="mt-3 text-3xl text-ink sm:text-4xl">{service.title}</h2>
                   <p className="mt-4 max-w-lg text-lg leading-relaxed text-muted">{service.description}</p>
                   <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                     {service.points.map((p) => (
                       <li key={p} className="flex items-center gap-2.5 text-sm font-medium text-ink/80">
-                        <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-bronze-50 text-bronze">
+                        <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-50 text-accent">
                           <Check className="h-3 w-3" strokeWidth={3} aria-hidden />
                         </span>
                         {p}

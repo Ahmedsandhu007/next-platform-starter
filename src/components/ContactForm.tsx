@@ -10,7 +10,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const fieldClass =
-  "w-full rounded-none border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 transition-colors focus:border-bronze focus-visible:outline-none focus:ring-1 focus:ring-bronze";
+  "w-full rounded-none border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 transition-colors focus:border-accent focus-visible:outline-none focus:ring-1 focus:ring-accent";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -69,7 +69,7 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div className="flex flex-col items-center justify-center border border-line bg-white p-10 text-center">
-        <span className="grid h-16 w-16 place-items-center rounded-full border border-bronze text-bronze">
+        <span className="grid h-16 w-16 place-items-center rounded-full border border-accent text-accent">
           <Check className="h-7 w-7" strokeWidth={1.5} aria-hidden />
         </span>
         <h3 className="mt-6 font-display text-2xl text-ink">Thank you — message received</h3>
@@ -84,7 +84,7 @@ export function ContactForm() {
             setErrors({});
             formRef.current?.reset();
           }}
-          className="mt-7 text-xs font-semibold uppercase tracking-[0.18em] text-bronze underline-offset-4 hover:underline"
+          className="mt-7 text-xs font-semibold uppercase tracking-[0.18em] text-accent underline-offset-4 hover:underline"
         >
           Send another message
         </button>
@@ -180,7 +180,7 @@ export function ContactForm() {
             value="yes"
             aria-invalid={!!errors.consent}
             aria-describedby={errors.consent ? "consent-error" : undefined}
-            className="mt-0.5 h-5 w-5 shrink-0 rounded-none border-line accent-bronze focus-visible:outline-none"
+            className="mt-0.5 h-5 w-5 shrink-0 rounded-none border-line accent-accent focus-visible:outline-none"
           />
           <span>
             I agree to MMR Accountants contacting me about my enquiry. We&apos;ll never share your details.
@@ -260,7 +260,7 @@ function Field({
         className="mb-1.5 block text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-ink"
       >
         {label}
-        {required && <span className="ml-0.5 text-bronze">*</span>}
+        {required && <span className="ml-0.5 text-accent">*</span>}
       </label>
       {children}
       {error && (

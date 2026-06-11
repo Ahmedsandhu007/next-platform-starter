@@ -18,13 +18,24 @@
   --color-ink: #24282b;
   --color-ink-soft: #3a3f43;
 
-  /* Accent orange (#EE5935) — utility name kept as `bronze` */
+  /* Warm accent orange (#EE5935) — utility name kept as `bronze`. NOW DEMOTED:
+     used only for the solid CTA buttons and a few small warm pops. */
   --color-bronze: #ee5935;
   --color-bronze-400: #f47a60;
   --color-bronze-500: #ee5935;
   --color-bronze-600: #d8472a;
   --color-bronze-700: #b5381f;
   --color-bronze-50: #fdeee9;
+
+  /* Navy-blue accent — the PRIMARY accent across the site (eyebrows, icons,
+     hovers, checkmarks, links, illustrations). Harmonises with the hero/footer
+     brand-blue gradient. */
+  --color-accent: #1d66ba;
+  --color-accent-400: #5a93d6;
+  --color-accent-500: #1d66ba;
+  --color-accent-600: #17538f;
+  --color-accent-700: #134d92;
+  --color-accent-50: #eef4fc;
 
   /* Dark brand surfaces (#24282B) — utility name kept as `navy` */
   --color-navy: #24282b;
@@ -91,18 +102,21 @@ h4 {
 }
 
 ::selection {
-  background: var(--color-bronze);
+  background: var(--color-accent);
   color: #ffffff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-bronze);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
 /* Helpers */
 .text-bronze {
   color: var(--color-bronze);
+}
+.text-accent {
+  color: var(--color-accent);
 }
 
 .eyebrow {
@@ -122,7 +136,7 @@ h4 {
   background-image:
     radial-gradient(38% 50% at 12% 18%, rgba(236, 245, 254, 0.75), transparent 62%),
     radial-gradient(36% 46% at 88% 8%, rgba(207, 230, 251, 0.5), transparent 60%),
-    radial-gradient(46% 60% at 78% 92%, rgba(238, 89, 53, 0.06), transparent 66%);
+    radial-gradient(46% 60% at 78% 92%, rgba(29, 102, 186, 0.07), transparent 66%);
 }
 
 /* Faint dot grid, masked so it fades at the edges */
@@ -233,6 +247,7 @@ html.js [data-reveal-stagger].is-visible > *:nth-child(5) { transition-delay: 0.
 html.js [data-reveal-stagger].is-visible > *:nth-child(6) { transition-delay: 0.35s; }
 html.js [data-reveal-stagger].is-visible > *:nth-child(7) { transition-delay: 0.41s; }
 html.js [data-reveal-stagger].is-visible > *:nth-child(8) { transition-delay: 0.47s; }
+html.js [data-reveal-stagger].is-visible > *:nth-child(9) { transition-delay: 0.53s; }
 
 html.js [data-reveal-line] {
   transform: scaleX(0);

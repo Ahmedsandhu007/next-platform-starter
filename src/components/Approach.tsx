@@ -25,7 +25,7 @@ export function Approach() {
                 {(active) => (
                   <>
                     <div
-                      className={`rounded-xl p-5 transition-colors duration-300 ${active ? "bg-bronze-50" : "bg-cream"}`}
+                      className={`rounded-xl p-5 transition-colors duration-300 ${active ? "bg-accent-50" : "bg-cream"}`}
                     >
                       <SpotArt name={v.art} className="mx-auto max-w-[230px]" />
                     </div>
@@ -34,12 +34,12 @@ export function Approach() {
                     <Link
                       href={`/how-we-help/${v.slug}`}
                       className={`mt-5 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] transition-colors ${
-                        active ? "text-bronze" : "text-ink hover:text-bronze"
+                        active ? "text-accent" : "text-ink hover:text-accent"
                       }`}
                     >
                       Learn more
                       <ArrowRight
-                        className={`h-3.5 w-3.5 text-bronze transition-transform duration-300 ${active ? "translate-x-1" : ""}`}
+                        className={`h-3.5 w-3.5 text-accent transition-transform duration-300 ${active ? "translate-x-1" : ""}`}
                         aria-hidden
                       />
                     </Link>

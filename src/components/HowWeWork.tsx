@@ -11,14 +11,14 @@ function Step({ step }: { step: (typeof processSteps)[number] }) {
   return (
     <li {...bind} className="relative flex flex-col items-center text-center lg:px-3">
       <div
-        className={`relative z-10 grid h-[4.5rem] w-[4.5rem] place-items-center rounded-2xl bg-gradient-to-br from-bronze to-bronze-700 text-white shadow-lg shadow-bronze/25 ring-4 ring-white transition-transform duration-300 ${
+        className={`relative z-10 grid h-[4.5rem] w-[4.5rem] place-items-center rounded-2xl bg-gradient-to-br from-accent to-accent-700 text-white shadow-lg shadow-accent/25 ring-4 ring-white transition-transform duration-300 ${
           active ? "-translate-y-1" : ""
         }`}
       >
         <span className="font-display text-2xl font-extrabold">{step.step}</span>
       </div>
       <div className="mt-6 flex items-center justify-center gap-2">
-        <Icon name={step.icon as IconName} className="h-4 w-4 text-bronze" strokeWidth={2} aria-hidden />
+        <Icon name={step.icon as IconName} className="h-4 w-4 text-accent" strokeWidth={2} aria-hidden />
         <h3 className="text-lg text-ink">{step.title}</h3>
       </div>
       <p className="mx-auto mt-2.5 max-w-xs text-sm leading-relaxed text-muted">{step.description}</p>
@@ -38,7 +38,7 @@ export function HowWeWork() {
             <div className="h-full w-full rounded-full bg-line" />
             <div
               data-reveal-line=""
-              className="absolute inset-0 h-full origin-left rounded-full bg-gradient-to-r from-bronze to-ink"
+              className="absolute inset-0 h-full origin-left rounded-full bg-gradient-to-r from-accent to-ink"
             />
           </div>
 

@@ -82,7 +82,7 @@ export function ChatPanel({ open, onClose }: { open: boolean; onClose: () => voi
               <div className="leading-tight">
                 <p className="text-sm font-semibold">Assistant</p>
                 <p className="flex items-center gap-1.5 text-[0.7rem] text-white/70">
-                  <span className="h-1.5 w-1.5 rounded-full bg-bronze-400" aria-hidden /> Online now
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent-400" aria-hidden /> Online now
                 </p>
               </div>
             </div>
@@ -113,7 +113,7 @@ export function ChatPanel({ open, onClose }: { open: boolean; onClose: () => voi
                 key={q.key}
                 type="button"
                 onClick={() => send(q.label)}
-                className="border border-line px-3 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:border-bronze hover:text-bronze"
+                className="border border-line px-3 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:border-accent hover:text-accent"
               >
                 {q.label}
               </button>
@@ -136,12 +136,12 @@ export function ChatPanel({ open, onClose }: { open: boolean; onClose: () => voi
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message…"
-              className="w-full rounded-none border border-line bg-white px-3 py-2.5 text-sm text-ink placeholder:text-ink/35 focus:border-bronze focus-visible:outline-none focus:ring-1 focus:ring-bronze"
+              className="w-full rounded-none border border-line bg-white px-3 py-2.5 text-sm text-ink placeholder:text-ink/35 focus:border-accent focus-visible:outline-none focus:ring-1 focus:ring-accent"
             />
             <button
               type="submit"
               aria-label="Send message"
-              className="grid h-10 w-10 shrink-0 place-items-center bg-ink text-white transition-colors hover:bg-bronze"
+              className="grid h-10 w-10 shrink-0 place-items-center bg-ink text-white transition-colors hover:bg-accent"
             >
               <Send className="h-4 w-4" />
             </button>

@@ -24,7 +24,7 @@ export function WhyChoose() {
                   <>
                     <span
                       className={`grid h-14 w-14 place-items-center rounded-xl transition-all duration-300 ${
-                        active ? "scale-105 bg-ink text-white" : "bg-blue text-bronze"
+                        active ? "scale-105 bg-ink text-white" : "bg-blue text-accent"
                       }`}
                     >
                       <Icon name={point.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />

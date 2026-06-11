@@ -11,11 +11,11 @@ function PartnerBadge({ name }: { name: string }) {
     <li
       {...bind}
       className={`flex items-center justify-center gap-2.5 border bg-white px-4 py-5 transition-all duration-300 ${
-        active ? "-translate-y-0.5 border-bronze/40 shadow-sm" : "border-line"
+        active ? "-translate-y-0.5 border-accent/40 shadow-sm" : "border-line"
       }`}
     >
       <span
-        className={`h-1.5 w-1.5 shrink-0 bg-bronze transition-transform duration-300 ${active ? "scale-150" : ""}`}
+        className={`h-1.5 w-1.5 shrink-0 bg-accent transition-transform duration-300 ${active ? "scale-150" : ""}`}
         aria-hidden
       />
       <span

@@ -41,7 +41,7 @@ export function SocialRail() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={s.label}
-          className="text-ink/55 transition-colors duration-300 hover:text-bronze"
+          className="text-ink/55 transition-colors duration-300 hover:text-accent"
         >
           <s.icon className="h-4 w-4" aria-hidden />
         </a>
