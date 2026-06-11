@@ -10,6 +10,7 @@
  */
 import type { NavLink } from "@/lib/content";
 import { isIconName } from "@/components/ui/Icon";
+import { lengthError } from "./limits";
 
 export type NavData = { navLinks: NavLink[] };
 
@@ -19,6 +20,12 @@ const isObj = (v: unknown): v is Record<string, unknown> =>
   typeof v === "object" && v !== null && !Array.isArray(v);
 const isStr = (v: unknown): v is string => typeof v === "string";
 const isNonEmpty = (v: unknown): v is string => isStr(v) && v.trim() !== "";
+
+/** Push a length error if `value` exceeds the limit for `key` (no-op for non-strings). */
+function strLen(value: unknown, key: string, label: string, errors: string[]) {
+  const e = lengthError(value, key, label);
+  if (e) errors.push(e);
+}
 
 export function validateNav(value: unknown): ValidationResult {
   if (!isObj(value)) return { ok: false, errors: ["nav: must be an object"] };
@@ -36,7 +43,9 @@ export function validateNav(value: unknown): ValidationResult {
       return;
     }
     if (!isNonEmpty(link.label)) errors.push(`${l}.label: required, must be a non-empty string`);
+    else strLen(link.label, "label", `${l}.label`, errors);
     if (!isNonEmpty(link.href)) errors.push(`${l}.href: required, must be a non-empty string`);
+    else strLen(link.href, "href", `${l}.href`, errors);
 
     if (link.children !== undefined) {
       if (!Array.isArray(link.children)) {
@@ -62,6 +71,7 @@ export function validateNav(value: unknown): ValidationResult {
             return;
           }
           if (!isNonEmpty(cat.label)) errors.push(`${cl}.label: required, must be a non-empty string`);
+          else strLen(cat.label, "label", `${cl}.label`, errors);
           if (!isIconName(cat.icon)) errors.push(`${cl}.icon: "${String(cat.icon)}" is not a known icon name`);
           if (!Array.isArray(cat.items) || cat.items.length === 0) {
             errors.push(`${cl}.items: required, must be a non-empty array`);
@@ -73,8 +83,11 @@ export function validateNav(value: unknown): ValidationResult {
                 return;
               }
               if (!isNonEmpty(it.title)) errors.push(`${il}.title: required, must be a non-empty string`);
+              else strLen(it.title, "title", `${il}.title`, errors);
               if (!isNonEmpty(it.description)) errors.push(`${il}.description: required, must be a non-empty string`);
+              else strLen(it.description, "description", `${il}.description`, errors);
               if (!isNonEmpty(it.href)) errors.push(`${il}.href: required, must be a non-empty string`);
+              else strLen(it.href, "href", `${il}.href`, errors);
               if (!isIconName(it.icon)) errors.push(`${il}.icon: "${String(it.icon)}" is not a known icon name`);
             });
           }

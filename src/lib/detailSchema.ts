@@ -7,6 +7,8 @@
  * can never push malformed JSON that breaks the next build.
  */
 
+import { lengthError } from "./cms/limits";
+
 export type DetailFaq = { question: string; answer: string };
 export type DetailSection = { heading: string; body: string[]; bullets?: string[] };
 
@@ -49,10 +51,19 @@ export function validateRawDetail(value: unknown, label = "page"): string[] {
 
   for (const key of REQUIRED_STRINGS) {
     if (!isNonEmpty(o[key])) errors.push(`${label}.${key}: required, must be a non-empty string`);
+    else {
+      const e = lengthError(o[key], key, `${label}.${key}`);
+      if (e) errors.push(e);
+    }
   }
 
   if (!isStrArray(o.highlights)) {
     errors.push(`${label}.highlights: must be an array of strings`);
+  } else {
+    (o.highlights as string[]).forEach((h, i) => {
+      const e = lengthError(h, "highlights", `${label}.highlights[${i}]`);
+      if (e) errors.push(e);
+    });
   }
 
   if (!Array.isArray(o.sections)) {
@@ -66,9 +77,22 @@ export function validateRawDetail(value: unknown, label = "page"): string[] {
       }
       const s = section as Record<string, unknown>;
       if (!isNonEmpty(s.heading)) errors.push(`${sl}.heading: required, must be a non-empty string`);
+      else {
+        const e = lengthError(s.heading, "heading", `${sl}.heading`);
+        if (e) errors.push(e);
+      }
       if (!isStrArray(s.body)) errors.push(`${sl}.body: must be an array of strings`);
+      else (s.body as string[]).forEach((b, bi) => {
+        const e = lengthError(b, "body", `${sl}.body[${bi}]`);
+        if (e) errors.push(e);
+      });
       if (s.bullets !== undefined && !isStrArray(s.bullets)) {
         errors.push(`${sl}.bullets: must be an array of strings when present`);
+      } else if (Array.isArray(s.bullets)) {
+        (s.bullets as string[]).forEach((b, bi) => {
+          const e = lengthError(b, "bullets", `${sl}.bullets[${bi}]`);
+          if (e) errors.push(e);
+        });
       }
     });
   }
@@ -84,7 +108,15 @@ export function validateRawDetail(value: unknown, label = "page"): string[] {
       }
       const f = faq as Record<string, unknown>;
       if (!isNonEmpty(f.question)) errors.push(`${fl}.question: required, must be a non-empty string`);
+      else {
+        const e = lengthError(f.question, "question", `${fl}.question`);
+        if (e) errors.push(e);
+      }
       if (!isNonEmpty(f.answer)) errors.push(`${fl}.answer: required, must be a non-empty string`);
+      else {
+        const e = lengthError(f.answer, "answer", `${fl}.answer`);
+        if (e) errors.push(e);
+      }
     });
   }
 

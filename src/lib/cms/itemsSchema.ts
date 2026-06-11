@@ -13,6 +13,7 @@
 import type { Service, Industry, WhyPoint, ValueProp, ProcessStep, Faq } from "@/lib/content";
 import { isIconName } from "@/components/ui/Icon";
 import { isArtName } from "@/components/ui/SpotArt";
+import { lengthError } from "./limits";
 
 export type SectionsData = {
   services: Service[];
@@ -36,7 +37,22 @@ const isStrList = (v: unknown): boolean => Array.isArray(v) && v.length > 0 && v
 type ItemErrors = (item: Record<string, unknown>, label: string, errors: string[]) => void;
 
 function reqStr(item: Record<string, unknown>, field: string, label: string, errors: string[]) {
-  if (!isNonEmpty(item[field])) errors.push(`${label}.${field}: required, must be a non-empty string`);
+  if (!isNonEmpty(item[field])) {
+    errors.push(`${label}.${field}: required, must be a non-empty string`);
+    return;
+  }
+  const e = lengthError(item[field], field, `${label}.${field}`);
+  if (e) errors.push(e);
+}
+
+/** Enforce the per-item character limit on a string list (after the shape check). */
+function listLen(value: unknown, key: string, label: string, errors: string[]) {
+  if (Array.isArray(value)) {
+    value.forEach((v, i) => {
+      const e = lengthError(v, key, `${label}[${i}]`);
+      if (e) errors.push(e);
+    });
+  }
 }
 function reqIcon(item: Record<string, unknown>, label: string, errors: string[]) {
   if (!isIconName(item.icon)) errors.push(`${label}.icon: "${String(item.icon)}" is not a known icon name`);
@@ -72,6 +88,7 @@ export function validateSections(value: unknown): ValidationResult {
     reqIcon(it, l, errors);
     reqArt(it, l, errors);
     if (!isStrList(it.points)) errors.push(`${l}.points: required, must be a non-empty list of strings`);
+    listLen(it.points, "points", `${l}.points`, errors);
   });
 
   checkList(value.industries, "industries", errors, (it, l) => {
@@ -107,7 +124,9 @@ export function validateSections(value: unknown): ValidationResult {
   });
 
   if (!isStrList(value.partners)) errors.push("partners: required, must be a non-empty list of strings");
+  listLen(value.partners, "partners", "partners", errors);
   if (!isStrList(value.businessTypes)) errors.push("businessTypes: required, must be a non-empty list of strings");
+  listLen(value.businessTypes, "businessTypes", "businessTypes", errors);
 
   return errors.length > 0 ? { ok: false, errors } : { ok: true };
 }

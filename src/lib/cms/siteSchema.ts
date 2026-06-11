@@ -8,6 +8,8 @@
  * can never push malformed JSON that breaks the next build.
  */
 
+import { lengthError } from "./limits";
+
 /* ---------- Types (the contract the public components rely on) ---------- */
 
 export type Office = {
@@ -125,15 +127,26 @@ function reqStr(root: Record<string, unknown>, path: string, errors: string[]) {
     }
     cur = cur[p];
   }
-  if (!isNonEmpty(cur)) errors.push(`${path}: required, must be a non-empty string`);
+  if (!isNonEmpty(cur)) {
+    errors.push(`${path}: required, must be a non-empty string`);
+    return;
+  }
+  const e = lengthError(cur, parts[parts.length - 1], path);
+  if (e) errors.push(e);
 }
 
-/** Require an array of non-empty strings at `path` (1+ entries). */
+/** Require an array of non-empty strings at `path` (1+ entries), each within its limit. */
 function reqStrArray(root: Record<string, unknown>, path: string, errors: string[]) {
   const value = path.split(".").reduce<unknown>((acc, p) => (isObj(acc) ? acc[p] : undefined), root);
   if (!Array.isArray(value) || value.length === 0 || !value.every(isNonEmpty)) {
     errors.push(`${path}: required, must be a non-empty array of non-empty strings`);
+    return;
   }
+  const key = path.split(".").pop() ?? path;
+  value.forEach((v, i) => {
+    const e = lengthError(v, key, `${path}[${i}]`);
+    if (e) errors.push(e);
+  });
 }
 
 /** Validate a Heading object at `path` (eyebrow/title/subtitle). */

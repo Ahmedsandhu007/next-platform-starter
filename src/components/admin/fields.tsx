@@ -1,12 +1,68 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { limitFor } from "@/lib/cms/limits";
 
 /** Shared admin form primitives, reused across CMS editors. */
 
 export const fieldClass =
   "w-full rounded-none border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-ink/30 focus:border-bronze focus-visible:outline-none focus:ring-1 focus:ring-bronze";
 export const labelClass = "mb-1 block text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink";
+
+/** Live character counter — turns red once the value is over the limit. */
+export function CharCount({ value, max }: { value: string; max: number }) {
+  const over = value.length > max;
+  return (
+    <span className={`shrink-0 text-[0.68rem] tabular-nums ${over ? "font-semibold text-red-600" : "text-muted/70"}`}>
+      {value.length}/{max}
+    </span>
+  );
+}
+
+/**
+ * Text input / textarea with a live character counter + over-limit styling.
+ * The limit comes from an explicit `max`, or the field `role` resolved against
+ * the central CMS limits (so it always matches what the server will enforce).
+ */
+export function LimitedField({
+  value,
+  onChange,
+  role,
+  max,
+  placeholder,
+  multiline = false,
+  rows = 3,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  role?: string;
+  max?: number;
+  placeholder?: string;
+  multiline?: boolean;
+  rows?: number;
+}) {
+  const limit = max ?? (role ? limitFor(role) : 400);
+  const over = value.length > limit;
+  const cls = `${fieldClass} ${over ? "border-red-400 focus:border-red-500 focus:ring-red-400" : ""}`;
+  return (
+    <div>
+      {multiline ? (
+        <textarea
+          value={value}
+          placeholder={placeholder}
+          rows={rows}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${cls} resize-y`}
+        />
+      ) : (
+        <input value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} className={cls} />
+      )}
+      <div className="mt-0.5 flex justify-end">
+        <CharCount value={value} max={limit} />
+      </div>
+    </div>
+  );
+}
 
 export function moveItem<T>(arr: T[], from: number, to: number): T[] {
   if (to < 0 || to >= arr.length) return arr;
@@ -96,38 +152,56 @@ export function StringList({
   multiline = false,
   addLabel = "Add item",
   placeholder = "",
+  role,
+  max,
 }: {
   items: string[];
   onChange: (next: string[]) => void;
   multiline?: boolean;
   addLabel?: string;
   placeholder?: string;
+  /** Field role (e.g. "points", "bullets") — resolves the per-item character limit. */
+  role?: string;
+  /** Explicit per-item character limit (overrides `role`). */
+  max?: number;
 }) {
   const set = (i: number, value: string) => onChange(items.map((it, idx) => (idx === i ? value : it)));
   const remove = (i: number) => onChange(items.filter((_, idx) => idx !== i));
   const move = (from: number, to: number) => onChange(moveItem(items, from, to));
+  const limit = max ?? (role ? limitFor(role) : undefined);
 
   return (
     <div className="space-y-2">
       {items.length === 0 && <p className="text-xs italic text-muted">None yet.</p>}
-      {items.map((item, i) => (
-        <div key={i} className="flex items-start gap-2">
-          {multiline ? (
-            <textarea
-              value={item}
-              placeholder={placeholder}
-              rows={2}
-              onChange={(e) => set(i, e.target.value)}
-              className={`${fieldClass} resize-y`}
-            />
-          ) : (
-            <input value={item} placeholder={placeholder} onChange={(e) => set(i, e.target.value)} className={fieldClass} />
-          )}
-          <div className="pt-0.5">
-            <RowControls index={i} count={items.length} onMove={(to) => move(i, to)} onRemove={() => remove(i)} removeTitle="Remove" />
+      {items.map((item, i) => {
+        const over = limit !== undefined && item.length > limit;
+        const cls = `${fieldClass} ${over ? "border-red-400" : ""}`;
+        return (
+          <div key={i} className="flex items-start gap-2">
+            <div className="flex-1">
+              {multiline ? (
+                <textarea
+                  value={item}
+                  placeholder={placeholder}
+                  rows={2}
+                  onChange={(e) => set(i, e.target.value)}
+                  className={`${cls} resize-y`}
+                />
+              ) : (
+                <input value={item} placeholder={placeholder} onChange={(e) => set(i, e.target.value)} className={cls} />
+              )}
+              {limit !== undefined && (
+                <div className="mt-0.5 flex justify-end">
+                  <CharCount value={item} max={limit} />
+                </div>
+              )}
+            </div>
+            <div className="pt-0.5">
+              <RowControls index={i} count={items.length} onMove={(to) => move(i, to)} onRemove={() => remove(i)} removeTitle="Remove" />
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
       <button
         type="button"
         onClick={() => onChange([...items, ""])}

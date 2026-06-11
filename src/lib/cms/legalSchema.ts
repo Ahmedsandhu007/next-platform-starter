@@ -5,6 +5,7 @@
  * Types reuse content.ts via a type-only import (no runtime cycle).
  */
 import type { LegalPage } from "@/lib/content";
+import { lengthError } from "./limits";
 
 export type LegalData = { pages: LegalPage[] };
 
@@ -15,6 +16,11 @@ const isObj = (v: unknown): v is Record<string, unknown> =>
 const isStr = (v: unknown): v is string => typeof v === "string";
 const isNonEmpty = (v: unknown): v is string => isStr(v) && v.trim() !== "";
 const isStrList = (v: unknown): boolean => Array.isArray(v) && v.length > 0 && v.every(isNonEmpty);
+
+function strLen(value: unknown, key: string, label: string, errors: string[]) {
+  const e = lengthError(value, key, label);
+  if (e) errors.push(e);
+}
 
 const PAGE_STRINGS = ["slug", "crumb", "title", "intro", "updated", "metaTitle", "metaDescription"] as const;
 
@@ -36,6 +42,7 @@ export function validateLegal(value: unknown): ValidationResult {
     }
     for (const key of PAGE_STRINGS) {
       if (!isNonEmpty(page[key])) errors.push(`${label}.${key}: required, must be a non-empty string`);
+      else strLen(page[key], key, `${label}.${key}`, errors);
     }
     if (isStr(page.slug)) {
       if (seen.has(page.slug)) errors.push(`${label}: duplicate slug "${page.slug}"`);
@@ -52,9 +59,13 @@ export function validateLegal(value: unknown): ValidationResult {
           return;
         }
         if (!isNonEmpty(section.heading)) errors.push(`${sl}.heading: required, must be a non-empty string`);
+        else strLen(section.heading, "heading", `${sl}.heading`, errors);
         if (!isStrList(section.body)) errors.push(`${sl}.body: required, must be a non-empty list of strings`);
+        else (section.body as string[]).forEach((b, bi) => strLen(b, "body", `${sl}.body[${bi}]`, errors));
         if (section.bullets !== undefined && !(Array.isArray(section.bullets) && section.bullets.every(isNonEmpty))) {
           errors.push(`${sl}.bullets: must be a list of non-empty strings when present`);
+        } else if (Array.isArray(section.bullets)) {
+          (section.bullets as string[]).forEach((b, bi) => strLen(b, "bullets", `${sl}.bullets[${bi}]`, errors));
         }
       });
     }

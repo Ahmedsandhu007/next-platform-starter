@@ -2,7 +2,8 @@
 
 import type { ReactNode } from "react";
 import type { SiteCopy } from "@/lib/cms/siteSchema";
-import { AddButton, fieldClass, Labeled, moveItem, RowControls, StringList } from "@/components/admin/fields";
+import { AddButton, CharCount, fieldClass, Labeled, moveItem, RowControls, StringList } from "@/components/admin/fields";
+import { limitFor } from "@/lib/cms/limits";
 import { Card, EditorHeader, LoadGate, type Path, SaveBtn, setIn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
 
 /** Sections, in page order — drives both the jump-nav and the card anchors. */
@@ -81,16 +82,30 @@ function CopyFields({ data, upd }: { data: SiteCopy; upd: (path: Path, value: un
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => upd(path, e.target.value),
   });
 
-  const Text = (label: string, path: Path, hint?: string) => (
-    <Labeled label={label} hint={hint}>
-      <input {...bind(path)} className={fieldClass} />
-    </Labeled>
-  );
-  const Area = (label: string, path: Path, rows = 3) => (
-    <Labeled label={label}>
-      <textarea {...bind(path)} rows={rows} className={`${fieldClass} resize-y`} />
-    </Labeled>
-  );
+  const Text = (label: string, path: Path, hint?: string) => {
+    const v = String(get(path) ?? "");
+    const limit = limitFor(String(path[path.length - 1]));
+    return (
+      <Labeled label={label} hint={hint}>
+        <input {...bind(path)} className={`${fieldClass} ${v.length > limit ? "border-red-400" : ""}`} />
+        <div className="mt-0.5 flex justify-end">
+          <CharCount value={v} max={limit} />
+        </div>
+      </Labeled>
+    );
+  };
+  const Area = (label: string, path: Path, rows = 3) => {
+    const v = String(get(path) ?? "");
+    const limit = limitFor(String(path[path.length - 1]));
+    return (
+      <Labeled label={label}>
+        <textarea {...bind(path)} rows={rows} className={`${fieldClass} resize-y ${v.length > limit ? "border-red-400" : ""}`} />
+        <div className="mt-0.5 flex justify-end">
+          <CharCount value={v} max={limit} />
+        </div>
+      </Labeled>
+    );
+  };
   /** eyebrow + title + subtitle for a section heading at `base`. */
   const heading = (base: Path): ReactNode => (
     <>
@@ -122,7 +137,7 @@ function CopyFields({ data, upd }: { data: SiteCopy; upd: (path: Path, value: un
           <span className="mb-1 block text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink">
             Hero pillars
           </span>
-          <StringList items={data.hero.pillars} onChange={(v) => upd(["hero", "pillars"], v)} addLabel="Add pillar" />
+          <StringList items={data.hero.pillars} onChange={(v) => upd(["hero", "pillars"], v)} addLabel="Add pillar" role="pillars" />
         </div>
       </Card>
 
@@ -228,7 +243,7 @@ function CopyFields({ data, upd }: { data: SiteCopy; upd: (path: Path, value: un
           <span className="mb-1 block text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink">
             Legal link labels
           </span>
-          <StringList items={data.footer.legal} onChange={(v) => upd(["footer", "legal"], v)} addLabel="Add legal link" />
+          <StringList items={data.footer.legal} onChange={(v) => upd(["footer", "legal"], v)} addLabel="Add legal link" role="legal" />
         </div>
       </Card>
 
