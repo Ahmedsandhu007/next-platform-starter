@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { DotCluster, RingAccent } from "@/components/ui/Decorations";
 import { copy, siteConfig } from "@/lib/content";
 
-/** High-contrast conversion band — a dark panel with continuously animated bronze glow + decorations. */
+/** High-contrast conversion band — a blue panel with continuously animated glow + decorations. */
 export function CtaBand() {
   const reduce = useReducedMotion();
   const phoneHref = `tel:${siteConfig.contact.phone.replace(/\s/g, "")}`;
@@ -15,16 +15,21 @@ export function CtaBand() {
   return (
     <section className="bg-white py-20 sm:py-28">
       <Container>
-        <div className="relative overflow-hidden rounded-3xl bg-navy px-6 py-16 text-center sm:px-12 lg:py-20">
-          {/* Continuously animated glow + sheen */}
+        <div className="relative overflow-hidden rounded-3xl bg-brand-blue px-6 py-16 text-center sm:px-12 lg:py-20">
+          {/* Blue-surface decorations — matches the hero (dot-grid, rings, glows, sheen) */}
           <div aria-hidden className="pointer-events-none absolute inset-0">
+            {/* faint white dot-grid */}
+            <div className="absolute inset-0 bg-brand-dotgrid" />
+            {/* concentric rings */}
+            <div className="absolute -right-24 -top-28 h-[26rem] w-[26rem] rounded-full border border-white/10" />
+            <div className="absolute -left-16 -bottom-24 h-72 w-72 rounded-full border border-white/[0.08]" />
             {/* Static glows — animating large blur surfaces is too GPU-heavy */}
-            <div className="absolute -left-20 -top-24 h-80 w-80 rounded-full bg-bronze/25 blur-3xl" />
+            <div className="absolute -left-20 -top-24 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
             <div className="absolute -bottom-28 -right-16 h-96 w-96 rounded-full bg-bronze/15 blur-3xl" />
             {/* Opacity-only breathing glow (compositor-cheap — no re-rasterising the blur) */}
             <motion.div
-              className="absolute -top-10 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-bronze/10 blur-3xl"
-              animate={reduce ? {} : { opacity: [0.45, 0.85, 0.45] }}
+              className="absolute -top-10 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-white/10 blur-3xl"
+              animate={reduce ? {} : { opacity: [0.4, 0.75, 0.4] }}
               transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
             />
             {/* Sweeping sheen — a thin, un-blurred gradient (cheap) */}

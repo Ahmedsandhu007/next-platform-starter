@@ -10,8 +10,20 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden bg-navy text-white/65">
-      <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-bronze/10 blur-3xl" aria-hidden />
+    <footer className="relative overflow-hidden bg-brand-blue-deep text-white/70">
+      {/* faint white dot-grid + soft glows, fading down from the top */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute inset-0 bg-brand-dotgrid"
+          style={{
+            WebkitMaskImage: "linear-gradient(to bottom, #000 0%, transparent 55%)",
+            maskImage: "linear-gradient(to bottom, #000 0%, transparent 55%)",
+          }}
+        />
+        <div className="absolute -right-32 -top-28 h-[28rem] w-[28rem] rounded-full border border-white/[0.06]" />
+        <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/[0.07] blur-3xl" />
+        <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-bronze/10 blur-3xl" />
+      </div>
       <Container className="relative py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.7fr_1fr_1fr_1.3fr]">
           {/* Brand */}
@@ -26,7 +38,7 @@ export function Footer() {
             ) : (
               <Logo tone="light" size="md" />
             )}
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/55">{copy.footer.blurb}</p>
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/60">{copy.footer.blurb}</p>
             <div className="mt-7">
               <ButtonLink href="/contact" variant="bronze" withArrow>
                 {copy.footer.cta}
@@ -90,7 +102,7 @@ export function Footer() {
                   <MapPin className="mt-0.5 h-[18px] w-[18px] shrink-0 text-bronze-400" strokeWidth={1.75} aria-hidden />
                   <div>
                     <p className="font-semibold text-white/85">{o.city}</p>
-                    <p className="mt-0.5 text-white/55">{o.addressLine}, {o.postcode}</p>
+                    <p className="mt-0.5 text-white/60">{o.addressLine}, {o.postcode}</p>
                     <a
                       href={`tel:${o.phone.replace(/\s/g, "")}`}
                       className="mt-1 inline-block text-white/80 transition-colors hover:text-white"
@@ -111,7 +123,7 @@ export function Footer() {
         </div>
 
         {/* Compliance */}
-        <div className="mt-14 border-t border-white/10 pt-8 text-xs leading-relaxed text-white/40">
+        <div className="mt-14 border-t border-white/10 pt-8 text-xs leading-relaxed text-white/50">
           <p className="max-w-4xl">
             {siteConfig.name}{" "}Ltd is registered in England &amp; Wales (Company No.{" "}
             {siteConfig.companyNumber}). Registered office: {siteConfig.contact.addressLine},{" "}

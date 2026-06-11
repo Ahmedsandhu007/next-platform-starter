@@ -138,6 +138,26 @@ h4 {
   background: radial-gradient(60% 55% at 70% 30%, rgba(238, 89, 53, 0.1), transparent 70%);
 }
 
+/* Deep brand-blue surfaces (hero · CTA band · footer), matching the blue hero.
+   `.bg-brand-blue` is the vivid hero gradient; `.bg-brand-blue-deep` is a darker
+   variant for the footer so light text keeps enough contrast. */
+.bg-brand-blue {
+  background-color: #134d92;
+  background-image: radial-gradient(85% 120% at 12% 0%, #2f86d8 0%, #1d66ba 46%, #134d92 100%);
+}
+.bg-brand-blue-deep {
+  background-color: #0e3a6e;
+  background-image: radial-gradient(120% 130% at 50% 0%, #1a5895 0%, #103f73 52%, #0c3158 100%);
+}
+
+/* Faint white dot-grid overlay for the blue surfaces, masked to fade at the edges. */
+.bg-brand-dotgrid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 24px 24px;
+  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 35%, #000 25%, transparent 100%);
+  mask-image: radial-gradient(ellipse 95% 85% at 50% 35%, #000 25%, transparent 100%);
+}
+
 /* Glass / blur surface for the sticky header + cards */
 .glass {
   background: rgba(255, 255, 255, 0.72);
