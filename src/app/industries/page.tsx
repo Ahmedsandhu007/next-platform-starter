@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function IndustriesPage() {
   return (
     <>
-      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} />
+      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} icon="Building2" />
       <Industries />
       <Testimonials />
       <CtaBand />

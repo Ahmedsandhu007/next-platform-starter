@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function WhyMmrPage() {
   return (
     <>
-      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} />
+      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} icon="ShieldCheck" />
       <WhyChoose />
       <Testimonials />
       <TrustedBy />

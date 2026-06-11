@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/ui/Container";
+import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import { CtaBand } from "@/components/CtaBand";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { approachPages, detailHref } from "@/lib/detailContent";
@@ -21,10 +22,12 @@ export default function HowWeHelpPage() {
         crumb="How we help"
         title="More than compliance — a partner in your growth"
         subtitle="Filing on time is the bare minimum. We plan ahead, keep your numbers live, and turn them into advice that actually moves the needle. Here is how we help."
+        icon="Lightbulb"
       />
-      <section className="bg-white py-16 sm:py-20">
-        <Container>
-          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="relative overflow-hidden bg-white py-16 sm:py-20">
+        <BackgroundFX variant="subtle" />
+        <Container className="relative">
+          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal-stagger>
             {approachPages.map((p) => (
               <li key={p.slug}>
                 <Link

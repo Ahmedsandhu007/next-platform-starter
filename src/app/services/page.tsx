@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} />
+      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} art="advisory" />
       <ServicesDetailed />
       <CloudAccounting />
       <CtaBand />

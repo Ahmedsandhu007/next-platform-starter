@@ -1,5 +1,7 @@
 import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/ui/Reveal";
+import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import { type LegalPage } from "@/lib/content";
 
 /** Shared renderer for the Privacy / Terms / Cookies pages. */
@@ -7,9 +9,10 @@ export function LegalPageView({ page }: { page: LegalPage }) {
   return (
     <>
       <PageHero crumb={page.crumb} title={page.title} subtitle={page.intro} />
-      <section className="bg-white py-16 sm:py-20">
-        <Container>
-          <div className="mx-auto max-w-3xl">
+      <section className="relative overflow-hidden bg-white py-16 sm:py-20">
+        <BackgroundFX variant="subtle" />
+        <Container className="relative">
+          <Reveal className="mx-auto max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-bronze">{page.updated}</p>
 
             <div className="mt-10 flex flex-col gap-10">
@@ -34,7 +37,7 @@ export function LegalPageView({ page }: { page: LegalPage }) {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </>
