@@ -2,8 +2,10 @@ import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/ui/Container";
+import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import { CtaBand } from "@/components/CtaBand";
 import { Icon, type IconName } from "@/components/ui/Icon";
+import { type Name as SpotArtName } from "@/components/ui/SpotArt";
 import { ButtonLink } from "@/components/ui/Button";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { siteConfig } from "@/lib/content";
@@ -15,9 +17,48 @@ const SECTION_META: Record<DetailKind, { label: string; href: string }> = {
   approach: { label: "How we help", href: "/how-we-help" },
 };
 
+/** Map detail-page slugs to a fitting spot illustration; industries fall back
+ *  to the page's own icon (there's no sector-specific illustration). */
+const ART_BY_SLUG: Record<string, SpotArtName> = {
+  bookkeeping: "bookkeeping",
+  "tax-planning": "tax",
+  vat: "vat",
+  payroll: "payroll",
+  "company-formation": "formation",
+  advisory: "advisory",
+  "proactive-tax-planning": "tax",
+  "cloud-accounting": "cloud",
+  "advisory-partnership": "advisory",
+};
+
+/** Pick a relevant icon for a content card from its heading keywords, so the
+ *  grid reads like the reference (a distinct icon per card) rather than a wall
+ *  of prose. Falls back to the page's own icon. */
+const ICON_RULES: [RegExp, IconName][] = [
+  [/cloud|software|digital|mtd|online|app|dashboard/, "Cloud"],
+  [/deadline|companies house|hmrc|file|filing|penalt|complian|submit|register/, "ShieldCheck"],
+  [/vat|making tax digital/, "Percent"],
+  [/payroll|employee|staff|pension|paye|wage|auto.?enrol/, "Users"],
+  [/director|self.?assessment|self assessment|personal tax/, "UserRound"],
+  [/tax|return|relief|allowance|deduct|cis|ir35/, "Receipt"],
+  [/advis|grow|plan|strateg|decision|forecast|scal|profit|kpi/, "TrendingUp"],
+  [/report|standard|statement|ledger|record|bookkeep|reconcil|account/, "BookOpen"],
+  [/form|incorporat|company|setup|set up|start|structure/, "Building2"],
+  [/cash|fund|invoice|payment|money|fee|price|cost|budget/, "BadgePoundSterling"],
+  [/support|help|advice|partner|relationship|contact|talk/, "MessagesSquare"],
+];
+
+function sectionIcon(heading: string, fallback: IconName): IconName {
+  const h = heading.toLowerCase();
+  for (const [re, name] of ICON_RULES) if (re.test(h)) return name;
+  return fallback;
+}
+
 /** Shared renderer for every Service / Industry / "How we help" detail page. */
 export function DetailPageView({ page }: { page: DetailPage }) {
   const parent = SECTION_META[page.kind];
+  const art = ART_BY_SLUG[page.slug];
+  const pageIcon = page.icon as IconName;
   const url = `${siteConfig.url}${detailHref(page.kind, page.slug)}`;
 
   const breadcrumbSchema = {
@@ -62,85 +103,95 @@ export function DetailPageView({ page }: { page: DetailPage }) {
 
   return (
     <>
-      <PageHero crumb={page.crumb} parent={parent} title={page.title} subtitle={page.intro} />
+      <PageHero
+        crumb={page.crumb}
+        parent={parent}
+        title={page.title}
+        subtitle={page.intro}
+        art={art}
+        icon={art ? undefined : pageIcon}
+      />
 
-      <section className="bg-white py-16 sm:py-20">
-        <Container>
-          <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
-            {/* Main content */}
-            <div className="flex flex-col gap-10 lg:col-span-2">
-              {page.sections.map((s) => (
-                <div key={s.heading}>
-                  <h2 className="font-display text-xl text-ink sm:text-2xl">{s.heading}</h2>
-                  {s.body.map((p, i) => (
-                    <p key={i} className="mt-3 text-[0.95rem] leading-relaxed text-muted">
-                      {p}
-                    </p>
-                  ))}
-                  {s.bullets ? (
-                    <ul className="mt-4 flex flex-col gap-2.5">
-                      {s.bullets.map((b) => (
-                        <li key={b} className="flex items-start gap-3 text-[0.95rem] leading-relaxed text-muted">
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" aria-hidden />
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
-              ))}
+      {/* Content as an icon-card grid (not a wall of prose) */}
+      <section className="relative overflow-hidden bg-white py-16 sm:py-20">
+        <BackgroundFX variant="subtle" />
+        <Container className="relative">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="eyebrow text-bronze">{page.eyebrow}</p>
+            <h2 className="mt-3 font-display text-2xl text-ink sm:text-3xl">What&apos;s involved</h2>
+            <p className="mt-4 text-[0.95rem] leading-relaxed text-muted">
+              Here&apos;s exactly what&apos;s involved — and how your own named accountant handles each part for you.
+            </p>
+          </div>
 
-              <p className="border-t border-line pt-6 text-xs leading-relaxed text-muted/80">
-                {page.updated}. This page is general guidance, not advice — figures relate to the 2025/26 UK tax year
-                and may change. Please get in touch for advice tailored to your circumstances.
-              </p>
-            </div>
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7" data-reveal-stagger>
+            {page.sections.map((s) => (
+              <article
+                key={s.heading}
+                className="group flex flex-col items-center rounded-2xl border border-line bg-white p-7 text-center shadow-sm shadow-ink/[0.02] transition-all duration-300 hover:-translate-y-1.5 hover:border-bronze/30 hover:shadow-xl hover:shadow-ink/5"
+              >
+                <span className="grid h-16 w-16 place-items-center rounded-2xl bg-blue text-bronze transition-all duration-300 group-hover:bg-ink group-hover:text-white group-hover:shadow-lg group-hover:shadow-ink/15">
+                  <Icon name={sectionIcon(s.heading, pageIcon)} className="h-8 w-8" strokeWidth={1.5} aria-hidden />
+                </span>
+                <h3 className="mt-5 font-display text-lg text-ink">{s.heading}</h3>
+                <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{s.body[0]}</p>
+              </article>
+            ))}
+          </div>
 
-            {/* Sidebar */}
-            <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-              <div className="rounded-2xl border border-line bg-cream/40 p-6">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink text-white">
-                    <Icon name={page.icon as IconName} className="h-5 w-5" strokeWidth={1.8} aria-hidden />
-                  </span>
-                  <p className="font-display text-lg text-ink">What&apos;s included</p>
-                </div>
-                <ul className="mt-5 flex flex-col gap-3">
-                  {page.highlights.map((h) => (
-                    <li key={h} className="flex items-start gap-2.5 text-sm leading-relaxed text-ink/80">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-bronze" strokeWidth={3} aria-hidden />
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
-                <ButtonLink href="/contact" variant="primary" withArrow className="mt-6 w-full">
-                  Book a Consultation
-                </ButtonLink>
-              </div>
-
-              {page.related.length ? (
-                <div className="rounded-2xl border border-line bg-white p-6">
-                  <p className="font-display text-lg text-ink">Related</p>
-                  <ul className="mt-4 flex flex-col gap-1.5">
-                    {page.related.map((r) => (
-                      <li key={r.href}>
-                        <Link
-                          href={r.href}
-                          className="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-cream"
-                        >
-                          <span>{r.label}</span>
-                          <ArrowRight
-                            className="h-4 w-4 shrink-0 text-bronze transition-transform duration-300 group-hover:translate-x-0.5"
-                            aria-hidden
-                          />
-                        </Link>
+          {/* What's included — quick checklist + CTA */}
+          {page.highlights.length ? (
+            <div className="mt-8 overflow-hidden rounded-3xl border border-line bg-cream/50 p-8 sm:p-10">
+              <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+                <div className="lg:max-w-2xl">
+                  <div className="flex items-center gap-3">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink text-white">
+                      <Icon name={pageIcon} className="h-5 w-5" strokeWidth={1.8} aria-hidden />
+                    </span>
+                    <h2 className="font-display text-xl text-ink sm:text-2xl">What&apos;s included</h2>
+                  </div>
+                  <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                    {page.highlights.map((h) => (
+                      <li key={h} className="flex items-start gap-2.5 text-sm leading-relaxed text-ink/80">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-bronze" strokeWidth={3} aria-hidden />
+                        <span>{h}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-              ) : null}
-            </aside>
-          </div>
+                <ButtonLink href="/contact" variant="primary" size="lg" withArrow className="shrink-0">
+                  Book a Consultation
+                </ButtonLink>
+              </div>
+            </div>
+          ) : null}
+
+          {/* Related internal links */}
+          {page.related.length ? (
+            <div className="mt-14">
+              <h2 className="font-display text-lg text-ink">Related</h2>
+              <div className="mt-5 grid gap-4 sm:grid-cols-3">
+                {page.related.map((r) => (
+                  <Link
+                    key={r.href}
+                    href={r.href}
+                    className="group flex items-center justify-between gap-3 rounded-2xl border border-line bg-white px-5 py-4 text-sm font-semibold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-bronze/30 hover:shadow-lg hover:shadow-ink/5"
+                  >
+                    <span>{r.label}</span>
+                    <ArrowRight
+                      className="h-4 w-4 shrink-0 text-bronze transition-transform duration-300 group-hover:translate-x-1"
+                      aria-hidden
+                    />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          <p className="mt-12 border-t border-line pt-6 text-xs leading-relaxed text-muted/80">
+            {page.updated}. This page is general guidance, not advice — figures relate to the 2025/26 UK tax year
+            and may change. Please get in touch for advice tailored to your circumstances.
+          </p>
         </Container>
       </section>
 
