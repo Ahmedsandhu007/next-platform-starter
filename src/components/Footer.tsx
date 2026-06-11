@@ -22,19 +22,17 @@ export function Footer() {
         />
         <div className="absolute -right-32 -top-28 h-[28rem] w-[28rem] rounded-full border border-white/[0.06]" />
         <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/[0.07] blur-3xl" />
-        <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-bronze/10 blur-3xl" />
+        <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-white/[0.06] blur-3xl" />
       </div>
       <Container className="relative py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.7fr_1fr_1fr_1.3fr]">
           {/* Brand */}
           <div>
-            {siteConfig.logoCircular ? (
+            {siteConfig.logoLinear ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={siteConfig.logoCircular}
-                alt={siteConfig.name}
-                className="h-16 w-16 rounded-full bg-white object-contain p-2"
-              />
+              <span className="inline-flex rounded-lg bg-white px-3.5 py-2 shadow-sm">
+                <img src={siteConfig.logoLinear} alt={siteConfig.name} className="h-7 w-auto object-contain sm:h-8" />
+              </span>
             ) : (
               <Logo tone="light" size="md" />
             )}
@@ -52,7 +50,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center rounded-lg bg-white/5 text-white/60 ring-1 ring-white/10 transition-all duration-300 hover:bg-bronze hover:text-white hover:ring-bronze"
+                  className="grid h-10 w-10 place-items-center rounded-lg bg-white/5 text-white/60 ring-1 ring-white/10 transition-all duration-300 hover:bg-accent hover:text-white hover:ring-accent"
                 >
                   <s.icon className="h-4 w-4" aria-hidden />
                 </a>
@@ -99,7 +97,7 @@ export function Footer() {
             <ul className="mt-5 flex flex-col gap-5 text-sm">
               {siteConfig.offices.map((o) => (
                 <li key={o.city} className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 h-[18px] w-[18px] shrink-0 text-bronze-400" strokeWidth={1.75} aria-hidden />
+                  <MapPin className="mt-0.5 h-[18px] w-[18px] shrink-0 text-blue-300" strokeWidth={1.75} aria-hidden />
                   <div>
                     <p className="font-semibold text-white/85">{o.city}</p>
                     <p className="mt-0.5 text-white/60">{o.addressLine}, {o.postcode}</p>
@@ -113,7 +111,7 @@ export function Footer() {
                 </li>
               ))}
               <li className="flex items-start gap-3">
-                <Mail className="mt-0.5 h-[18px] w-[18px] shrink-0 text-bronze-400" strokeWidth={1.75} aria-hidden />
+                <Mail className="mt-0.5 h-[18px] w-[18px] shrink-0 text-blue-300" strokeWidth={1.75} aria-hidden />
                 <a href={`mailto:${siteConfig.contact.email}`} className="break-all text-white/80 transition-colors hover:text-white">
                   {siteConfig.contact.email}
                 </a>

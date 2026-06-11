@@ -57,7 +57,7 @@ export function Header() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="text-white/55 transition-colors hover:text-bronze-400"
+                  className="text-white/55 transition-colors hover:text-accent-400"
                 >
                   <s.icon className="h-3.5 w-3.5" aria-hidden />
                 </a>
@@ -67,10 +67,10 @@ export function Header() {
               <span className="hidden items-center gap-1.5 text-white/55 lg:flex">
                 <Clock className="h-3.5 w-3.5" aria-hidden /> {siteConfig.contact.hours}
               </span>
-              <a href={phoneHref} className="flex items-center gap-1.5 font-semibold text-white transition-colors hover:text-bronze-400">
-                <Phone className="h-3.5 w-3.5 text-bronze-400" aria-hidden /> {siteConfig.contact.phoneDisplay}
+              <a href={phoneHref} className="flex items-center gap-1.5 font-semibold text-white transition-colors hover:text-accent-400">
+                <Phone className="h-3.5 w-3.5 text-accent-400" aria-hidden /> {siteConfig.contact.phoneDisplay}
               </a>
-              <Link href="/contact" className="flex items-center gap-1.5 font-semibold text-bronze-400 transition-colors hover:text-white">
+              <Link href="/contact" className="flex items-center gap-1.5 font-semibold text-accent-400 transition-colors hover:text-white">
                 <PhoneCall className="h-3.5 w-3.5" aria-hidden /> Call Me Back
               </Link>
             </div>
@@ -105,7 +105,7 @@ export function Header() {
                 <img
                   src={siteConfig.logoLinear}
                   alt={siteConfig.name}
-                  className={`w-auto transition-all duration-300 ${scrolled ? "h-8 sm:h-9" : "h-9 sm:h-10"}`}
+                  className={`w-auto max-w-[62vw] object-contain transition-all duration-300 ${scrolled ? "h-6 sm:h-8" : "h-7 sm:h-9"}`}
                 />
               ) : (
                 <Logo size="md" />
@@ -124,8 +124,8 @@ export function Header() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-bronze ${
-                        active ? "text-bronze" : "text-ink/80"
+                      className={`px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-accent ${
+                        active ? "text-accent" : "text-ink/80"
                       }`}
                     >
                       {link.label}
@@ -145,12 +145,12 @@ export function Header() {
                   <div key={link.href} className="group relative">
                     <Link
                       href={link.href}
-                      className={`flex items-center gap-1 px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-bronze ${
-                        active ? "text-bronze" : "text-ink/80"
+                      className={`flex items-center gap-1 px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-accent ${
+                        active ? "text-accent" : "text-ink/80"
                       }`}
                     >
                       {link.label}
-                      <ChevronDown className="h-3.5 w-3.5 text-bronze transition-transform duration-300 group-hover:rotate-180" aria-hidden />
+                      <ChevronDown className="h-3.5 w-3.5 text-accent transition-transform duration-300 group-hover:rotate-180" aria-hidden />
                     </Link>
                     <div
                       className={`invisible absolute top-full translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 ${
@@ -167,19 +167,19 @@ export function Header() {
                                   onMouseEnter={() => setActiveCat((prev) => ({ ...prev, [link.href]: i }))}
                                   onFocus={() => setActiveCat((prev) => ({ ...prev, [link.href]: i }))}
                                   className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
-                                    currentCat === i ? "bg-white text-bronze shadow-sm" : "text-ink/75 hover:bg-white/70"
+                                    currentCat === i ? "bg-white text-accent shadow-sm" : "text-ink/75 hover:bg-white/70"
                                   }`}
                                 >
                                   <span
                                     className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg transition-colors ${
-                                      currentCat === i ? "bg-ink text-white" : "bg-white text-bronze ring-1 ring-line"
+                                      currentCat === i ? "bg-ink text-white" : "bg-white text-accent ring-1 ring-line"
                                     }`}
                                   >
                                     <Icon name={cat.icon as IconName} className="h-4 w-4" strokeWidth={1.9} aria-hidden />
                                   </span>
                                   <span className="flex-1">{cat.label}</span>
                                   <ChevronRight
-                                    className={`h-4 w-4 shrink-0 transition-opacity ${currentCat === i ? "text-bronze opacity-100" : "opacity-0"}`}
+                                    className={`h-4 w-4 shrink-0 transition-opacity ${currentCat === i ? "text-accent opacity-100" : "opacity-0"}`}
                                     aria-hidden
                                   />
                                 </button>
@@ -193,7 +193,7 @@ export function Header() {
                                 href={it.href}
                                 className="group/i flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-cream"
                               >
-                                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-blue text-bronze transition-colors group-hover/i:bg-ink group-hover/i:text-white">
+                                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-blue text-accent transition-colors group-hover/i:bg-ink group-hover/i:text-white">
                                   <Icon name={it.icon as IconName} className="h-[18px] w-[18px]" strokeWidth={1.8} aria-hidden />
                                 </span>
                                 <span className="min-w-0">
@@ -210,9 +210,9 @@ export function Header() {
                             <li key={child.href}>
                               <Link
                                 href={child.href}
-                                className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm text-ink/80 transition-colors hover:bg-cream hover:text-bronze"
+                                className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm text-ink/80 transition-colors hover:bg-cream hover:text-accent"
                               >
-                                <span className="h-1 w-1 shrink-0 bg-bronze" aria-hidden />
+                                <span className="h-1 w-1 shrink-0 bg-accent" aria-hidden />
                                 {child.label}
                               </Link>
                             </li>
@@ -281,7 +281,7 @@ export function Header() {
                             aria-label={`Toggle ${link.label} submenu`}
                             aria-expanded={openSub === link.href}
                             onClick={() => setOpenSub(openSub === link.href ? null : link.href)}
-                            className="grid h-9 w-9 place-items-center text-bronze"
+                            className="grid h-9 w-9 place-items-center text-accent"
                           >
                             <Plus className={`h-4 w-4 transition-transform duration-300 ${openSub === link.href ? "rotate-45" : ""}`} />
                           </button>
@@ -303,7 +303,7 @@ export function Header() {
                                   onClick={() => setOpen(false)}
                                   className="flex items-center gap-2.5 py-2.5 text-sm text-ink/75"
                                 >
-                                  <span className="h-1 w-1 shrink-0 bg-bronze" aria-hidden />
+                                  <span className="h-1 w-1 shrink-0 bg-accent" aria-hidden />
                                   {child.label}
                                 </Link>
                               </li>
@@ -317,14 +317,14 @@ export function Header() {
 
                 <div className="flex flex-col gap-4 pt-5">
                   <a href={phoneHref} className="inline-flex items-center gap-2 text-sm font-semibold text-ink">
-                    <Phone className="h-4 w-4 text-bronze" aria-hidden /> {siteConfig.contact.phoneDisplay}
+                    <Phone className="h-4 w-4 text-accent" aria-hidden /> {siteConfig.contact.phoneDisplay}
                   </a>
                   <ButtonLink href="/contact" variant="primary" withArrow onClick={() => setOpen(false)} className="w-full">
                     Get a Quote
                   </ButtonLink>
                   <div className="flex items-center gap-3 pt-1">
                     {socialLinks.map((s) => (
-                      <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="text-ink/45 hover:text-bronze">
+                      <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="text-ink/45 hover:text-accent">
                         <s.icon className="h-4 w-4" aria-hidden />
                       </a>
                     ))}
