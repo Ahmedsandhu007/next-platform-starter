@@ -3,7 +3,6 @@ import path from "path";
 import { siteConfig } from "@/lib/content";
 import { HeroPremium } from "@/components/HeroPremium";
 import { TrustedBy } from "@/components/TrustedBy";
-import { Approach } from "@/components/Approach";
 import { Services } from "@/components/Services";
 import { WhyChoose } from "@/components/WhyChoose";
 import { Industries } from "@/components/Industries";
@@ -29,7 +28,6 @@ export default function Home() {
     <>
       <HeroPremium cutoutSrc={cutoutSrc} />
       <TrustedBy />
-      <Approach />
       <Services />
       <WhyChoose />
       <Industries />

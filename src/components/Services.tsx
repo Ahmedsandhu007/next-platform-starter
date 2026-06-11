@@ -7,7 +7,15 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
 import { InteractiveCard } from "@/components/ui/InteractiveCard";
-import { copy, services } from "@/lib/content";
+import { copy, services, valueProps } from "@/lib/content";
+
+/** The 3 "how we help" value-props now live in this section as icon cards
+ *  (the standalone "How we help" section was removed from the home page). */
+const APPROACH_ICON: Record<string, IconName> = {
+  "proactive-tax-planning": "Receipt",
+  "cloud-accounting": "Cloud",
+  "advisory-partnership": "LineChart",
+};
 
 export function Services() {
   return (
@@ -23,7 +31,7 @@ export function Services() {
                   <>
                     <span
                       className={`grid h-14 w-14 place-items-center rounded-xl transition-all duration-300 ${
-                        active ? "scale-105 bg-ink text-white" : "bg-blue text-bronze"
+                        active ? "scale-105 bg-ink text-white" : "bg-blue text-accent"
                       }`}
                     >
                       <Icon name={service.icon as IconName} className="h-7 w-7" strokeWidth={1.8} aria-hidden />
@@ -35,7 +43,7 @@ export function Services() {
                     <ul className="mt-5 flex flex-1 flex-col gap-2.5 border-t border-line pt-5">
                       {service.points.map((point) => (
                         <li key={point} className="flex items-center gap-2.5 text-sm font-medium text-ink/80">
-                          <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-bronze-50 text-bronze">
+                          <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-50 text-accent">
                             <Check className="h-3 w-3" strokeWidth={3} aria-hidden />
                           </span>
                           {point}
@@ -46,12 +54,47 @@ export function Services() {
                     <Link
                       href={`/services/${service.slug}`}
                       className={`mt-6 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] transition-colors ${
-                        active ? "text-bronze" : "text-ink hover:text-bronze"
+                        active ? "text-accent" : "text-ink hover:text-accent"
                       }`}
                     >
                       Learn more
                       <ArrowRight
-                        className={`h-3.5 w-3.5 text-bronze transition-transform duration-300 ${active ? "translate-x-1" : ""}`}
+                        className={`h-3.5 w-3.5 text-accent transition-transform duration-300 ${active ? "translate-x-1" : ""}`}
+                        aria-hidden
+                      />
+                    </Link>
+                  </>
+                )}
+              </InteractiveCard>
+            </li>
+          ))}
+
+          {/* "How we help" value-props — merged in as icon cards */}
+          {valueProps.map((v) => (
+            <li key={v.slug}>
+              <InteractiveCard className="flex h-full flex-col rounded-2xl border border-line bg-white p-7">
+                {(active) => (
+                  <>
+                    <span
+                      className={`grid h-14 w-14 place-items-center rounded-xl transition-all duration-300 ${
+                        active ? "scale-105 bg-ink text-white" : "bg-blue text-accent"
+                      }`}
+                    >
+                      <Icon name={APPROACH_ICON[v.slug] ?? "Sparkles"} className="h-7 w-7" strokeWidth={1.8} aria-hidden />
+                    </span>
+
+                    <h3 className="mt-6 text-xl text-ink">{v.title}</h3>
+                    <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted">{v.description}</p>
+
+                    <Link
+                      href={`/how-we-help/${v.slug}`}
+                      className={`mt-6 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] transition-colors ${
+                        active ? "text-accent" : "text-ink hover:text-accent"
+                      }`}
+                    >
+                      Learn more
+                      <ArrowRight
+                        className={`h-3.5 w-3.5 text-accent transition-transform duration-300 ${active ? "translate-x-1" : ""}`}
                         aria-hidden
                       />
                     </Link>

@@ -5,10 +5,9 @@ import { ShieldCheck, Star } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import Image from "next/image";
+import { GoogleG } from "@/components/ui/brands";
 import { easeOut } from "@/lib/motion";
-import { copy } from "@/lib/content";
-
-const avatars = ["from-ink to-ink-soft", "from-bronze-500 to-bronze-700", "from-bronze-400 to-bronze-600", "from-ink-soft to-ink"];
+import { copy, reviewsMeta } from "@/lib/content";
 
 export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null }) {
   const reduce = useReducedMotion();
@@ -46,13 +45,18 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
         <div className="absolute -left-20 bottom-4 h-64 w-64 rounded-full border border-white/[0.07]" />
         {/* soft glows */}
         <div className="absolute -right-32 -top-28 h-[34rem] w-[34rem] rounded-full bg-white/10 blur-3xl motion-safe:animate-[floatY_15s_ease-in-out_infinite]" />
-        <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-bronze/15 blur-3xl" />
+        <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
       </div>
 
       <Container className="relative">
-        <div className="grid items-center gap-14 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10">
-          {/* Copy */}
-          <motion.div variants={container} initial="hidden" animate="visible">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-x-10 lg:gap-y-0">
+          {/* A — copy (heading, paragraph, buttons) */}
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="visible"
+            className="lg:col-start-1 lg:row-start-1"
+          >
             <motion.h1
               variants={item}
               className="text-[2.7rem] leading-[1.02] text-white sm:text-[3.3rem] lg:text-[4rem] xl:text-[4.7rem]"
@@ -73,40 +77,17 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
                 {copy.hero.secondaryCta}
               </ButtonLink>
             </motion.div>
-
-            <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-white/15 pt-7">
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2.5" aria-hidden>
-                  {avatars.map((g, i) => (
-                    <span key={i} className={`h-9 w-9 rounded-full border-2 border-white bg-gradient-to-br ${g}`} />
-                  ))}
-                </div>
-                <div>
-                  <div className="flex items-center gap-0.5 text-bronze-400" aria-hidden>
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-current" />
-                    ))}
-                  </div>
-                  <p className="mt-0.5 text-sm text-white/70">
-                    Rated <span className="font-bold text-white">{copy.hero.ratingScore}</span> {copy.hero.ratingLabel}
-                  </p>
-                </div>
-              </div>
-              <span className="hidden h-10 w-px bg-white/20 sm:block" aria-hidden />
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
-                <ShieldCheck className="h-5 w-5 text-bronze-400" strokeWidth={1.75} aria-hidden />
-                {copy.hero.badge}
-              </span>
-            </motion.div>
           </motion.div>
 
-          {/* Right visual: a transparent cut-out (frameless on the navy, like the
-              reference) when public/hero.png exists; otherwise the photo, framed. */}
+          {/* B — visual: a transparent cut-out (frameless on the blue, like the
+              reference) when public/hero.png exists; otherwise the photo, framed.
+              On mobile this sits ABOVE the review badges; on desktop it's the
+              right column spanning both rows. */}
           <motion.div
             initial={reduce ? false : { opacity: 0, scale: 0.96, y: 20 }}
             animate={reduce ? {} : { opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, ease: easeOut, delay: 0.2 }}
-            className="relative mx-auto w-full max-w-2xl lg:max-w-none"
+            className="relative mx-auto w-full max-w-2xl lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-none"
           >
             {cutoutSrc ? (
               <div className="relative">
@@ -127,7 +108,7 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
                 {/* offset accent frame for depth + a bronze tie-in */}
                 <div
                   aria-hidden
-                  className="absolute -bottom-4 -right-4 hidden h-full w-full rounded-3xl border border-bronze/40 sm:block"
+                  className="absolute -bottom-4 -right-4 hidden h-full w-full rounded-3xl border border-accent/40 sm:block"
                 />
                 <div className="relative overflow-hidden rounded-3xl bg-white shadow-2xl shadow-navy-700/50 ring-1 ring-white/10">
                   <Image
@@ -142,6 +123,39 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
                 </div>
               </>
             )}
+          </motion.div>
+
+          {/* C — review badges (Google + ACCA): beneath the picture on mobile,
+              under the copy on desktop. */}
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={reduce ? {} : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: easeOut, delay: 0.5 }}
+            className="flex flex-wrap items-center gap-x-6 gap-y-4 lg:col-start-1 lg:row-start-2 lg:border-t lg:border-white/15 lg:pt-7"
+          >
+            {/* Google reviews — white chip behind the G only; text on the blue */}
+            <div className="inline-flex items-center gap-2.5">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white shadow-lg shadow-navy-700/30">
+                <GoogleG className="h-6 w-6" />
+              </span>
+              <div className="text-left">
+                <p className="text-[0.78rem] font-semibold leading-none text-white">Google Reviews</p>
+                <div className="mt-1.5 flex items-center gap-1.5">
+                  <span className="text-sm font-bold leading-none text-white">{reviewsMeta.rating.score}</span>
+                  <span className="flex items-center gap-0.5" aria-hidden>
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-[#fbbc05] text-[#fbbc05]" />
+                    ))}
+                  </span>
+                  <span className="text-xs text-white/70">({reviewsMeta.rating.count})</span>
+                </div>
+              </div>
+            </div>
+            <span className="hidden h-10 w-px bg-white/20 sm:block" aria-hidden />
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
+              <ShieldCheck className="h-5 w-5 text-blue-300" strokeWidth={1.75} aria-hidden />
+              {copy.hero.badge}
+            </span>
           </motion.div>
         </div>
 
