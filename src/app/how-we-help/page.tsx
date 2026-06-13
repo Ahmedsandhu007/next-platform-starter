@@ -27,7 +27,7 @@ export default function HowWeHelpPage() {
       <section className="relative overflow-hidden bg-white py-16 sm:py-20">
         <BackgroundFX variant="subtle" />
         <Container className="relative">
-          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal-stagger>
+          <ul className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2" data-reveal-stagger>
             {approachPages.map((p) => (
               <li key={p.slug}>
                 <Link

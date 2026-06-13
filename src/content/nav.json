@@ -8,7 +8,7 @@
           "label": "Accounts & Compliance",
           "icon": "BookOpen",
           "items": [
-            { "title": "Bookkeeping & Annual Accounts", "description": "Tidy cloud books and year-end accounts, filed early.", "icon": "BookOpen", "href": "/services/bookkeeping" },
+            { "title": "Bookkeeping & Annual Accounts", "description": "Tidy books and year-end accounts, filed early.", "icon": "BookOpen", "href": "/services/bookkeeping" },
             { "title": "VAT & Making Tax Digital", "description": "The right scheme, accurate returns, no missed deadlines.", "icon": "Percent", "href": "/services/vat" },
             { "title": "Payroll & Pensions", "description": "Fully managed RTI payroll and auto-enrolment.", "icon": "Users", "href": "/services/payroll" }
           ]
@@ -60,7 +60,7 @@
           "icon": "Sparkles",
           "items": [
             { "title": "Fast turnaround", "description": "A reply to every query within one business day.", "icon": "Zap", "href": "/why-mmr#why" },
-            { "title": "Cloud experts", "description": "Certified in Xero, QuickBooks and Sage.", "icon": "Cloud", "href": "/why-mmr#why" },
+            { "title": "Software experts", "description": "Certified in Xero, QuickBooks and Sage.", "icon": "Laptop", "href": "/why-mmr#why" },
             { "title": "Client stories", "description": "See what UK businesses say about us.", "icon": "MessagesSquare", "href": "/why-mmr#testimonials" }
           ]
         }
@@ -107,8 +107,8 @@
           ]
         },
         {
-          "label": "Cloud & support",
-          "icon": "Cloud",
+          "label": "Switching & support",
+          "icon": "MessagesSquare",
           "items": [
             { "title": "Switch to MMR", "description": "We move you from your old accountant, paperless.", "icon": "Zap", "href": "/how-we-work#process" },
             { "title": "Year-round support", "description": "A dedicated accountant, only a call away.", "icon": "MessagesSquare", "href": "/why-mmr#why" }

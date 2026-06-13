@@ -22,9 +22,13 @@ export function Services() {
       <Container>
         <SectionHeading {...copy.services.heading} />
 
-        <ul data-reveal-stagger className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ul data-reveal-stagger className="mt-16 flex flex-wrap justify-center gap-6">
           {services.map((service) => (
-            <li id={service.slug} key={service.title} className="scroll-mt-28">
+            <li
+              id={service.slug}
+              key={service.title}
+              className="w-full scroll-mt-28 sm:w-[calc(50%_-_0.75rem)] lg:w-[calc(33.333%_-_1rem)]"
+            >
               <InteractiveCard className="flex h-full flex-col rounded-2xl border border-line bg-white p-7">
                 {(active) => (
                   <>
@@ -70,7 +74,7 @@ export function Services() {
 
           {/* "How we help" value-props — merged in as icon cards */}
           {valueProps.map((v) => (
-            <li key={v.slug}>
+            <li key={v.slug} className="w-full sm:w-[calc(50%_-_0.75rem)] lg:w-[calc(33.333%_-_1rem)]">
               <InteractiveCard className="flex h-full flex-col rounded-2xl border border-line bg-white p-7">
                 {(active) => (
                   <>
