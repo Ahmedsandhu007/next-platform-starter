@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { GoogleG, GoogleWordmark, IcaewLogo, AccaLogo, AatLogo } from "@/components/ui/brands";
+import { GoogleG, GoogleWordmark, AccaLogo } from "@/components/ui/brands";
 import { reviews, reviewsMeta } from "@/lib/content";
 
 const avatarTones = [
@@ -45,19 +45,25 @@ export function Testimonials() {
       aria-label="Accreditations and client reviews"
     >
       <Container>
-        {/* Accreditations */}
+        {/* Single ACCA statement */}
         <Reveal className="mx-auto max-w-3xl text-center">
-          <span className="eyebrow text-accent">{t.eyebrow}</span>
-          <h2 className="mt-4 text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">{t.title}</h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted">{t.intro}</p>
+          <h2 className="text-2xl leading-snug text-ink sm:text-3xl">{t.intro}</h2>
         </Reveal>
 
-        {/* Accreditation logos (official colours) */}
+        {/* ACCA accreditation + relevant credentials */}
         <Reveal delay={0.05}>
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-14 gap-y-9 sm:gap-x-20">
-            <IcaewLogo />
+          <div className="mt-11 flex flex-col items-center gap-5">
             <AccaLogo />
-            <AatLogo />
+            <div className="flex flex-wrap items-center justify-center gap-2.5">
+              {["Chartered Certified Accountants", "ACCA-regulated", "Fully insured", "Ethical oversight"].map((c) => (
+                <span
+                  key={c}
+                  className="rounded-full border border-line bg-cream/60 px-3.5 py-1.5 text-xs font-semibold text-ink/70"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
         </Reveal>
 

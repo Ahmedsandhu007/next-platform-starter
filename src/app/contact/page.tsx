@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} icon="PhoneCall" />
+      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} illus="contact" />
       <Contact />
     </>
   );

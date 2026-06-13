@@ -6,11 +6,11 @@ import { TrustedBy } from "@/components/TrustedBy";
 import { Services } from "@/components/Services";
 import { WhyChoose } from "@/components/WhyChoose";
 import { Industries } from "@/components/Industries";
-import { CloudAccounting } from "@/components/CloudAccounting";
 import { HowWeWork } from "@/components/HowWeWork";
 import { Testimonials } from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
 import { CtaBand } from "@/components/CtaBand";
+import { LeadPopup } from "@/components/LeadPopup";
 
 export default function Home() {
   // Hero cut-out source, in priority order:
@@ -31,11 +31,11 @@ export default function Home() {
       <Services />
       <WhyChoose />
       <Industries />
-      <CloudAccounting />
       <HowWeWork />
       <Testimonials />
       <FAQ />
       <CtaBand />
+      <LeadPopup />
     </>
   );
 }

@@ -23,5 +23,22 @@
             <input name="consent" type="text" />
             <input name="bot-field" type="text" />
         </form>
+
+        <!-- Homepage "request a callback" popup. Mirrors LeadPopup.tsx field names. -->
+        <form name="callback" data-netlify="true" netlify-honeypot="bot-field" hidden>
+            <input type="hidden" name="form-name" value="callback" />
+            <input name="name" type="text" />
+            <input name="email" type="email" />
+            <input name="phone" type="tel" />
+            <input name="bot-field" type="text" />
+        </form>
+
+        <!-- Live-chat email capture. Mirrors ChatPanel.tsx field names. -->
+        <form name="chat-lead" data-netlify="true" netlify-honeypot="bot-field" hidden>
+            <input type="hidden" name="form-name" value="chat-lead" />
+            <input name="email" type="email" />
+            <input name="topic" type="text" />
+            <input name="bot-field" type="text" />
+        </form>
     </body>
 </html>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin } from "lucide-react";
+import { Clock, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { ButtonLink } from "@/components/ui/Button";
@@ -115,6 +115,13 @@ export function Footer() {
                 <a href={`mailto:${siteConfig.contact.email}`} className="break-all text-white/80 transition-colors hover:text-white">
                   {siteConfig.contact.email}
                 </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock className="mt-0.5 h-[18px] w-[18px] shrink-0 text-blue-300" strokeWidth={1.75} aria-hidden />
+                <div>
+                  <p className="text-white/60">{siteConfig.contact.hours}</p>
+                  <p className="mt-0.5 font-semibold text-white/85">24/7 support for clients</p>
+                </div>
               </li>
             </ul>
           </div>

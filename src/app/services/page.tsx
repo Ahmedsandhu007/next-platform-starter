@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { ServicesDetailed } from "@/components/ServicesDetailed";
-import { CloudAccounting } from "@/components/CloudAccounting";
 import { CtaBand } from "@/components/CtaBand";
 import { copy } from "@/lib/content";
 
@@ -16,9 +15,8 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} art="advisory" />
+      <PageHero crumb={page.crumb} title={page.title} subtitle={page.subtitle} illus="finance" />
       <ServicesDetailed />
-      <CloudAccounting />
       <CtaBand />
     </>
   );

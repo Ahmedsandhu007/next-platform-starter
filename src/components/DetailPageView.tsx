@@ -5,7 +5,6 @@ import { Container } from "@/components/ui/Container";
 import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import { CtaBand } from "@/components/CtaBand";
 import { Icon, type IconName } from "@/components/ui/Icon";
-import { type Name as SpotArtName } from "@/components/ui/SpotArt";
 import { ButtonLink } from "@/components/ui/Button";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { siteConfig } from "@/lib/content";
@@ -17,16 +16,27 @@ const SECTION_META: Record<DetailKind, { label: string; href: string }> = {
   approach: { label: "How we help", href: "/how-we-help" },
 };
 
-/** Map detail-page slugs to a fitting spot illustration; industries fall back
- *  to the page's own icon (there's no sector-specific illustration). */
-const ART_BY_SLUG: Record<string, SpotArtName> = {
+/** Map every detail-page slug to a recoloured header illustration
+ *  (public/illustrations/<key>.svg). */
+const ILLUS_BY_SLUG: Record<string, string> = {
+  // Services
   bookkeeping: "bookkeeping",
   "tax-planning": "tax",
   vat: "vat",
   payroll: "payroll",
   "company-formation": "formation",
   advisory: "advisory",
-  "proactive-tax-planning": "tax",
+  // Industries
+  contractors: "contractors",
+  ecommerce: "ecommerce",
+  startups: "startups",
+  landlords: "property",
+  hospitality: "growth",
+  healthcare: "healthcare",
+  construction: "construction",
+  creative: "creative",
+  // How we help
+  "proactive-tax-planning": "proactive",
   "cloud-accounting": "cloud",
   "advisory-partnership": "advisory",
 };
@@ -57,7 +67,7 @@ function sectionIcon(heading: string, fallback: IconName): IconName {
 /** Shared renderer for every Service / Industry / "How we help" detail page. */
 export function DetailPageView({ page }: { page: DetailPage }) {
   const parent = SECTION_META[page.kind];
-  const art = ART_BY_SLUG[page.slug];
+  const illus = ILLUS_BY_SLUG[page.slug];
   const pageIcon = page.icon as IconName;
   const url = `${siteConfig.url}${detailHref(page.kind, page.slug)}`;
 
@@ -108,8 +118,8 @@ export function DetailPageView({ page }: { page: DetailPage }) {
         parent={parent}
         title={page.title}
         subtitle={page.intro}
-        art={art}
-        icon={art ? undefined : pageIcon}
+        illus={illus}
+        icon={illus ? undefined : pageIcon}
       />
 
       {/* Content as an icon-card grid (not a wall of prose) */}

@@ -16,6 +16,7 @@ export function PageHero({
   subtitle,
   crumb,
   parent,
+  illus,
   art,
   icon,
 }: {
@@ -24,12 +25,14 @@ export function PageHero({
   crumb: string;
   /** Optional middle breadcrumb (e.g. Home / Services / This page). */
   parent?: { label: string; href: string };
+  /** Optional recoloured header illustration at public/illustrations/<illus>.svg. */
+  illus?: string;
   /** Optional spot illustration floated on the right (desktop only). */
   art?: SpotArtName;
   /** Optional icon visual (used when no illustration fits the page). */
   icon?: IconName;
 }) {
-  const hasVisual = Boolean(art || icon);
+  const hasVisual = Boolean(illus || art || icon);
 
   return (
     <section className="relative overflow-hidden bg-brand-blue pt-32 pb-20 text-white sm:pt-36 sm:pb-24 lg:pt-40">
@@ -83,7 +86,12 @@ export function PageHero({
                 {/* soft glow so the card sits naturally on the blue */}
                 <div aria-hidden className="absolute -inset-6 rounded-[45%] bg-white/15 blur-3xl" />
                 <div className="relative overflow-hidden rounded-3xl shadow-2xl shadow-navy-700/40 ring-1 ring-white/15">
-                  {art ? (
+                  {illus ? (
+                    <div className="relative aspect-[4/3] bg-white p-6 sm:p-8">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={`/illustrations/${illus}.svg`} alt="" className="h-full w-full object-contain" />
+                    </div>
+                  ) : art ? (
                     <SpotArt name={art} />
                   ) : (
                     <div className="relative aspect-[220/180] bg-blue">

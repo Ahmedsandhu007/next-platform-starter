@@ -22,7 +22,7 @@ export default function HowWeHelpPage() {
         crumb="How we help"
         title="More than compliance — a partner in your growth"
         subtitle="Filing on time is the bare minimum. We plan ahead, keep your numbers live, and turn them into advice that actually moves the needle. Here is how we help."
-        icon="Lightbulb"
+        illus="growth"
       />
       <section className="relative overflow-hidden bg-white py-16 sm:py-20">
         <BackgroundFX variant="subtle" />
