@@ -77,7 +77,8 @@ export const reviewsMeta = {
 
 /** Outbound link to the firm's Google Business reviews — redirects to the live
  *  listing, the authoritative source for the current rating + review count. */
-export const googleReviewsUrl = "https://share.google/8K5ZSZ0RAsIYGeWob";
+export const googleReviewsUrl =
+  "https://www.google.com/maps/place/MMR+%26+CO+Chartered+Certified+Accountants+%26+Tax+Advisors/@53.4919153,-2.2435325,17z/data=!4m8!3m7!1s0x487bb1b7a6fca8ad:0x4a6cca253935cc0a!8m2!3d53.4919121!4d-2.2409576!9m1!1b1!16s%2Fg%2F11c2nhc49h?entry=ttu&g_ep=EgoyMDI2MDYxMC4wIKXMDSoASAFQAw%3D%3D";
 
 export type Faq = {
   question: string;

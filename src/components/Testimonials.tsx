@@ -6,7 +6,7 @@ import type { Swiper as SwiperClass } from "swiper";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { GoogleG, GoogleWordmark, AccaLogo } from "@/components/ui/brands";
@@ -46,8 +46,10 @@ export function Testimonials() {
     >
       <Container>
         {/* Single ACCA statement */}
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl leading-snug text-ink sm:text-3xl">{t.intro}</h2>
+        <Reveal className="mx-auto max-w-3xl px-3 text-center">
+          <h2 className="text-balance font-display text-2xl font-bold leading-[1.32] text-ink sm:text-[1.95rem] sm:leading-snug lg:text-[2.25rem] lg:leading-[1.28]">
+            {t.intro}
+          </h2>
         </Reveal>
 
         {/* ACCA accreditation + relevant credentials */}
@@ -88,23 +90,6 @@ export function Testimonials() {
               <GoogleWordmark className="align-middle text-base" />
             </a>
           </div>
-        </Reveal>
-
-        {/* Read all reviews on Google */}
-        <Reveal delay={0.08} className="mt-6 flex justify-center">
-          <a
-            href={googleReviewsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex max-w-full items-center gap-2.5 rounded-full border border-line bg-white px-5 py-2.5 text-center text-[0.8rem] font-semibold text-ink shadow-sm transition-colors hover:border-accent hover:text-accent"
-          >
-            <GoogleG className="h-4 w-4 shrink-0" />
-            <span>MMR &amp; CO Chartered Certified Accountants &amp; Tax Advisors Reviews</span>
-            <ArrowUpRight
-              className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              aria-hidden
-            />
-          </a>
         </Reveal>
 
         {/* Review cards */}
