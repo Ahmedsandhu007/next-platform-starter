@@ -8,3 +8,8 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Event-triggered + serverless functions. submission-created.mjs sends the
+# contact-form auto-reply (dormant until RESEND_API_KEY is set — see FORMS.md).
+[functions]
+  directory = "netlify/functions"

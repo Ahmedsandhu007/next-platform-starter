@@ -143,6 +143,15 @@ the real artwork, see **`public/brand/README.txt`**.
 
 ---
 
+## Contact form enquiries
+
+The contact form needs **no database** — Netlify Forms stores every submission and
+can email it to you. To choose **where enquiries are emailed**, and to optionally
+switch on **reCAPTCHA** spam protection or a **visitor auto-reply**, see
+**[`FORMS.md`](FORMS.md)**.
+
+---
+
 ## Troubleshooting
 
 - **"CMS not configured" on the login page** → `ADMIN_PASSWORD` / `ADMIN_SESSION_SECRET`

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AlertCircle, Check, Loader2, Send } from "lucide-react";
 import { businessTypes, siteConfig } from "@/lib/content";
 
@@ -9,13 +9,64 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/** reCAPTCHA v2 site key. Set NEXT_PUBLIC_RECAPTCHA_SITE_KEY to switch the widget
+ *  on; while it's unset the form behaves exactly as before (honeypot only). The
+ *  matching SITE_RECAPTCHA_SECRET + data-netlify-recaptcha in __forms.html are what
+ *  make Netlify actually reject failed challenges — see FORMS.md. */
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+type Grecaptcha = {
+  render: (el: HTMLElement, opts: Record<string, unknown>) => number;
+  getResponse: (id?: number) => string;
+  reset: (id?: number) => void;
+};
+declare global {
+  interface Window {
+    grecaptcha?: Grecaptcha;
+  }
+}
+
 const fieldClass =
   "w-full rounded-none border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 transition-colors focus:border-accent focus-visible:outline-none focus:ring-1 focus:ring-accent";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
+  const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const recaptchaRef = useRef<HTMLDivElement>(null);
+  const widgetId = useRef<number | null>(null);
+
+  // Render the reCAPTCHA v2 widget once Google's script is ready — only when a
+  // site key is configured. Re-runs on `status` so the widget re-appears after the
+  // success screen resets to the form. Polls because the script loads async.
+  useEffect(() => {
+    if (!RECAPTCHA_SITE_KEY || status === "success") return;
+    let timer: ReturnType<typeof setTimeout>;
+    const render = () => {
+      const el = recaptchaRef.current;
+      if (!el || el.childElementCount > 0) return; // gone, or already rendered
+      if (window.grecaptcha?.render) {
+        widgetId.current = window.grecaptcha.render(el, {
+          sitekey: RECAPTCHA_SITE_KEY,
+          callback: () => setRecaptchaError(null),
+          "expired-callback": () => setRecaptchaError(null),
+        });
+      } else {
+        timer = setTimeout(render, 250);
+      }
+    };
+    if (!document.getElementById("recaptcha-api")) {
+      const s = document.createElement("script");
+      s.id = "recaptcha-api";
+      s.src = "https://www.google.com/recaptcha/api.js?render=explicit";
+      s.async = true;
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+    render();
+    return () => clearTimeout(timer);
+  }, [status]);
 
   function validate(data: FormData): Errors {
     const next: Errors = {};
@@ -43,6 +94,18 @@ export function ContactForm() {
       return;
     }
 
+    // reCAPTCHA (only when configured): require a completed challenge before we send.
+    let token = "";
+    if (RECAPTCHA_SITE_KEY) {
+      token = window.grecaptcha?.getResponse(widgetId.current ?? undefined) ?? "";
+      if (!token) {
+        setRecaptchaError("Please confirm you're not a robot.");
+        recaptchaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      setRecaptchaError(null);
+    }
+
     // Deliver via Netlify Forms (zero-config on Netlify). The matching hidden form
     // in public/__forms.html lets Netlify detect the fields at deploy time; here we
     // POST the submission to it over AJAX so the page never reloads.
@@ -51,6 +114,7 @@ export function ContactForm() {
       const body = new URLSearchParams();
       data.forEach((value, key) => body.append(key, typeof value === "string" ? value : ""));
       body.set("form-name", "contact");
+      if (token) body.set("g-recaptcha-response", token);
 
       const res = await fetch("/__forms.html", {
         method: "POST",
@@ -60,8 +124,11 @@ export function ContactForm() {
       if (!res.ok) throw new Error(`Submission failed (${res.status})`);
 
       form.reset();
+      window.grecaptcha?.reset(widgetId.current ?? undefined);
       setStatus("success");
     } catch {
+      // reCAPTCHA tokens are single-use — reset so the visitor can retry.
+      window.grecaptcha?.reset(widgetId.current ?? undefined);
       setStatus("error");
     }
   }
@@ -192,6 +259,15 @@ export function ContactForm() {
           </p>
         )}
       </div>
+
+      {RECAPTCHA_SITE_KEY && (
+        <div className="mt-5">
+          <div ref={recaptchaRef} className="g-recaptcha" />
+          {recaptchaError && (
+            <p className="mt-1.5 text-xs font-medium text-red-700">{recaptchaError}</p>
+          )}
+        </div>
+      )}
 
       {status === "error" && (
         <div
