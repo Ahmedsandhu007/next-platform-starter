@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import Image from "next/image";
 import { GoogleG } from "@/components/ui/brands";
 import { easeOut } from "@/lib/motion";
-import { copy, reviewsMeta } from "@/lib/content";
+import { copy, googleReviewsUrl, reviewsMeta } from "@/lib/content";
 
 export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null }) {
   const reduce = useReducedMotion();
@@ -134,7 +134,13 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
             className="flex flex-wrap items-center gap-x-6 gap-y-4 lg:col-start-1 lg:row-start-2 lg:border-t lg:border-white/15 lg:pt-7"
           >
             {/* Google reviews — white chip behind the G only; text on the blue */}
-            <div className="inline-flex items-center gap-2.5">
+            <a
+              href={googleReviewsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Read our reviews on Google"
+              className="inline-flex items-center gap-2.5 transition-opacity hover:opacity-90"
+            >
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white shadow-lg shadow-navy-700/30">
                 <GoogleG className="h-6 w-6" />
               </span>
@@ -150,7 +156,7 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
                   <span className="text-xs text-white/70">({reviewsMeta.rating.count})</span>
                 </div>
               </div>
-            </div>
+            </a>
             <span className="hidden h-10 w-px bg-white/20 sm:block" aria-hidden />
             <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
               <ShieldCheck className="h-5 w-5 text-blue-300" strokeWidth={1.75} aria-hidden />

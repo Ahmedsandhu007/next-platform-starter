@@ -2,61 +2,55 @@
   "eyebrow": "Accredited & reviewed",
   "title": "Qualified, regulated and trusted",
   "intro": "Every client is looked after by qualified Chartered Certified Accountants, registered with ACCA body.",
-  "rating": { "score": "4.9", "outOf": "5", "count": 240, "platform": "Google" },
+  "rating": { "score": "5.0", "outOf": "5", "count": 75, "platform": "Google" },
   "reviews": [
     {
-      "name": "Sarah Whitfield",
-      "role": "Director, Northgate Interiors Ltd",
-      "date": "14 May 2026",
+      "name": "Ahsan Qaisar",
+      "date": "18 February 2026",
       "rating": 5,
       "image": "",
-      "initials": "SW",
-      "quote": "Switching to MMR was the easiest business decision we made. Our books are finally clear, and they spotted reliefs our old accountant never mentioned."
+      "initials": "AQ",
+      "quote": "Absolute professionals. The entire team is a solid 10 out of 10."
     },
     {
-      "name": "Daniel Osei",
-      "role": "IT Consultant",
-      "date": "2 May 2026",
+      "name": "Carlo Colombo",
+      "date": "7 April 2026",
       "rating": 5,
       "image": "",
-      "initials": "DO",
-      "quote": "As a contractor I just want to be paid correctly and pay the right tax. MMR handle all of it and reply within the hour — I genuinely never worry about it."
+      "initials": "CC",
+      "quote": "Filled our taxes perfectly and were always on top of things."
     },
     {
-      "name": "Priya Nair",
-      "role": "Co-founder, Loophapp",
-      "date": "28 April 2026",
+      "name": "Happy Sammy",
+      "date": "28 January 2026",
       "rating": 5,
       "image": "",
-      "initials": "PN",
-      "quote": "Their cash-flow forecasts helped us raise our first round with confidence. It feels like having a finance director without the full-time cost."
+      "initials": "HS",
+      "quote": "Professionally constructed and reliable. Good communication and helpful."
     },
     {
-      "name": "Mark Ellison",
-      "role": "Owner, Ellison Plumbing & Heating",
-      "date": "19 April 2026",
+      "name": "Moderna Coronet",
+      "date": "3 July 2025",
       "rating": 5,
       "image": "",
-      "initials": "ME",
-      "quote": "Fixed fees mean no nasty surprises, and the year-end was done weeks early for the first time ever. Highly recommended for any small limited company."
+      "initials": "MC",
+      "quote": "Great service, impeccable. Thank you Mohsin, you are a life saver!"
     },
     {
-      "name": "James Carter",
-      "role": "Founder, Carter & Reeve Architects",
-      "date": "8 April 2026",
+      "name": "Silver Spindle",
+      "date": "10 June 2025",
       "rating": 5,
       "image": "",
-      "initials": "JC",
-      "quote": "MMR restructured how we pay ourselves and saved us more in the first year than two years of their fees combined. Genuinely proactive advisers."
+      "initials": "SS",
+      "quote": "Always found them to be professional. Our company needs are well looked after."
     },
     {
-      "name": "Aisha Khan",
-      "role": "Director, Brightway Recruitment",
-      "date": "30 March 2026",
+      "name": "Ionela Ionela",
+      "date": "24 June 2025",
       "rating": 5,
       "image": "",
-      "initials": "AK",
-      "quote": "Moving our payroll and VAT to MMR took the stress out of month-end completely. Everything is in the cloud and I can see exactly where we stand."
+      "initials": "II",
+      "quote": "Very respectful and very quick to help. Highly recommend."
     }
   ]
 }

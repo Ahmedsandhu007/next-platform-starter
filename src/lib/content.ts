@@ -16,7 +16,7 @@ import type { SiteSettings, SiteCopy } from "@/lib/cms/siteSchema";
  *  CMS-editable in src/content/settings.json. */
 export const siteConfig: SiteSettings = settingsData as SiteSettings;
 
-export type ServiceArt = "tax" | "cloud" | "advisory" | "bookkeeping" | "vat" | "payroll" | "formation";
+export type ServiceArt = "tax" | "advisory" | "bookkeeping" | "vat" | "payroll" | "formation";
 
 export type Service = {
   slug: string;
@@ -39,7 +39,7 @@ export const whyPoints: WhyPoint[] = sectionsData.whyPoints as WhyPoint[];
 
 export type ValueProp = {
   slug: string;
-  art: "tax" | "cloud" | "advisory" | "bookkeeping";
+  art: "tax" | "advisory" | "bookkeeping";
   title: string;
   description: string;
 };
@@ -74,6 +74,10 @@ export const reviewsMeta = {
   intro: reviewsData.intro,
   rating: reviewsData.rating,
 };
+
+/** Outbound link to the firm's Google Business reviews — redirects to the live
+ *  listing, the authoritative source for the current rating + review count. */
+export const googleReviewsUrl = "https://share.google/8K5ZSZ0RAsIYGeWob";
 
 export type Faq = {
   question: string;

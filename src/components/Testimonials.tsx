@@ -6,11 +6,11 @@ import type { Swiper as SwiperClass } from "swiper";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { GoogleG, GoogleWordmark, AccaLogo } from "@/components/ui/brands";
-import { reviews, reviewsMeta } from "@/lib/content";
+import { googleReviewsUrl, reviews, reviewsMeta } from "@/lib/content";
 
 const avatarTones = [
   "from-[#24282b] to-[#16191b]",
@@ -78,11 +78,33 @@ export function Testimonials() {
               </div>
             </div>
             <span className="hidden h-12 w-px bg-line sm:block" aria-hidden />
-            <p className="text-sm leading-relaxed text-muted">
-              from <span className="font-bold text-ink">{t.rating.count}+</span> verified reviews on{" "}
+            <a
+              href={googleReviewsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm leading-relaxed text-muted underline-offset-2 transition-colors hover:text-ink hover:underline"
+            >
+              from <span className="font-bold text-ink">{t.rating.count}</span> reviews on{" "}
               <GoogleWordmark className="align-middle text-base" />
-            </p>
+            </a>
           </div>
+        </Reveal>
+
+        {/* Read all reviews on Google */}
+        <Reveal delay={0.08} className="mt-6 flex justify-center">
+          <a
+            href={googleReviewsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex max-w-full items-center gap-2.5 rounded-full border border-line bg-white px-5 py-2.5 text-center text-[0.8rem] font-semibold text-ink shadow-sm transition-colors hover:border-accent hover:text-accent"
+          >
+            <GoogleG className="h-4 w-4 shrink-0" />
+            <span>MMR &amp; CO Chartered Certified Accountants &amp; Tax Advisors Reviews</span>
+            <ArrowUpRight
+              className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              aria-hidden
+            />
+          </a>
         </Reveal>
 
         {/* Review cards */}
