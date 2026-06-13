@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 # MMR Accountants — Marketing Website
 
 A premium, fully responsive marketing site for a UK chartered accountancy firm,
-built with the modern Next.js App Router. Direction 4 — "Contemporary Private
-Equity": a pure-white background with charcoal black (`#1A1A1A`) and rich bronze
-(`#8B6A3D`) accents, an editorial Bodoni Moda (Didone) display face, hairline
-rules, smooth scroll animations and a strong SEO/accessibility baseline.
+built with the modern Next.js App Router.
 
 ## Tech stack
 
@@ -16,19 +12,21 @@ rules, smooth scroll animations and a strong SEO/accessibility baseline.
 
 ## Pages
 
-Seven routes share one layout (header, footer, side rails, contact dock):
+Routes share one layout (header, footer, side rails, contact dock):
 
-- `/` — home: photographic hero with an inline **Get-a-Quote form**, then trusted-by,
-  services, why MMR, industries, cloud, process, testimonials, FAQ and a closing CTA.
-- `/services`, `/why-mmr`, `/industries`, `/how-we-work`, `/faq`, `/contact` — each a
-  focused page with a breadcrumb banner (`PageHero`) and the relevant sections.
+- `/` — home: hero with the Google-reviews + ACCA badges, then trusted-by,
+  services, why MMR, industries, process, testimonials, FAQ and a closing CTA.
+- `/services`, `/why-mmr`, `/industries`, `/how-we-help`, `/how-we-work`, `/faq`,
+  `/contact` — each a focused page with a decorative blue breadcrumb banner
+  (`PageHero`) and the relevant sections.
+- Detail pages under `/services/[slug]`, `/industries/[slug]`, `/how-we-help/[slug]`.
 
 The navbar uses **dropdown mega-menus** (desktop hover panels / mobile accordion);
 dropdown items deep-link to anchored sections (e.g. `/services#payroll`).
 
-**Floating chrome:** a left social rail, a right "Get a Quote" tab, a back-to-top
-button, and a bottom-right **contact speed-dial** that fans out *Call us* + *Live chat*
-(the scripted assistant) on hover/tap. Decorative bronze "seal" sticker on the hero.
+**Floating chrome:** a bottom-right **contact speed-dial** that fans out *Call us* +
+*Live chat* (the scripted assistant) on hover/tap, plus a once-per-session
+"request a callback" popup on the home page.
 
 ## Getting started
 
@@ -52,93 +50,43 @@ npm run lint       # ESLint
 If Node is already on your `PATH` and you are on a normal network, the plain
 `npm run dev` / `npm run build` commands work without the two `$env:` lines.
 
-A helper script, `preview-start.cmd`, launches the already-built production server
-on port 3100 (used by the editor preview).
-
 ## Project structure
 
 ```
 src/
   app/
-    layout.tsx            Shared chrome (Header, Footer, rails, ContactDock) + SEO + JSON-LD
+    layout.tsx            Shared chrome (Header, Footer, ContactDock) + SEO + JSON-LD
     page.tsx              Home
-    services/, why-mmr/, industries/, how-we-work/, faq/, contact/   page routes
-    globals.css           Tailwind v4 theme (charcoal/bronze palette, fonts, keyframes)
+    services/, industries/, how-we-help/, how-we-work/, why-mmr/, faq/, contact/
+    globals.css           Tailwind v4 theme (navy/orange/light-blue palette, fonts, keyframes)
     sitemap.ts · robots.ts · opengraph-image.tsx
   components/
-    Header (mega-menu), HeroPhoto + QuoteFormMini, PageHero, CtaBand,
-    TrustedBy, Services, WhyChoose, Industries, CloudAccounting, HowWeWork,
-    Testimonials, FAQ, Contact + ContactForm, Footer,
-    ContactDock + ChatPanel, SocialRail, QuoteTab, ScrollTop
-    ui/                   Reveal, AnimatedCounter, Container, Button,
-                          SectionHeading, Icon, Logo, Seal
+    Header (mega-menu), HeroPremium, PageHero, CtaBand, TrustedBy, Services,
+    WhyChoose, Industries, HowWeWork, Testimonials, FAQ, Contact + ContactForm,
+    Footer, ContactDock + ChatPanel, LeadPopup, DetailPageView
+    admin/                the /admin CMS editors
+    ui/                   Reveal, Container, Button, Icon, SpotArt, brands, …
+  content/                CMS-editable JSON (settings, copy, sections, nav, legal,
+                          reviews, services, industries-1/2, approach)
   lib/
-    content.ts            All copy + nav config (single source of truth)
-    motion.ts             Shared Framer Motion variants
+    content.ts            Single import surface (re-exports content + detail pages)
+    cms/                  schemas + validation for the CMS
 ```
 
 ## Customising
 
-- **Copy, services, FAQs, contact details** -> `src/lib/content.ts`
-- **Brand colours, fonts, animations** -> the `@theme` block in `src/app/globals.css`
-- **Domain / SEO** -> `siteConfig.url` in `content.ts` (drives metadata, sitemap, OG, JSON-LD)
+- **Most copy + content** is CMS-editable at **`/admin`** (see `ADMIN.md`) and lives
+  in `src/content/*.json`.
+- **Brand colours, fonts, animations** -> the `@theme` block in `src/app/globals.css`.
+- **Domain / SEO** -> `siteConfig.url` in `settings.json` (drives metadata, sitemap, OG, JSON-LD).
 
 ## Notes
 
-- **Hero variants.** The page uses `HeroPhoto` (a framed client-meeting photograph).
-  Swap it for `Hero` in `src/app/page.tsx` to use the monochrome "statement card"
-  version instead — both components are kept.
-- **Hero image.** `public/hero.jpg` (sourced from Pexels — free licence, no
-  attribution required). An architectural alternate is at `public/hero-architecture.jpg`;
-  point the `<Image src>` in `HeroPhoto.tsx` at it to switch. Served and optimised
-  via `next/image` (`sharp`).
-- The contact form validates on the client and shows a success state. It is **not**
-  wired to a backend — connect `handleSubmit` in `src/components/ContactForm.tsx`
-  to a route handler or service (e.g. Resend, Formspree) to actually deliver mail.
+- **Contact form** is wired to **Netlify Forms** (`public/__forms.html` + AJAX in
+  `ContactForm.tsx`), with optional reCAPTCHA and a visitor auto-reply. See **`FORMS.md`**
+  for receiving enquiries and the optional setup.
+- **Header illustrations** are licence-clean unDraw SVGs, recoloured to the brand
+  navy, in `public/illustrations/`.
 - All animations respect `prefers-reduced-motion`.
-- The page is fully static-prerendered for fast loading and strong Lighthouse scores.
-=======
-# Next.js on Netlify Platform Starter
-
-[Live Demo](https://nextjs-platform-starter.netlify.app/)
-
-A modern starter based on Next.js 16 (App Router), Tailwind, and [Netlify Core Primitives](https://docs.netlify.com/core/overview/#develop) (Edge Functions, Image CDN, Blob Store).
-
-In this site, Netlify Core Primitives are used both implictly for running Next.js features (e.g. Route Handlers, image optimization via `next/image`, and more) and also explicitly by the user code.
-
-Implicit usage means you're using any Next.js functionality and everything "just works" when deployed - all the plumbing is done for you. Explicit usage is framework-agnostic and typically provides more features than what Next.js exposes.
-
-## Deploying to Netlify
-
-Click the button below to deploy this template to your Netlify account.
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/next-platform-starter)
-
-## Developing Locally
-
-1. Clone this repository, then run `npm install` in its root directory.
-
-2. For the starter to have full functionality locally (e.g. edge functions, blob store), please ensure you have an up-to-date version of Netlify CLI. Run:
-
-```
-npm install netlify-cli@latest -g
-```
-
-3. Link your local repository to the deployed Netlify site. This will ensure you're using the same runtime version for both local development and your deployed site.
-
-```
-netlify link
-```
-
-4. Then, run the Next.js development server via Netlify CLI:
-
-```
-netlify dev
-```
-
-If your browser doesn't navigate to the site automatically, visit [localhost:8888](http://localhost:8888).
-
-## Resources
-
-- Check out the [Next.js on Netlify docs](https://docs.netlify.com/frameworks/next-js/overview/)
->>>>>>> 4d5db64a2a363fbd31920ad9506a58165723257b
+- The site is fully static-prerendered for fast loading and strong Lighthouse scores.
+- Delivery / handover steps are in **`HANDOVER.md`**.
