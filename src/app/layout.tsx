@@ -32,7 +32,6 @@ export const metadata: Metadata = {
     "private equity accountants",
     "limited company accountants",
     "contractor accountants",
-    "cloud accounting",
     "Xero accountants",
     "tax planning UK",
     "VAT returns",

@@ -27,7 +27,7 @@ The dashboard groups everything into **Site-wide**, **Home page** and **Detail p
 **Site-wide → Section text & headings** (`copy.json`)
 
 - Every eyebrow, heading, subtitle, paragraph and button label across the site,
-  grouped by section (Hero, Services, Why MMR, Cloud accounting, FAQ, Footer, …)
+  grouped by section (Hero, Services, Why MMR, FAQ, Footer, …)
   with a jump-nav at the top. Includes the breadcrumb / banner title / SEO listing
   for each sub-page.
 
@@ -63,7 +63,7 @@ The dashboard groups everything into **Site-wide**, **Home page** and **Detail p
 - Section heading + intro, the rating summary, and each review (text, star rating
   and an optional uploaded photo).
 
-**Detail pages** — for each of the 17 Services / Industries / "How we help" pages:
+**Detail pages** — for each of the 16 Services / Industries / "How we help" pages:
 
 - **Basics** — page title, eyebrow, intro (the URL/slug is fixed and shown read-only)
 - **Search engine listing** — meta title & description (with length hints)
@@ -168,7 +168,7 @@ The whole-site CMS is now complete — everything below is editable, all backed 
 JSON files in `src/content/` and committed through the same registry + object-editor
 pattern:
 
-- **17 detail pages** (`services.json`, `industries-1/2.json`, `approach.json`)
+- **16 detail pages** (`services.json`, `industries-1/2.json`, `approach.json`)
 - **Google reviews** (`reviews.json`)
 - **Site & contact details** (`settings.json`) and **section text** (`copy.json`)
 - **Section item lists** (`sections.json` — services, industries, why, approach,

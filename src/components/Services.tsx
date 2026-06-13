@@ -13,7 +13,6 @@ import { copy, services, valueProps } from "@/lib/content";
  *  (the standalone "How we help" section was removed from the home page). */
 const APPROACH_ICON: Record<string, IconName> = {
   "proactive-tax-planning": "Receipt",
-  "cloud-accounting": "Cloud",
   "advisory-partnership": "LineChart",
 };
 

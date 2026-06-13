@@ -39,7 +39,6 @@
       "href": "/how-we-help",
       "children": [
         { "label": "Proactive Tax Planning", "href": "/how-we-help/proactive-tax-planning" },
-        { "label": "Cloud-First Accounting", "href": "/how-we-help/cloud-accounting" },
         { "label": "Advisory & Growth", "href": "/how-we-help/advisory-partnership" }
       ]
     },
@@ -111,7 +110,6 @@
           "label": "Cloud & support",
           "icon": "Cloud",
           "items": [
-            { "title": "Cloud accounting", "description": "Live numbers in Xero, QuickBooks or Sage.", "icon": "Cloud", "href": "/how-we-help/cloud-accounting" },
             { "title": "Switch to MMR", "description": "We move you from your old accountant, paperless.", "icon": "Zap", "href": "/how-we-work#process" },
             { "title": "Year-round support", "description": "A dedicated accountant, only a call away.", "icon": "MessagesSquare", "href": "/why-mmr#why" }
           ]

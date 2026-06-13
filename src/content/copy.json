@@ -46,18 +46,6 @@
       "subtitle": "We speak your industry's language. From IR35 for contractors to CIS for construction, you get advice shaped around how your business actually works."
     }
   },
-  "cloud": {
-    "eyebrow": "Cloud accounting",
-    "title": "Your finances, live and in the cloud",
-    "subtitle": "We set up and run market-leading cloud software for you, so your numbers are always up to date, always backed up, and available wherever you are — on any device.",
-    "features": [
-      { "title": "Real-time dashboards", "description": "See cash flow, profit and tax the moment money moves." },
-      { "title": "Making Tax Digital ready", "description": "Fully MTD-compliant filing for VAT and beyond." },
-      { "title": "Snap receipts on mobile", "description": "Photograph a receipt and we file it automatically." },
-      { "title": "Automatic bank feeds", "description": "Transactions reconciled daily — no manual entry." }
-    ],
-    "ctaButton": "Move to the Cloud"
-  },
   "process": {
     "heading": {
       "eyebrow": "How we work",

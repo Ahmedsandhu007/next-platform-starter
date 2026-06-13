@@ -57,7 +57,6 @@ const ICONS: Record<string, string> = {
   construction: "HardHat",
   creative: "Palette",
   "proactive-tax-planning": "Receipt",
-  "cloud-accounting": "Cloud",
   "advisory-partnership": "LineChart",
 };
 
@@ -78,13 +77,12 @@ const SHORT_LABEL: Record<string, string> = {
   construction: "Construction & CIS",
   creative: "Creative & Agencies",
   "proactive-tax-planning": "Proactive Tax Planning",
-  "cloud-accounting": "Cloud Accounting",
   "advisory-partnership": "Advisory & Growth",
 };
 
 /** Internal links per page (SEO + navigation). Hrefs resolve to real detail pages. */
 const RELATED: Record<string, string[]> = {
-  bookkeeping: ["/services/vat", "/services/tax-planning", "/how-we-help/cloud-accounting"],
+  bookkeeping: ["/services/vat", "/services/tax-planning"],
   "tax-planning": ["/services/vat", "/services/advisory", "/how-we-help/proactive-tax-planning"],
   vat: ["/services/bookkeeping", "/industries/construction", "/industries/ecommerce"],
   payroll: ["/services/bookkeeping", "/industries/hospitality", "/industries/construction"],
@@ -99,7 +97,6 @@ const RELATED: Record<string, string[]> = {
   construction: ["/services/vat", "/services/payroll", "/services/tax-planning"],
   creative: ["/services/advisory", "/services/tax-planning", "/services/vat"],
   "proactive-tax-planning": ["/services/tax-planning", "/services/vat", "/services/advisory"],
-  "cloud-accounting": ["/services/bookkeeping", "/services/vat", "/services/advisory"],
   "advisory-partnership": ["/services/advisory", "/services/tax-planning", "/industries/startups"],
 };
 

@@ -3,7 +3,7 @@
  * no stock imagery. Used to give sections a bespoke, hand-made feel.
  */
 /** Runtime list of available illustration keys — for CMS pickers and validation. */
-export const artNames = ["tax", "cloud", "advisory", "bookkeeping", "vat", "payroll", "formation"] as const;
+export const artNames = ["tax", "advisory", "bookkeeping", "vat", "payroll", "formation"] as const;
 export type Name = (typeof artNames)[number];
 
 /** Whether a string is a known illustration key. */
@@ -13,29 +13,6 @@ export function isArtName(value: unknown): value is Name {
 
 export function SpotArt({ name, className = "" }: { name: Name; className?: string }) {
   const common = { className: `h-auto w-full ${className}`, fill: "none", role: "img" as const };
-
-  if (name === "cloud") {
-    return (
-      <svg viewBox="0 0 220 180" aria-label="Cloud accounting illustration" {...common}>
-        <rect x="16" y="26" width="188" height="128" rx="20" fill="#ecf5fe" />
-        <circle cx="186" cy="44" r="6" fill="#1d66ba" fillOpacity="0.5" />
-        <circle cx="30" cy="140" r="5" fill="#24282b" fillOpacity="0.12" />
-        {/* cloud */}
-        <path d="M70 96a22 22 0 0 1 43-6 17 17 0 0 1 16 24H78a16 16 0 0 1-8-18z" fill="#ffffff" stroke="#24282b" strokeWidth="2.5" />
-        <path d="M96 70a22 22 0 0 1 17 20" stroke="#1d66ba" strokeWidth="2.5" strokeLinecap="round" />
-        {/* dashboard card */}
-        <rect x="74" y="118" width="72" height="42" rx="8" fill="#ffffff" stroke="#e5e7eb" strokeWidth="2" />
-        <rect x="84" y="146" width="10" height="8" rx="2" fill="#cdd6df" />
-        <rect x="98" y="140" width="10" height="14" rx="2" fill="#24282b" />
-        <rect x="112" y="135" width="10" height="19" rx="2" fill="#1d66ba" />
-        <rect x="126" y="143" width="10" height="11" rx="2" fill="#cdd6df" />
-        <rect x="84" y="126" width="34" height="5" rx="2.5" fill="#b7c0c9" />
-        {/* sync */}
-        <path d="M150 92a12 12 0 1 0 4 9" stroke="#1d66ba" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M150 84v8h-8" stroke="#1d66ba" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    );
-  }
 
   if (name === "advisory") {
     return (

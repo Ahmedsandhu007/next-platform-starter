@@ -37,7 +37,6 @@ const ILLUS_BY_SLUG: Record<string, string> = {
   creative: "creative",
   // How we help
   "proactive-tax-planning": "proactive",
-  "cloud-accounting": "cloud",
   "advisory-partnership": "advisory",
 };
 

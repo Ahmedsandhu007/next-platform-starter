@@ -46,7 +46,6 @@ export type SiteSettings = {
 };
 
 export type Heading = { eyebrow: string; title: string; subtitle: string };
-export type CloudFeature = { title: string; description: string };
 export type PageMeta = {
   crumb: string;
   title: string;
@@ -73,13 +72,6 @@ export type SiteCopy = {
   services: { heading: Heading; ctaText: string; ctaButton: string };
   why: { heading: Heading; ctaText: string; ctaButton: string };
   industries: { heading: Heading };
-  cloud: {
-    eyebrow: string;
-    title: string;
-    subtitle: string;
-    features: CloudFeature[];
-    ctaButton: string;
-  };
   process: { heading: Heading };
   faq: { heading: Heading; stillHaveTitle: string; stillHaveText: string; stillHaveCta: string };
   cta: { eyebrow: string; title: string; subtitle: string; primaryCta: string };
@@ -232,21 +224,6 @@ export function validateCopy(value: unknown): ValidationResult {
   reqStr(value, "why.ctaButton", errors);
 
   reqHeading(value, "industries.heading", errors);
-
-  // cloud
-  for (const p of ["cloud.eyebrow", "cloud.title", "cloud.subtitle", "cloud.ctaButton"]) {
-    reqStr(value, p, errors);
-  }
-  const features = (value.cloud as Record<string, unknown> | undefined)?.features;
-  if (!Array.isArray(features) || features.length === 0) {
-    errors.push("cloud.features: required, must be a non-empty array");
-  } else {
-    features.forEach((f, i) => {
-      if (!isObj(f) || !isNonEmpty(f.title) || !isNonEmpty(f.description)) {
-        errors.push(`cloud.features[${i}]: each needs a non-empty title and description`);
-      }
-    });
-  }
 
   reqHeading(value, "process.heading", errors);
 

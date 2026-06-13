@@ -81,11 +81,6 @@
       "description": "Accounts and returns delivered ahead of deadline, with a reply to every question within one business day."
     },
     {
-      "icon": "Cloud",
-      "title": "Cloud Accounting Experts",
-      "description": "Certified partners in Xero, QuickBooks and Sage — your numbers kept live and reconciled in real time."
-    },
-    {
       "icon": "MapPin",
       "title": "UK Business Specialists",
       "description": "Deep expertise in UK tax, IR35, VAT and CIS, supporting established businesses the length of the country."
@@ -97,12 +92,6 @@
       "art": "tax",
       "title": "Proactive tax planning",
       "description": "We don't simply file your taxes — we plan ahead all year to legally lower your bill and keep more profit where it belongs."
-    },
-    {
-      "slug": "cloud-accounting",
-      "art": "cloud",
-      "title": "Cloud-first, always current",
-      "description": "Your books live in the cloud and reconcile daily, so you always know exactly where your business stands."
     },
     {
       "slug": "advisory-partnership",

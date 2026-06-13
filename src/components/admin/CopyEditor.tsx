@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import type { SiteCopy } from "@/lib/cms/siteSchema";
-import { AddButton, CharCount, fieldClass, Labeled, moveItem, RowControls, StringList } from "@/components/admin/fields";
+import { CharCount, fieldClass, Labeled, StringList } from "@/components/admin/fields";
 import { limitFor } from "@/lib/cms/limits";
 import { Card, EditorHeader, LoadGate, type Path, SaveBtn, setIn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
 
@@ -14,7 +14,6 @@ const SECTIONS = [
   { id: "sec-services", label: "Services" },
   { id: "sec-why", label: "Why MMR" },
   { id: "sec-industries", label: "Industries" },
-  { id: "sec-cloud", label: "Cloud accounting" },
   { id: "sec-process", label: "Process" },
   { id: "sec-faq", label: "FAQ" },
   { id: "sec-cta", label: "CTA band" },
@@ -115,8 +114,6 @@ function CopyFields({ data, upd }: { data: SiteCopy; upd: (path: Path, value: un
     </>
   );
 
-  const features = data.cloud.features;
-
   return (
     <>
       <Card id="sec-hero" title="Hero" description="The top of the home page.">
@@ -163,40 +160,6 @@ function CopyFields({ data, upd }: { data: SiteCopy; upd: (path: Path, value: un
 
       <Card id="sec-industries" title="Industries" description="The industries section heading.">
         {heading(["industries", "heading"])}
-      </Card>
-
-      <Card id="sec-cloud" title="Cloud accounting" description="The cloud-software section + its feature list.">
-        {Text("Eyebrow", ["cloud", "eyebrow"])}
-        {Text("Title", ["cloud", "title"])}
-        {Area("Subtitle", ["cloud", "subtitle"], 2)}
-        {Text("CTA button", ["cloud", "ctaButton"])}
-        <div>
-          <span className="mb-2 block text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink">Features</span>
-          <div className="space-y-3">
-            {features.map((f, i) => (
-              <div key={i} className="border border-line bg-cream/30 p-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted">Feature {i + 1}</span>
-                  <RowControls
-                    index={i}
-                    count={features.length}
-                    onMove={(to) => upd(["cloud", "features"], moveItem(features, i, to))}
-                    onRemove={() => upd(["cloud", "features"], features.filter((_, idx) => idx !== i))}
-                    removeTitle="Remove feature"
-                  />
-                </div>
-                <div className="mt-3 space-y-3">
-                  {Text("Title", ["cloud", "features", i, "title"])}
-                  {Area("Description", ["cloud", "features", i, "description"], 2)}
-                </div>
-              </div>
-            ))}
-          </div>
-          <AddButton
-            label="Add feature"
-            onClick={() => upd(["cloud", "features"], [...features, { title: "", description: "" }])}
-          />
-        </div>
       </Card>
 
       <Card id="sec-process" title="Process" description='The "how we work" steps section heading.'>
