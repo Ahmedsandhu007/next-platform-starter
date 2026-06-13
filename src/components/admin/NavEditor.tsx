@@ -2,7 +2,7 @@
 
 import type { MegaCategory, NavChild } from "@/lib/content";
 import type { NavData } from "@/lib/cms/navSchema";
-import { AddButton, fieldClass, Labeled, labelClass, moveItem, RowControls } from "@/components/admin/fields";
+import { AddButton, Field, labelClass, moveItem, RowControls } from "@/components/admin/fields";
 import { EditorHeader, LoadGate, type Path, SaveBtn, setIn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
 import { IconSelect } from "@/components/admin/pickers";
 
@@ -50,19 +50,11 @@ export function NavEditor() {
 
 function NavFields({ data, upd }: { data: NavData; upd: (path: Path, value: unknown) => void }) {
   const get = (path: Path): unknown => path.reduce<unknown>((acc, k) => (acc as Record<string, unknown>)?.[k], data);
-  const bind = (path: Path) => ({
-    value: String(get(path) ?? ""),
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => upd(path, e.target.value),
-  });
   const Text = (label: string, path: Path) => (
-    <Labeled label={label}>
-      <input {...bind(path)} className={fieldClass} />
-    </Labeled>
+    <Field label={label} value={String(get(path) ?? "")} onChange={(v) => upd(path, v)} role={String(path[path.length - 1])} />
   );
   const Area = (label: string, path: Path, rows = 2) => (
-    <Labeled label={label}>
-      <textarea {...bind(path)} rows={rows} className={`${fieldClass} resize-y`} />
-    </Labeled>
+    <Field label={label} value={String(get(path) ?? "")} onChange={(v) => upd(path, v)} role={String(path[path.length - 1])} multiline rows={rows} />
   );
 
   /** Simple dropdown (children) editor — label + href, add/remove/reorder. */

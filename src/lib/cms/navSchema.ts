@@ -10,7 +10,7 @@
  */
 import type { NavLink } from "@/lib/content";
 import { isIconName } from "@/components/ui/Icon";
-import { lengthError } from "./limits";
+import { fieldErrors } from "./limits";
 
 export type NavData = { navLinks: NavLink[] };
 
@@ -23,8 +23,7 @@ const isNonEmpty = (v: unknown): v is string => isStr(v) && v.trim() !== "";
 
 /** Push a length error if `value` exceeds the limit for `key` (no-op for non-strings). */
 function strLen(value: unknown, key: string, label: string, errors: string[]) {
-  const e = lengthError(value, key, label);
-  if (e) errors.push(e);
+  errors.push(...fieldErrors(value, key, label));
 }
 
 export function validateNav(value: unknown): ValidationResult {

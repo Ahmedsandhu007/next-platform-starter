@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { limitFor } from "@/lib/cms/limits";
+import { limitFor, formatFor, isFormat, formatHint, type FieldFormat } from "@/lib/cms/limits";
 
 /** Shared admin form primitives, reused across CMS editors. */
 
@@ -61,6 +61,68 @@ export function LimitedField({
         <CharCount value={value} max={limit} />
       </div>
     </div>
+  );
+}
+
+/**
+ * Complete labeled CMS text field: label + live character counter, with the
+ * per-field character limit AND format (email/URL/phone/…) resolved from the
+ * field `role` (or overridden via `max`/`format`). Turns red over the limit or
+ * on an invalid format and shows the requirement inline. The single building
+ * block the editors use so every input is validated consistently.
+ */
+export function Field({
+  label,
+  value,
+  onChange,
+  role,
+  max,
+  format,
+  hint,
+  placeholder,
+  multiline = false,
+  rows = 3,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  /** Field role (last path segment, e.g. "email", "title") → resolves limit + format. */
+  role?: string;
+  max?: number;
+  format?: FieldFormat;
+  hint?: string;
+  placeholder?: string;
+  multiline?: boolean;
+  rows?: number;
+}) {
+  const limit = max ?? (role ? limitFor(role) : 400);
+  const fmt = format ?? (role ? formatFor(role) : null);
+  const over = value.length > limit;
+  const badFormat = !!fmt && value.trim() !== "" && !isFormat(value, fmt);
+  const invalid = over || badFormat;
+  const cls = `${fieldClass} ${invalid ? "border-red-400 focus:border-red-500 focus:ring-red-400" : ""}`;
+  const note = badFormat ? formatHint(fmt!) : hint;
+  return (
+    <label className="block">
+      <span className="mb-1 flex items-end justify-between gap-2">
+        <span className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink">{label}</span>
+        <CharCount value={value} max={limit} />
+      </span>
+      {multiline ? (
+        <textarea
+          value={value}
+          placeholder={placeholder}
+          rows={rows}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${cls} resize-y`}
+        />
+      ) : (
+        <input value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} className={cls} />
+      )}
+      {note && (
+        <span className={`mt-1 block text-[0.68rem] ${badFormat ? "font-medium text-red-600" : "text-muted"}`}>{note}</span>
+      )}
+    </label>
   );
 }
 

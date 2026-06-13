@@ -1,7 +1,7 @@
 "use client";
 
 import type { Office, SiteSettings } from "@/lib/cms/siteSchema";
-import { AddButton, fieldClass, Labeled, moveItem, RowControls, StringList } from "@/components/admin/fields";
+import { AddButton, Field, moveItem, RowControls, StringList } from "@/components/admin/fields";
 import { ImageField } from "@/components/admin/ImageField";
 import { Card, EditorHeader, LoadGate, SaveBtn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
 
@@ -34,27 +34,12 @@ export function SettingsEditor() {
           <>
             <Card title="Business identity" description="Your firm name, registration and the description search engines show.">
               <div className="grid gap-4 sm:grid-cols-2">
-                <Labeled label="Business name">
-                  <input value={data.name} onChange={(e) => mutate((d) => ({ ...d, name: e.target.value }))} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Short name (logo / abbreviations)">
-                  <input value={data.shortName} onChange={(e) => mutate((d) => ({ ...d, shortName: e.target.value }))} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Company number">
-                  <input value={data.companyNumber} onChange={(e) => mutate((d) => ({ ...d, companyNumber: e.target.value }))} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Website URL" hint="https://…">
-                  <input value={data.url} onChange={(e) => mutate((d) => ({ ...d, url: e.target.value }))} className={fieldClass} />
-                </Labeled>
+                <Field label="Business name" value={data.name} onChange={(v) => mutate((d) => ({ ...d, name: v }))} role="name" />
+                <Field label="Short name (logo / abbreviations)" value={data.shortName} onChange={(v) => mutate((d) => ({ ...d, shortName: v }))} role="shortName" />
+                <Field label="Company number" value={data.companyNumber} onChange={(v) => mutate((d) => ({ ...d, companyNumber: v }))} role="companyNumber" hint="UK company number, e.g. 12345678" />
+                <Field label="Website URL" value={data.url} onChange={(v) => mutate((d) => ({ ...d, url: v }))} role="url" hint="https://…" />
               </div>
-              <Labeled label="Description" hint="Used for SEO + structured data">
-                <textarea
-                  value={data.description}
-                  rows={3}
-                  onChange={(e) => mutate((d) => ({ ...d, description: e.target.value }))}
-                  className={`${fieldClass} resize-y`}
-                />
-              </Labeled>
+              <Field label="Description" value={data.description} onChange={(v) => mutate((d) => ({ ...d, description: v }))} role="description" multiline hint="Used for SEO + structured data" />
               <div>
                 <span className="mb-1 block text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink">
                   Pillars (shown beneath the logo)
@@ -64,6 +49,7 @@ export function SettingsEditor() {
                   onChange={(pillars) => mutate((d) => ({ ...d, pillars }))}
                   addLabel="Add pillar"
                   placeholder="e.g. Tax"
+                  role="pillars"
                 />
               </div>
             </Card>
@@ -82,7 +68,7 @@ export function SettingsEditor() {
 
             <Card
               title="Brand logos"
-              description="The linear logo shown in the header and the circular logo badge in the footer. Leave empty to use the built-in typographic lockup. A transparent PNG/SVG works best."
+              description="The logo shown in the header and footer. Leave empty to use the built-in typographic lockup. A transparent PNG works best — it's auto-trimmed and compressed on upload."
             >
               <ImageField
                 label="Linear logo (header)"
@@ -104,27 +90,13 @@ export function SettingsEditor() {
               description="Used in the header, the call buttons and search-engine data. This is your main (Manchester) office."
             >
               <div className="grid gap-4 sm:grid-cols-2">
-                <Labeled label="Phone — for call links" hint="e.g. +44 161 222 3120">
-                  <input value={data.contact.phone} onChange={(e) => setContact("phone", e.target.value)} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Phone — shown on the page" hint="e.g. 0161 222 3120">
-                  <input value={data.contact.phoneDisplay} onChange={(e) => setContact("phoneDisplay", e.target.value)} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Email">
-                  <input value={data.contact.email} onChange={(e) => setContact("email", e.target.value)} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Opening hours">
-                  <input value={data.contact.hours} onChange={(e) => setContact("hours", e.target.value)} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Address">
-                  <input value={data.contact.addressLine} onChange={(e) => setContact("addressLine", e.target.value)} className={fieldClass} />
-                </Labeled>
-                <Labeled label="City">
-                  <input value={data.contact.city} onChange={(e) => setContact("city", e.target.value)} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Postcode">
-                  <input value={data.contact.postcode} onChange={(e) => setContact("postcode", e.target.value)} className={fieldClass} />
-                </Labeled>
+                <Field label="Phone — for call links" value={data.contact.phone} onChange={(v) => setContact("phone", v)} role="phone" hint="e.g. +44 161 222 3120" />
+                <Field label="Phone — shown on the page" value={data.contact.phoneDisplay} onChange={(v) => setContact("phoneDisplay", v)} role="phoneDisplay" hint="e.g. 0161 222 3120" />
+                <Field label="Email" value={data.contact.email} onChange={(v) => setContact("email", v)} role="email" />
+                <Field label="Opening hours" value={data.contact.hours} onChange={(v) => setContact("hours", v)} role="hours" />
+                <Field label="Address" value={data.contact.addressLine} onChange={(v) => setContact("addressLine", v)} role="addressLine" />
+                <Field label="City" value={data.contact.city} onChange={(v) => setContact("city", v)} role="city" />
+                <Field label="Postcode" value={data.contact.postcode} onChange={(v) => setContact("postcode", v)} role="postcode" />
               </div>
             </Card>
 
@@ -144,9 +116,13 @@ export function SettingsEditor() {
                     </div>
                     <div className="mt-3 grid gap-3 sm:grid-cols-2">
                       {OFFICE_FIELDS.map(({ key, label }) => (
-                        <Labeled key={key} label={label}>
-                          <input value={office[key]} onChange={(e) => setOffice(i, { ...office, [key]: e.target.value })} className={fieldClass} />
-                        </Labeled>
+                        <Field
+                          key={key}
+                          label={label}
+                          value={office[key]}
+                          onChange={(v) => setOffice(i, { ...office, [key]: v })}
+                          role={key}
+                        />
                       ))}
                     </div>
                   </div>
@@ -165,15 +141,9 @@ export function SettingsEditor() {
 
             <Card title="Social links" description="Used by the social icons in the header, footer and side rail.">
               <div className="grid gap-4 sm:grid-cols-2">
-                <Labeled label="LinkedIn URL">
-                  <input value={data.social.linkedin} onChange={(e) => setSocial("linkedin", e.target.value)} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Twitter / X URL">
-                  <input value={data.social.twitter} onChange={(e) => setSocial("twitter", e.target.value)} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Facebook URL">
-                  <input value={data.social.facebook} onChange={(e) => setSocial("facebook", e.target.value)} className={fieldClass} />
-                </Labeled>
+                <Field label="LinkedIn URL" value={data.social.linkedin} onChange={(v) => setSocial("linkedin", v)} role="linkedin" hint="https://…" />
+                <Field label="Twitter / X URL" value={data.social.twitter} onChange={(v) => setSocial("twitter", v)} role="twitter" hint="https://…" />
+                <Field label="Facebook URL" value={data.social.facebook} onChange={(v) => setSocial("facebook", v)} role="facebook" hint="https://…" />
               </div>
             </Card>
 

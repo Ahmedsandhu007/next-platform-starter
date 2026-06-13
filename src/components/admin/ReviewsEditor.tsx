@@ -1,7 +1,7 @@
 "use client";
 
 import type { Review, ReviewsData } from "@/lib/cms/schemas";
-import { AddButton, fieldClass, Labeled, labelClass, moveItem, RowControls } from "@/components/admin/fields";
+import { AddButton, Field, fieldClass, labelClass, moveItem, RowControls } from "@/components/admin/fields";
 import { ImageField } from "@/components/admin/ImageField";
 import { Card, EditorHeader, LoadGate, SaveBtn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
 
@@ -40,36 +40,26 @@ export function ReviewsEditor() {
         {data && (
           <>
             <Card title="Section heading">
-              <Labeled label="Eyebrow">
-                <input value={data.eyebrow} onChange={(e) => mutate((d) => ({ ...d, eyebrow: e.target.value }))} className={fieldClass} />
-              </Labeled>
-              <Labeled label="Title">
-                <input value={data.title} onChange={(e) => mutate((d) => ({ ...d, title: e.target.value }))} className={fieldClass} />
-              </Labeled>
-              <Labeled label="Intro">
-                <textarea value={data.intro} rows={3} onChange={(e) => mutate((d) => ({ ...d, intro: e.target.value }))} className={`${fieldClass} resize-y`} />
-              </Labeled>
+              <Field label="Eyebrow" value={data.eyebrow} onChange={(v) => mutate((d) => ({ ...d, eyebrow: v }))} role="eyebrow" />
+              <Field label="Title" value={data.title} onChange={(v) => mutate((d) => ({ ...d, title: v }))} role="title" />
+              <Field label="Intro" value={data.intro} onChange={(v) => mutate((d) => ({ ...d, intro: v }))} role="subtitle" multiline />
             </Card>
 
             <Card title="Rating summary">
               <div className="grid gap-4 sm:grid-cols-2">
-                <Labeled label="Score (e.g. 4.9)">
-                  <input value={data.rating.score} onChange={(e) => mutate((d) => ({ ...d, rating: { ...d.rating, score: e.target.value } }))} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Out of (e.g. 5)">
-                  <input value={data.rating.outOf} onChange={(e) => mutate((d) => ({ ...d, rating: { ...d.rating, outOf: e.target.value } }))} className={fieldClass} />
-                </Labeled>
-                <Labeled label="Review count">
+                <Field label="Score (e.g. 4.9)" value={data.rating.score} onChange={(v) => mutate((d) => ({ ...d, rating: { ...d.rating, score: v } }))} format="ratingScore" max={6} />
+                <Field label="Out of (e.g. 5)" value={data.rating.outOf} onChange={(v) => mutate((d) => ({ ...d, rating: { ...d.rating, outOf: v } }))} max={3} />
+                <label className="block">
+                  <span className="mb-1 block text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink">Review count</span>
                   <input
                     type="number"
+                    min={0}
                     value={data.rating.count}
                     onChange={(e) => mutate((d) => ({ ...d, rating: { ...d.rating, count: Number(e.target.value) || 0 } }))}
                     className={fieldClass}
                   />
-                </Labeled>
-                <Labeled label="Platform (e.g. Google)">
-                  <input value={data.rating.platform} onChange={(e) => mutate((d) => ({ ...d, rating: { ...d.rating, platform: e.target.value } }))} className={fieldClass} />
-                </Labeled>
+                </label>
+                <Field label="Platform (e.g. Google)" value={data.rating.platform} onChange={(v) => mutate((d) => ({ ...d, rating: { ...d.rating, platform: v } }))} max={30} />
               </div>
             </Card>
 
@@ -88,18 +78,10 @@ export function ReviewsEditor() {
                       />
                     </div>
                     <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                      <Labeled label="Name">
-                        <input value={rev.name} onChange={(e) => setReview(i, { ...rev, name: e.target.value })} className={fieldClass} />
-                      </Labeled>
-                      <Labeled label="Role / company">
-                        <input value={rev.role ?? ""} onChange={(e) => setReview(i, { ...rev, role: e.target.value })} className={fieldClass} />
-                      </Labeled>
-                      <Labeled label="Date">
-                        <input value={rev.date} onChange={(e) => setReview(i, { ...rev, date: e.target.value })} className={fieldClass} />
-                      </Labeled>
-                      <Labeled label="Initials (fallback avatar)">
-                        <input value={rev.initials} maxLength={3} onChange={(e) => setReview(i, { ...rev, initials: e.target.value.toUpperCase() })} className={fieldClass} />
-                      </Labeled>
+                      <Field label="Name" value={rev.name} onChange={(v) => setReview(i, { ...rev, name: v })} max={70} />
+                      <Field label="Role / company" value={rev.role ?? ""} onChange={(v) => setReview(i, { ...rev, role: v })} max={70} />
+                      <Field label="Date" value={rev.date} onChange={(v) => setReview(i, { ...rev, date: v })} max={40} hint="e.g. 2 weeks ago" />
+                      <Field label="Initials (fallback avatar)" value={rev.initials} onChange={(v) => setReview(i, { ...rev, initials: v.toUpperCase().slice(0, 3) })} max={3} />
                     </div>
                     <div className="mt-3">
                       <span className={labelClass}>Rating</span>
@@ -109,9 +91,7 @@ export function ReviewsEditor() {
                       <ImageField label="Reviewer photo (optional)" dir="reviews" round value={rev.image ?? ""} onChange={(path) => setReview(i, { ...rev, image: path })} />
                     </div>
                     <div className="mt-3">
-                      <Labeled label="Quote">
-                        <textarea value={rev.quote} rows={3} onChange={(e) => setReview(i, { ...rev, quote: e.target.value })} className={`${fieldClass} resize-y`} />
-                      </Labeled>
+                      <Field label="Quote" value={rev.quote} onChange={(v) => setReview(i, { ...rev, quote: v })} role="quote" multiline />
                     </div>
                   </div>
                 ))}

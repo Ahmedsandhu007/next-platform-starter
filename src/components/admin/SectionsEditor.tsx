@@ -1,7 +1,7 @@
 "use client";
 
 import type { SectionsData } from "@/lib/cms/itemsSchema";
-import { AddButton, fieldClass, Labeled, labelClass, moveItem, RowControls, StringList } from "@/components/admin/fields";
+import { AddButton, Field, labelClass, moveItem, RowControls, StringList } from "@/components/admin/fields";
 import { Card, EditorHeader, LoadGate, type Path, SaveBtn, setIn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
 import { ArtSelect, IconSelect } from "@/components/admin/pickers";
 
@@ -56,19 +56,11 @@ export function SectionsEditor() {
 /** Stable top-level component so inputs never remount (drop focus) while typing. */
 function SectionsFields({ data, upd }: { data: SectionsData; upd: (path: Path, value: unknown) => void }) {
   const get = (path: Path): unknown => path.reduce<unknown>((acc, k) => (acc as Record<string, unknown>)?.[k], data);
-  const bind = (path: Path) => ({
-    value: String(get(path) ?? ""),
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => upd(path, e.target.value),
-  });
   const Text = (label: string, path: Path) => (
-    <Labeled label={label}>
-      <input {...bind(path)} className={fieldClass} />
-    </Labeled>
+    <Field label={label} value={String(get(path) ?? "")} onChange={(v) => upd(path, v)} role={String(path[path.length - 1])} />
   );
   const Area = (label: string, path: Path, rows = 2) => (
-    <Labeled label={label}>
-      <textarea {...bind(path)} rows={rows} className={`${fieldClass} resize-y`} />
-    </Labeled>
+    <Field label={label} value={String(get(path) ?? "")} onChange={(v) => upd(path, v)} role={String(path[path.length - 1])} multiline rows={rows} />
   );
 
   return (
@@ -94,7 +86,7 @@ function SectionsFields({ data, upd }: { data: SectionsData; upd: (path: Path, v
                 {Area("Description", ["services", i, "description"])}
                 <div>
                   <span className={labelClass}>Bullet points</span>
-                  <StringList items={s.points} onChange={(v) => upd(["services", i, "points"], v)} addLabel="Add point" />
+                  <StringList items={s.points} onChange={(v) => upd(["services", i, "points"], v)} addLabel="Add point" role="points" />
                 </div>
               </div>
             </div>
@@ -227,11 +219,11 @@ function SectionsFields({ data, upd }: { data: SectionsData; upd: (path: Path, v
       </Card>
 
       <Card id="sec-partners" title="Trust badges" description="The accreditation / platform names shown in the strip under the hero.">
-        <StringList items={data.partners} onChange={(v) => upd(["partners"], v)} addLabel="Add badge" placeholder="e.g. Xero" />
+        <StringList items={data.partners} onChange={(v) => upd(["partners"], v)} addLabel="Add badge" placeholder="e.g. Xero" role="partners" />
       </Card>
 
       <Card id="sec-business" title="Business types" description="The options in the contact-form “Business type” dropdown.">
-        <StringList items={data.businessTypes} onChange={(v) => upd(["businessTypes"], v)} addLabel="Add type" placeholder="e.g. Sole trader" />
+        <StringList items={data.businessTypes} onChange={(v) => upd(["businessTypes"], v)} addLabel="Add type" placeholder="e.g. Sole trader" role="businessTypes" />
       </Card>
     </>
   );

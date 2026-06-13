@@ -116,6 +116,81 @@ export function lengthError(value: unknown, key: string, label: string): string 
 }
 
 /* ------------------------------------------------------------------ *
+ * Formats — a field "role" can require a specific shape (email, URL…).
+ * ------------------------------------------------------------------ */
+export type FieldFormat = "email" | "url" | "href" | "phone" | "slug" | "companyNumber" | "ratingScore";
+
+const FORMAT_RE: Record<FieldFormat, RegExp> = {
+  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  url: /^https?:\/\/[^\s.]+\.[^\s]+$/i,
+  href: /^(https?:\/\/|\/|#|mailto:|tel:)/i,
+  phone: /^[+0-9()\s.\-]{7,}$/,
+  slug: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+  companyNumber: /^[A-Za-z0-9]{6,10}$/,
+  ratingScore: /^[0-5](?:\.[0-9])?(?:\s*\/\s*5)?$/,
+};
+
+const FORMAT_MSG: Record<FieldFormat, string> = {
+  email: "must be a valid email address",
+  url: "must be a full URL starting with http:// or https://",
+  href: "must be a path (/page), anchor (#id), full URL, mailto: or tel:",
+  phone: "must be a phone number (digits, spaces, +, -, ( ) only)",
+  slug: "must be lowercase letters, numbers and hyphens only",
+  companyNumber: "must be 6–10 letters/numbers",
+  ratingScore: "must be a score out of 5 (e.g. 4.9 or 4.9/5)",
+};
+
+/** Field roles (last path segment) that must match a format. */
+export const FIELD_FORMATS: Record<string, FieldFormat> = {
+  email: "email",
+  url: "url",
+  linkedin: "url",
+  twitter: "url",
+  facebook: "url",
+  href: "href",
+  phone: "phone",
+  phoneDisplay: "phone",
+  companyNumber: "companyNumber",
+  slug: "slug",
+  ratingScore: "ratingScore",
+};
+
+/** The format a field role requires, or null. (For UI hints.) */
+export function formatFor(key: string): FieldFormat | null {
+  return FIELD_FORMATS[key] ?? null;
+}
+
+export function isFormat(value: string, format: FieldFormat): boolean {
+  return FORMAT_RE[format].test(value.trim());
+}
+
+/** Human-readable requirement for a format (for inline UI hints). */
+export function formatHint(format: FieldFormat): string {
+  return FORMAT_MSG[format];
+}
+
+/** Format error for a field by role — only when it has a format AND is non-empty AND invalid. */
+export function formatError(value: unknown, key: string, label: string): string | null {
+  if (typeof value !== "string" || value.trim() === "") return null;
+  // Display labels (e.g. contact.labels.email = "Email us") share a key with a
+  // real field but are plain text — never format-check them.
+  if (/\.labels?\./i.test(label)) return null;
+  const fmt = FIELD_FORMATS[key];
+  if (!fmt) return null;
+  return isFormat(value, fmt) ? null : `${label}: ${FORMAT_MSG[fmt]}`;
+}
+
+/** All errors for a field value (length + format), by role. Used by the validators. */
+export function fieldErrors(value: unknown, key: string, label: string): string[] {
+  const errs: string[] = [];
+  const le = lengthError(value, key, label);
+  if (le) errs.push(le);
+  const fe = formatError(value, key, label);
+  if (fe) errs.push(fe);
+  return errs;
+}
+
+/* ------------------------------------------------------------------ *
  * Images — raster only (no SVG: avoids script-in-SVG on a committed asset).
  * ------------------------------------------------------------------ */
 export const IMAGE_LIMITS = {

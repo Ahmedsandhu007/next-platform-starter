@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { DetailFaq, DetailSection, RawDetail } from "@/lib/detailSchema";
+import { limitFor } from "@/lib/cms/limits";
 
 const fieldClass =
   "w-full rounded-none border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-ink/30 focus:border-bronze focus-visible:outline-none focus:ring-1 focus:ring-bronze";
@@ -148,21 +149,21 @@ export function PageEditor({ file, slug }: { file: string; slug: string }) {
 
       {/* Basics */}
       <Card title="Basics">
-        <Labeled label="Page title">
+        <Labeled label="Page title" hint={counter(page.title.length, "title")}>
           <input
             value={page.title}
             onChange={(e) => mutate((p) => ({ ...p, title: e.target.value }))}
             className={fieldClass}
           />
         </Labeled>
-        <Labeled label="Eyebrow (small label above the title)">
+        <Labeled label="Eyebrow (small label above the title)" hint={counter(page.eyebrow.length, "eyebrow")}>
           <input
             value={page.eyebrow}
             onChange={(e) => mutate((p) => ({ ...p, eyebrow: e.target.value }))}
             className={fieldClass}
           />
         </Labeled>
-        <Labeled label="Intro (hero subtitle)">
+        <Labeled label="Intro (hero subtitle)" hint={counter(page.intro.length, "intro")}>
           <textarea
             value={page.intro}
             rows={3}
@@ -177,14 +178,14 @@ export function PageEditor({ file, slug }: { file: string; slug: string }) {
 
       {/* SEO */}
       <Card title="Search engine listing">
-        <Labeled label="Meta title" hint={counter(page.metaTitle.length, 60)}>
+        <Labeled label="Meta title" hint={counter(page.metaTitle.length, "metaTitle")}>
           <input
             value={page.metaTitle}
             onChange={(e) => mutate((p) => ({ ...p, metaTitle: e.target.value }))}
             className={fieldClass}
           />
         </Labeled>
-        <Labeled label="Meta description" hint={counter(page.metaDescription.length, 160)}>
+        <Labeled label="Meta description" hint={counter(page.metaDescription.length, "metaDescription")}>
           <textarea
             value={page.metaDescription}
             rows={3}
@@ -486,7 +487,7 @@ function SectionEditor({
         <RowControls index={index} count={count} onMove={onMove} onRemove={onRemove} removeTitle="Remove section" />
       </div>
       <div className="mt-3 space-y-3">
-        <Labeled label="Heading">
+        <Labeled label="Heading" hint={counter(section.heading.length, "heading")}>
           <input value={section.heading} onChange={(e) => set({ heading: e.target.value })} className={fieldClass} />
         </Labeled>
         <div>
@@ -536,10 +537,10 @@ function FaqEditor({
         <RowControls index={index} count={count} onMove={onMove} onRemove={onRemove} removeTitle="Remove FAQ" />
       </div>
       <div className="mt-3 space-y-3">
-        <Labeled label="Question">
+        <Labeled label="Question" hint={counter(faq.question.length, "question")}>
           <input value={faq.question} onChange={(e) => set({ question: e.target.value })} className={fieldClass} />
         </Labeled>
-        <Labeled label="Answer">
+        <Labeled label="Answer" hint={counter(faq.answer.length, "answer")}>
           <textarea
             value={faq.answer}
             rows={3}
@@ -562,6 +563,8 @@ function moveItem<T>(arr: T[], from: number, to: number): T[] {
   return copy;
 }
 
-function counter(length: number, ideal: number): string {
-  return `${length} chars${length > ideal ? ` · over ~${ideal}` : ""}`;
+/** "45/90" character counter for a field role; flags when over the limit. */
+function counter(length: number, role: string): string {
+  const max = limitFor(role);
+  return `${length}/${max}${length > max ? " · over limit" : ""}`;
 }

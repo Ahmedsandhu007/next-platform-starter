@@ -1,7 +1,7 @@
 "use client";
 
 import type { LegalData } from "@/lib/cms/legalSchema";
-import { AddButton, fieldClass, Labeled, labelClass, moveItem, RowControls, StringList } from "@/components/admin/fields";
+import { AddButton, Field, labelClass, moveItem, RowControls, StringList } from "@/components/admin/fields";
 import { Card, EditorHeader, LoadGate, type Path, SaveBtn, setIn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
 
 export function LegalEditor() {
@@ -48,19 +48,11 @@ export function LegalEditor() {
 
 function LegalFields({ data, upd }: { data: LegalData; upd: (path: Path, value: unknown) => void }) {
   const get = (path: Path): unknown => path.reduce<unknown>((acc, k) => (acc as Record<string, unknown>)?.[k], data);
-  const bind = (path: Path) => ({
-    value: String(get(path) ?? ""),
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => upd(path, e.target.value),
-  });
   const Text = (label: string, path: Path) => (
-    <Labeled label={label}>
-      <input {...bind(path)} className={fieldClass} />
-    </Labeled>
+    <Field label={label} value={String(get(path) ?? "")} onChange={(v) => upd(path, v)} role={String(path[path.length - 1])} />
   );
   const Area = (label: string, path: Path, rows = 2) => (
-    <Labeled label={label}>
-      <textarea {...bind(path)} rows={rows} className={`${fieldClass} resize-y`} />
-    </Labeled>
+    <Field label={label} value={String(get(path) ?? "")} onChange={(v) => upd(path, v)} role={String(path[path.length - 1])} multiline rows={rows} />
   );
 
   return (
@@ -103,6 +95,7 @@ function LegalFields({ data, upd }: { data: LegalData; upd: (path: Path, value: 
                         onChange={(v) => upd(["pages", i, "sections", si, "body"], v)}
                         multiline
                         addLabel="Add paragraph"
+                        role="body"
                       />
                     </div>
                     <div>
@@ -111,6 +104,7 @@ function LegalFields({ data, upd }: { data: LegalData; upd: (path: Path, value: 
                         items={section.bullets ?? []}
                         onChange={(v) => upd(["pages", i, "sections", si, "bullets"], v)}
                         addLabel="Add bullet"
+                        role="bullets"
                       />
                     </div>
                   </div>

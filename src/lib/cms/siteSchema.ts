@@ -8,7 +8,7 @@
  * can never push malformed JSON that breaks the next build.
  */
 
-import { lengthError } from "./limits";
+import { fieldErrors } from "./limits";
 
 /* ---------- Types (the contract the public components rely on) ---------- */
 
@@ -131,8 +131,7 @@ function reqStr(root: Record<string, unknown>, path: string, errors: string[]) {
     errors.push(`${path}: required, must be a non-empty string`);
     return;
   }
-  const e = lengthError(cur, parts[parts.length - 1], path);
-  if (e) errors.push(e);
+  errors.push(...fieldErrors(cur, parts[parts.length - 1], path));
 }
 
 /** Require an array of non-empty strings at `path` (1+ entries), each within its limit. */
@@ -144,8 +143,7 @@ function reqStrArray(root: Record<string, unknown>, path: string, errors: string
   }
   const key = path.split(".").pop() ?? path;
   value.forEach((v, i) => {
-    const e = lengthError(v, key, `${path}[${i}]`);
-    if (e) errors.push(e);
+    errors.push(...fieldErrors(v, key, `${path}[${i}]`));
   });
 }
 
