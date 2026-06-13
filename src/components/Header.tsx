@@ -105,13 +105,15 @@ export function Header() {
                 <img
                   src={siteConfig.logoLinear}
                   alt={siteConfig.name}
-                  className={`w-auto max-w-[62vw] object-contain transition-all duration-300 ${scrolled ? "h-6 sm:h-8" : "h-7 sm:h-9"}`}
+                  className={`w-auto max-w-[62vw] object-contain transition-all duration-300 ${scrolled ? "h-6 sm:h-7" : "h-7 sm:h-8"}`}
                 />
               ) : (
                 <Logo size="md" />
               )}
             </Link>
 
+            {/* Nav + quote button, grouped to the right (away from the logo) */}
+            <div className="flex items-center gap-5 xl:gap-9">
             {/* Desktop nav with dropdowns */}
             <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Primary">
               {navLinks.map((link, idx) => {
@@ -124,7 +126,7 @@ export function Header() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-accent ${
+                      className={`px-2.5 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.06em] transition-colors hover:text-accent ${
                         active ? "text-accent" : "text-ink/80"
                       }`}
                     >
@@ -145,7 +147,7 @@ export function Header() {
                   <div key={link.href} className="group relative">
                     <Link
                       href={link.href}
-                      className={`flex items-center gap-1 px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:text-accent ${
+                      className={`flex items-center gap-1 px-2.5 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.06em] transition-colors hover:text-accent ${
                         active ? "text-accent" : "text-ink/80"
                       }`}
                     >
@@ -229,6 +231,7 @@ export function Header() {
               <ButtonLink href="/contact" variant="primary" withArrow>
                 Get a Quote
               </ButtonLink>
+            </div>
             </div>
 
             <button
