@@ -396,10 +396,6 @@
     ],
     "faqs": [
       {
-        "question": "What is RTI and what does it mean for my payroll?",
-        "answer": "Real Time Information means PAYE is reported to HMRC every time you pay your staff. In practice we send a Full Payment Submission on or before each payday, plus an Employer Payment Summary where needed, so your PAYE account stays accurate throughout the year."
-      },
-      {
         "question": "Which employees do I have to enrol in a workplace pension?",
         "answer": "Eligible jobholders — those aged 22 to State Pension age earning over £10,000 — must be automatically enrolled. The minimum total contribution is 8% of qualifying earnings, of which the employer pays at least 3%. We assess your team and manage the whole process."
       },
