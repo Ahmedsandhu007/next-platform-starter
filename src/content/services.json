@@ -324,7 +324,8 @@
       "Payslips, P60s, P45s and P11Ds produced",
       "Employment Allowance claimed where eligible",
       "Statutory pay administered through payroll",
-      "Declaration of compliance to The Pensions Regulator"
+      "Declaration of compliance to The Pensions Regulator",
+      "payroll"
     ],
     "sections": [
       {
@@ -413,6 +414,10 @@
       {
         "question": "Do you handle statutory sick and maternity pay?",
         "answer": "Yes. Statutory payments such as SSP and SMP are administered through your payroll, so they are calculated correctly and paid through the normal pay run. We also help you keep pay rates in line with the National Living Wage, which is reviewed each April."
+      },
+      {
+        "question": "test faq",
+        "answer": "test faq"
       }
     ]
   },
