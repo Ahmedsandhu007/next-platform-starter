@@ -57,7 +57,7 @@ const staticTargets: SeoTarget[] = [
     route: "/",
     label: "Home",
     group: "Pages",
-    defaultTitle: `${siteConfig.name} — Chartered Accountants for Ambitious UK Businesses`,
+    defaultTitle: `${siteConfig.name} — Chartered Accountants for UK Businesses`,
     defaultDescription: siteConfig.description,
     editorHref: "/admin/copy",
   },

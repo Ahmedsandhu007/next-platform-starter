@@ -21,7 +21,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Chartered Accountants for Ambitious UK Businesses`,
+    default: `${siteConfig.name} — Chartered Accountants for UK Businesses`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — Chartered Accountants for Ambitious UK Businesses`,
+    title: `${siteConfig.name} — Chartered Accountants for UK Businesses`,
     description: siteConfig.description,
   },
   twitter: {

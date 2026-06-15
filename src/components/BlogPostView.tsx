@@ -130,6 +130,7 @@ export function BlogPostView({ post }: { post: BlogPost }) {
       name: siteConfig.name,
       url: siteConfig.url,
       telephone: siteConfig.contact.phone,
+      ...(siteConfig.logoLinear ? { logo: { "@type": "ImageObject", url: `${siteConfig.url}${siteConfig.logoLinear}` } } : {}),
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     url,

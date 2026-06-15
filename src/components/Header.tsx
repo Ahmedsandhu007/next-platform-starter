@@ -8,6 +8,7 @@ import { ChevronDown, ChevronRight, Clock, Menu, Phone, PhoneCall, Plus, X } fro
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { ButtonLink } from "@/components/ui/Button";
+import { SiteSearch } from "@/components/SiteSearch";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { socialLinks } from "@/components/ui/social";
 import { navLinks, siteConfig } from "@/lib/content";
@@ -227,6 +228,10 @@ export function Header() {
               })}
             </nav>
 
+            <div className="hidden lg:block">
+              <SiteSearch variant="icon" />
+            </div>
+
             <div className="hidden items-center gap-3 xl:flex">
               <ButtonLink href="/contact" variant="primary" withArrow>
                 Get a Quote
@@ -260,6 +265,9 @@ export function Header() {
             className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-line bg-white lg:hidden"
           >
             <Container className="py-4">
+              <div className="pb-4">
+                <SiteSearch variant="inline" onNavigate={() => setOpen(false)} />
+              </div>
               <nav className="flex flex-col divide-y divide-line" aria-label="Mobile">
                 {navLinks.map((link) => {
                   // Flatten mega categories → items; fall back to children; guard

@@ -34,11 +34,13 @@ export function defaultEntryFor(file: string, slug: string, title: string): Reco
     };
   }
   if (file === "case-studies") {
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
     return {
       slug,
       title: safeTitle,
       client: "Client name",
       industry: "Industry",
+      date: today,
       summary: "A short summary of this case study — edit me.",
       results: ["Key result — edit me"],
       metaTitle: safeTitle,

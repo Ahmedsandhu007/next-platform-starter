@@ -10,6 +10,8 @@ export type CaseStudy = {
   title: string;
   client: string;
   industry: string;
+  /** ISO date string, e.g. "2025-09-15" — drives the Article datePublished. Optional. */
+  date?: string;
   image?: string;
   imageAlt?: string;
   summary: string;

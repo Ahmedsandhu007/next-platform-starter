@@ -12,6 +12,8 @@ const isStrArray = (v: unknown): v is string[] => Array.isArray(v) && v.every(is
 
 const REQUIRED_STRINGS = ["slug", "title", "client", "industry", "summary", "metaTitle", "metaDescription"] as const;
 
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
 export function validateCaseStudy(value: unknown, label = "case study"): string[] {
   const errors: string[] = [];
   if (typeof value !== "object" || value === null) return [`${label}: must be an object`];
@@ -26,6 +28,11 @@ export function validateCaseStudy(value: unknown, label = "case study"): string[
   }
   if (isStr(o.slug) && o.slug.trim() && !isFormat(o.slug.trim(), "slug")) {
     errors.push(`${label}.slug: must be lowercase letters, numbers and hyphens only`);
+  }
+
+  if (o.date !== undefined) {
+    if (!isStr(o.date)) errors.push(`${label}.date: must be a string when present`);
+    else if (o.date.trim() && !ISO_DATE.test(o.date.trim())) errors.push(`${label}.date: must be a date in YYYY-MM-DD format`);
   }
 
   for (const key of ["image", "imageAlt"] as const) {

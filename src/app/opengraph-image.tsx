@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/content";
 
-export const alt = `${siteConfig.name} — Chartered Accountants for Ambitious UK Businesses`;
+export const alt = `${siteConfig.name} — Chartered Accountants for UK Businesses`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

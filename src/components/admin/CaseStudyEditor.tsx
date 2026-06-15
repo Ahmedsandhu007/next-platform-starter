@@ -82,11 +82,13 @@ export function CaseStudyEditor({ slug }: { slug: string }) {
 
     const image = cs.image?.trim();
     const imageAlt = cs.imageAlt?.trim();
+    const date = cs.date?.trim();
     const clean: CaseStudy = {
       slug: cs.slug,
       title: cs.title.trim(),
       client: cs.client.trim(),
       industry: cs.industry.trim(),
+      ...(date ? { date } : {}),
       ...(image ? { image } : {}),
       ...(imageAlt ? { imageAlt } : {}),
       summary: cs.summary.trim(),
@@ -176,6 +178,16 @@ export function CaseStudyEditor({ slug }: { slug: string }) {
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Client" value={cs.client} role="client" onChange={(v) => mutate((p) => ({ ...p, client: v }))} />
           <Field label="Industry" value={cs.industry} role="industry" onChange={(v) => mutate((p) => ({ ...p, industry: v }))} />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Labeled label="Date published (optional)">
+            <input
+              type="date"
+              value={cs.date ?? ""}
+              onChange={(e) => mutate((p) => ({ ...p, date: e.target.value }))}
+              className={fieldClass}
+            />
+          </Labeled>
         </div>
         <ImageField
           label="Image (thumbnail + hero)"
