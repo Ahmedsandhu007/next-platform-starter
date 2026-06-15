@@ -95,6 +95,23 @@ export const TEXT_LIMITS: Record<string, number> = {
   imageAlt: 140,
   image: 200,
 
+  // Case studies + team
+  client: 80,
+  industry: 60,
+  summary: 320,
+  result: 160,
+  markdownBody: 5000,
+  role: 70,
+  bio: 900,
+
+  // Per-page SEO overrides (seo.json)
+  ogTitle: 70,
+  ogDescription: 200,
+  canonical: 200,
+  ogImage: 200,
+  focusKeyword: 80,
+  schema: 6000,
+
   // Plural array keys (so limitFor("points") resolves directly)
   pillars: 60,
   points: 110,
@@ -126,12 +143,15 @@ export function lengthError(value: unknown, key: string, label: string): string 
 /* ------------------------------------------------------------------ *
  * Formats — a field "role" can require a specific shape (email, URL…).
  * ------------------------------------------------------------------ */
-export type FieldFormat = "email" | "url" | "href" | "phone" | "slug" | "companyNumber" | "ratingScore";
+export type FieldFormat = "email" | "url" | "href" | "canonicalUrl" | "phone" | "slug" | "companyNumber" | "ratingScore";
 
 const FORMAT_RE: Record<FieldFormat, RegExp> = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   url: /^https?:\/\/[^\s.]+\.[^\s]+$/i,
   href: /^(https?:\/\/|\/|#|mailto:|tel:)/i,
+  // A canonical URL or image src: a site path or a full http(s) URL only — no
+  // anchors, mailto: or tel:.
+  canonicalUrl: /^(https?:\/\/|\/)[^\s]*$/i,
   phone: /^[+0-9()\s.\-]{7,}$/,
   slug: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
   companyNumber: /^[A-Za-z0-9]{6,10}$/,
@@ -142,6 +162,7 @@ const FORMAT_MSG: Record<FieldFormat, string> = {
   email: "must be a valid email address",
   url: "must be a full URL starting with http:// or https://",
   href: "must be a path (/page), anchor (#id), full URL, mailto: or tel:",
+  canonicalUrl: "must be a site path (/page) or a full http:// or https:// URL",
   phone: "must be a phone number (digits, spaces, +, -, ( ) only)",
   slug: "must be lowercase letters, numbers and hyphens only",
   companyNumber: "must be 6–10 letters/numbers",
@@ -156,6 +177,8 @@ export const FIELD_FORMATS: Record<string, FieldFormat> = {
   twitter: "url",
   facebook: "url",
   href: "href",
+  canonical: "canonicalUrl",
+  ogImage: "canonicalUrl",
   phone: "phone",
   phoneDisplay: "phone",
   companyNumber: "companyNumber",

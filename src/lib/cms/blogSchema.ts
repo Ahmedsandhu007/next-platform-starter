@@ -74,6 +74,13 @@ function validateSection(value: unknown, label: string, errors: string[]) {
     });
   }
 
+  for (const key of ["image", "imageAlt"] as const) {
+    if (s[key] !== undefined) {
+      if (!isStr(s[key])) errors.push(`${label}.${key}: must be a string when present`);
+      else errors.push(...fieldErrors(s[key], key, `${label}.${key}`));
+    }
+  }
+
   if (s.table !== undefined) {
     if (typeof s.table !== "object" || s.table === null) {
       errors.push(`${label}.table: must be an object when present`);

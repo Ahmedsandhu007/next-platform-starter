@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlogPostView } from "@/components/BlogPostView";
 import { blogPosts, findBlogPost } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
 
 export function generateStaticParams() {
   return blogPosts.map((p) => ({ slug: p.slug }));
@@ -15,17 +16,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = findBlogPost(slug);
   if (!post) return {};
-  return {
-    title: post.metaTitle,
-    description: post.metaDescription,
-    alternates: { canonical: `/blog/${slug}` },
-    openGraph: {
-      type: "article",
-      title: post.metaTitle,
-      description: post.metaDescription,
-      publishedTime: post.date,
-    },
-  };
+  return buildMetadata(`/blog/${slug}`, {
+    defaultTitle: post.metaTitle,
+    defaultDescription: post.metaDescription,
+    ogType: "article",
+    publishedTime: post.date,
+  });
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

@@ -7,6 +7,8 @@ import { CtaBand } from "@/components/CtaBand";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
+import { CustomSchema } from "@/components/CustomSchema";
+import { jsonLd } from "@/lib/jsonLd";
 import { siteConfig } from "@/lib/content";
 import { detailHref, type DetailKind, type DetailPage } from "@/lib/detailContent";
 
@@ -221,8 +223,9 @@ export function DetailPageView({ page }: { page: DetailPage }) {
       <CtaBand />
 
       {schemas.map((schema, i) => (
-        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(schema) }} />
       ))}
+      <CustomSchema route={detailHref(page.kind, page.slug)} />
     </>
   );
 }

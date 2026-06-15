@@ -288,6 +288,34 @@ export function AddButton({ label, onClick }: { label: string; onClick: () => vo
   );
 }
 
+/** Labeled checkbox with an optional hint line. */
+export function Checkbox({
+  label,
+  checked,
+  onChange,
+  hint,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  hint?: string;
+}) {
+  return (
+    <label className="flex cursor-pointer items-start gap-2.5">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        className="mt-0.5 h-4 w-4 shrink-0 accent-bronze"
+      />
+      <span>
+        <span className="text-sm font-medium text-ink">{label}</span>
+        {hint && <span className="block text-[0.68rem] leading-snug text-muted">{hint}</span>}
+      </span>
+    </label>
+  );
+}
+
 /* ---------- shared editor chrome (used by PageEditor + BlogEditor) ---------- */
 
 export function BackLink() {

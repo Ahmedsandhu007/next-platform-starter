@@ -23,6 +23,9 @@ export type BlogSection = {
   bullets?: string[];
   links?: BlogLink[];
   table?: BlogTable;
+  /** Optional in-body image (uploaded via the CMS) + its alt text. */
+  image?: string;
+  imageAlt?: string;
 };
 
 export type BlogPost = {

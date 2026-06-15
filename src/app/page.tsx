@@ -1,6 +1,7 @@
 import { existsSync } from "fs";
 import path from "path";
 import { siteConfig } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { HeroPremium } from "@/components/HeroPremium";
 import { TrustedBy } from "@/components/TrustedBy";
 import { Services } from "@/components/Services";
@@ -11,6 +12,13 @@ import { Testimonials } from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
 import { CtaBand } from "@/components/CtaBand";
 import { LeadPopup } from "@/components/LeadPopup";
+import { CustomSchema } from "@/components/CustomSchema";
+
+export const metadata = buildMetadata("/", {
+  defaultTitle: `${siteConfig.name} — Chartered Accountants for Ambitious UK Businesses`,
+  defaultDescription: siteConfig.description,
+  absoluteTitle: true,
+});
 
 export default function Home() {
   // Hero cut-out source, in priority order:
@@ -36,6 +44,7 @@ export default function Home() {
       <FAQ />
       <CtaBand />
       <LeadPopup />
+      <CustomSchema route="/" />
     </>
   );
 }

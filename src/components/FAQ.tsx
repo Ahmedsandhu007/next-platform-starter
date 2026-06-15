@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ButtonLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { copy, faqs } from "@/lib/content";
+import { jsonLd } from "@/lib/jsonLd";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -94,7 +95,7 @@ export function FAQ() {
         </div>
       </Container>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }} />
     </section>
   );
 }

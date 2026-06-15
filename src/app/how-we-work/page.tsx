@@ -3,14 +3,14 @@ import { PageHero } from "@/components/PageHero";
 import { HowWeWork } from "@/components/HowWeWork";
 import { CtaBand } from "@/components/CtaBand";
 import { copy } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
 
 const page = copy.pages.howWeWork;
 
-export const metadata: Metadata = {
-  title: page.metaTitle,
-  description: page.metaDescription,
-  alternates: { canonical: "/how-we-work" },
-};
+export const metadata: Metadata = buildMetadata("/how-we-work", {
+  defaultTitle: page.metaTitle,
+  defaultDescription: page.metaDescription,
+});
 
 export default function HowWeWorkPage() {
   return (

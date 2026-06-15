@@ -4,14 +4,14 @@ import { Industries } from "@/components/Industries";
 import { Testimonials } from "@/components/Testimonials";
 import { CtaBand } from "@/components/CtaBand";
 import { copy } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
 
 const page = copy.pages.industries;
 
-export const metadata: Metadata = {
-  title: page.metaTitle,
-  description: page.metaDescription,
-  alternates: { canonical: "/industries" },
-};
+export const metadata: Metadata = buildMetadata("/industries", {
+  defaultTitle: page.metaTitle,
+  defaultDescription: page.metaDescription,
+});
 
 export default function IndustriesPage() {
   return (

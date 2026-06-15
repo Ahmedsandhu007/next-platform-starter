@@ -2,6 +2,8 @@ import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { BackgroundFX } from "@/components/ui/BackgroundFX";
+import { MarkdownContent } from "@/components/ui/MarkdownContent";
+import { CustomSchema } from "@/components/CustomSchema";
 import { type LegalPage } from "@/lib/content";
 
 /** Shared renderer for the Privacy / Terms / Cookies pages. */
@@ -19,11 +21,7 @@ export function LegalPageView({ page }: { page: LegalPage }) {
               {page.sections.map((s) => (
                 <div key={s.heading}>
                   <h2 className="font-display text-xl text-ink sm:text-2xl">{s.heading}</h2>
-                  {s.body.map((p, i) => (
-                    <p key={i} className="mt-3 text-[0.95rem] leading-relaxed text-muted">
-                      {p}
-                    </p>
-                  ))}
+                  {s.body.length ? <MarkdownContent className="mt-3">{s.body.join("\n\n")}</MarkdownContent> : null}
                   {s.bullets ? (
                     <ul className="mt-4 flex flex-col gap-2.5">
                       {s.bullets.map((b) => (
@@ -40,6 +38,7 @@ export function LegalPageView({ page }: { page: LegalPage }) {
           </Reveal>
         </Container>
       </section>
+      <CustomSchema route={`/${page.slug}`} />
     </>
   );
 }

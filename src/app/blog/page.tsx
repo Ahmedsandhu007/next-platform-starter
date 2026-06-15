@@ -6,13 +6,14 @@ import { Container } from "@/components/ui/Container";
 import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import { CtaBand } from "@/components/CtaBand";
 import { blogPosts, blogHref, formatBlogDate } from "@/lib/content";
+import { CustomSchema } from "@/components/CustomSchema";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
 
-export const metadata: Metadata = {
-  title: "News & Blog",
-  description:
+export const metadata: Metadata = buildMetadata("/blog", {
+  defaultTitle: "News & Blog",
+  defaultDescription:
     "Tax, accounting and business insights from MMR Accountants — plain-English guides on limited companies, HMRC, student loans and useful HMRC tools.",
-  alternates: { canonical: "/blog" },
-};
+});
 
 export default function BlogIndexPage() {
   return (
@@ -73,6 +74,7 @@ export default function BlogIndexPage() {
       </section>
 
       <CtaBand />
+      <CustomSchema route="/blog" />
     </>
   );
 }

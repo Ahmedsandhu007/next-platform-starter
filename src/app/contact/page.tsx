@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Contact } from "@/components/Contact";
 import { copy } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
 
 const page = copy.pages.contact;
 
-export const metadata: Metadata = {
-  title: page.metaTitle,
-  description: page.metaDescription,
-  alternates: { canonical: "/contact" },
-};
+export const metadata: Metadata = buildMetadata("/contact", {
+  defaultTitle: page.metaTitle,
+  defaultDescription: page.metaDescription,
+});
 
 export default function ContactPage() {
   return (

@@ -5,14 +5,14 @@ import { Testimonials } from "@/components/Testimonials";
 import { TrustedBy } from "@/components/TrustedBy";
 import { CtaBand } from "@/components/CtaBand";
 import { copy } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
 
 const page = copy.pages.whyMmr;
 
-export const metadata: Metadata = {
-  title: page.metaTitle,
-  description: page.metaDescription,
-  alternates: { canonical: "/why-mmr" },
-};
+export const metadata: Metadata = buildMetadata("/why-mmr", {
+  defaultTitle: page.metaTitle,
+  defaultDescription: page.metaDescription,
+});
 
 export default function WhyMmrPage() {
   return (

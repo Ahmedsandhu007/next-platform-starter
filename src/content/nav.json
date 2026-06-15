@@ -116,6 +116,8 @@
         }
       ]
     },
+    { "label": "Case Studies", "href": "/case-studies" },
+    { "label": "Team", "href": "/team" },
     { "label": "Blog", "href": "/blog" },
     { "label": "FAQ", "href": "/faq" }
   ]

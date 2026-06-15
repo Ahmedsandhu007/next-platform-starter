@@ -29,6 +29,7 @@ export function BlogEditor({ slug }: { slug: string }) {
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState("");
   const [issues, setIssues] = useState<string[]>([]);
+  const [deleting, setDeleting] = useState(false);
 
   // Load current content fresh from the repo (via the API → GitHub).
   useEffect(() => {
@@ -95,6 +96,8 @@ export function BlogEditor({ slug }: { slug: string }) {
         .filter((l) => l.label && l.href);
       if (links.length) section.links = links;
       if (s.table) section.table = s.table; // tables are preserved as-is
+      if (s.image && s.image.trim()) section.image = s.image.trim();
+      if (s.imageAlt && s.imageAlt.trim()) section.imageAlt = s.imageAlt.trim();
       return section;
     });
 
@@ -139,6 +142,30 @@ export function BlogEditor({ slug }: { slug: string }) {
       setSaveError("Network error while saving.");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function del() {
+    if (!post) return;
+    if (!window.confirm(`Delete “${post.title || post.slug}”? This cannot be undone.`)) return;
+    setDeleting(true);
+    setSaveError("");
+    try {
+      const res = await fetch(`/api/admin/content/blog?slug=${encodeURIComponent(post.slug)}`, { method: "DELETE" });
+      if (res.status === 401) {
+        window.location.href = "/admin/login";
+        return;
+      }
+      if (res.ok) {
+        window.location.href = "/admin";
+        return;
+      }
+      const data = (await res.json().catch(() => ({}))) as { message?: string };
+      setSaveError(data.message ?? `Delete failed (${res.status}).`);
+    } catch {
+      setSaveError("Network error while deleting.");
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -252,6 +279,18 @@ export function BlogEditor({ slug }: { slug: string }) {
         <SaveButton saving={saving} onClick={save} />
         {saved && <span className="text-sm text-emerald-700">Saved ✓</span>}
       </div>
+
+      {/* Danger zone */}
+      <div className="mt-10 border-t border-line pt-6">
+        <button
+          type="button"
+          onClick={del}
+          disabled={deleting}
+          className="text-xs font-semibold uppercase tracking-[0.14em] text-red-600 transition-colors hover:text-red-800 disabled:opacity-60"
+        >
+          {deleting ? "Deleting…" : "Delete this post"}
+        </button>
+      </div>
     </div>
   );
 }
@@ -291,13 +330,18 @@ function SectionEditor({
         </Labeled>
         <div>
           <span className={labelClass}>Paragraphs</span>
+          <p className="-mt-0.5 mb-1.5 text-[0.68rem] text-muted">
+            Supports Markdown — <code className="font-mono">## subheading</code>, <code className="font-mono">**bold**</code>,{" "}
+            <code className="font-mono">[link](/services/vat)</code>, tables and lists. Keep a whole table (or any
+            multi-line block) in a single box.
+          </p>
           <StringList
             items={section.body}
             onChange={(body) => set({ body })}
             multiline
             role="body"
             addLabel="Add paragraph"
-            placeholder="Paragraph text…"
+            placeholder="Paragraph text… (Markdown supported)"
           />
         </div>
         <div>
@@ -311,6 +355,25 @@ function SectionEditor({
           />
         </div>
         <LinksEditor links={section.links ?? []} onChange={(links) => set({ links })} />
+        <div>
+          <ImageField
+            label="In-body image (optional)"
+            dir="blog"
+            value={section.image ?? ""}
+            onChange={(path) => set({ image: path })}
+          />
+          {section.image ? (
+            <div className="mt-2">
+              <Field
+                label="Image alt text"
+                value={section.imageAlt ?? ""}
+                role="imageAlt"
+                hint="Describe the image for screen readers and SEO."
+                onChange={(v) => set({ imageAlt: v })}
+              />
+            </div>
+          ) : null}
+        </div>
         {section.table ? (
           <p className="border border-dashed border-line bg-white px-3 py-2 text-xs text-muted">
             This section has a data table ({section.table.headers.length} columns ×{" "}

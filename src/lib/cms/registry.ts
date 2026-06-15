@@ -13,6 +13,9 @@ import { validateSections } from "@/lib/cms/itemsSchema";
 import { validateNav } from "@/lib/cms/navSchema";
 import { validateLegal } from "@/lib/cms/legalSchema";
 import { validateBlog } from "@/lib/cms/blogSchema";
+import { validateSeo } from "@/lib/cms/seoSchema";
+import { validateCaseStudies } from "@/lib/cms/caseStudySchema";
+import { validateTeam } from "@/lib/cms/teamSchema";
 
 export type CollectionMode = "list" | "object";
 
@@ -33,11 +36,14 @@ export const collections: Collection[] = [
   { id: "nav", label: "Navigation & menus", group: "Site-wide", file: "src/content/nav.json", mode: "object", validate: validateNav, editPath: "/admin/nav" },
   { id: "legal", label: "Legal pages (privacy, terms, cookies)", group: "Site-wide", file: "src/content/legal.json", mode: "object", validate: validateLegal, editPath: "/admin/legal" },
   { id: "reviews", label: "Google reviews", group: "Home page", file: "src/content/reviews.json", mode: "object", validate: validateReviews, editPath: "/admin/reviews" },
+  { id: "seo", label: "SEO & search", group: "Site-wide", file: "src/content/seo.json", mode: "object", validate: validateSeo, editPath: "/admin/seo" },
   { id: "services", label: "Services", group: "Detail pages", file: "src/content/services.json", mode: "list", validate: validateFile },
   { id: "industries-1", label: "Industries — set A", group: "Detail pages", file: "src/content/industries-1.json", mode: "list", validate: validateFile },
   { id: "industries-2", label: "Industries — set B", group: "Detail pages", file: "src/content/industries-2.json", mode: "list", validate: validateFile },
   { id: "approach", label: "How we help", group: "Detail pages", file: "src/content/approach.json", mode: "list", validate: validateFile },
   { id: "blog", label: "Blog posts", group: "Blog", file: "src/content/blog.json", mode: "list", validate: validateBlog },
+  { id: "case-studies", label: "Case studies", group: "Pages", file: "src/content/case-studies.json", mode: "list", validate: validateCaseStudies },
+  { id: "team", label: "Team page", group: "Pages", file: "src/content/team.json", mode: "object", validate: validateTeam, editPath: "/admin/team" },
 ];
 
 const byId: Record<string, Collection> = Object.fromEntries(collections.map((c) => [c.id, c]));

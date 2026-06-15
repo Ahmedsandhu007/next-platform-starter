@@ -7,13 +7,13 @@ import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import { CtaBand } from "@/components/CtaBand";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { approachPages, detailHref } from "@/lib/detailContent";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
 
-export const metadata: Metadata = {
-  title: "How We Help",
-  description:
+export const metadata: Metadata = buildMetadata("/how-we-help", {
+  defaultTitle: "How We Help",
+  defaultDescription:
     "More than compliance — proactive tax planning, cloud-first accounting and an advisory partnership that turns your numbers into confident decisions.",
-  alternates: { canonical: "/how-we-help" },
-};
+});
 
 export default function HowWeHelpPage() {
   return (

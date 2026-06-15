@@ -6,6 +6,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import { CtaBand } from "@/components/CtaBand";
 import { ShareButtons } from "@/components/ShareButtons";
+import { MarkdownContent } from "@/components/ui/MarkdownContent";
+import { CustomSchema } from "@/components/CustomSchema";
+import { jsonLd } from "@/lib/jsonLd";
 import {
   siteConfig,
   blogHref,
@@ -24,11 +27,9 @@ function Section({ section }: { section: BlogSection }) {
         <h2 className="font-display text-xl text-ink sm:text-2xl">{section.heading}</h2>
       ) : null}
 
-      {section.body.map((p, i) => (
-        <p key={i} className={`text-[0.95rem] leading-relaxed text-muted ${section.heading || i > 0 ? "mt-3" : ""}`}>
-          {p}
-        </p>
-      ))}
+      {section.body.length ? (
+        <MarkdownContent className={section.heading ? "mt-3" : ""}>{section.body.join("\n\n")}</MarkdownContent>
+      ) : null}
 
       {section.bullets ? (
         <ul className="mt-4 flex flex-col gap-2.5">
@@ -87,6 +88,14 @@ function Section({ section }: { section: BlogSection }) {
             </tbody>
           </table>
         </div>
+      ) : null}
+
+      {section.image ? (
+        <figure className="mt-5 overflow-hidden rounded-2xl border border-line bg-blue/30">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={section.image} alt={section.imageAlt ?? ""} className="w-full object-contain" />
+          {section.imageAlt ? <figcaption className="px-4 py-2 text-xs text-muted">{section.imageAlt}</figcaption> : null}
+        </figure>
       ) : null}
     </div>
   );
@@ -191,8 +200,9 @@ export function BlogPostView({ post }: { post: BlogPost }) {
 
       <CtaBand />
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(articleSchema) }} />
+      <CustomSchema route={blogHref(post.slug)} />
     </>
   );
 }

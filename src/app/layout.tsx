@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { siteConfig } from "@/lib/content";
 import { SiteChrome } from "@/components/SiteChrome";
+import { jsonLd } from "@/lib/jsonLd";
 import "./globals.css";
 
 const inter = Inter({
@@ -91,6 +92,23 @@ const organizationSchema = {
   sameAs: Object.values(siteConfig.social),
 };
 
+// WebSite + SearchAction enables the Google Sitelinks Search Box (eligibility is
+// Google's call; this is the markup + a working /search?q= endpoint we control).
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${siteConfig.url}/search?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -118,7 +136,11 @@ export default function RootLayout({
         <SiteChrome>{children}</SiteChrome>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: jsonLd(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(websiteSchema) }}
         />
         {/* Scroll reveals — plain vanilla (not a React effect), so it runs the
             same way it does on the working reference site and on iOS Safari.

@@ -161,3 +161,14 @@ export * from "./detailContent";
    and assembled in blog.ts, re-exported here.
    ============================================================ */
 export * from "./blog";
+
+/* ============================================================
+   Case studies — client success stories, editable in
+   src/content/case-studies.json, typed in caseStudies.ts.
+   ============================================================ */
+export * from "./caseStudies";
+
+/* ============================================================
+   Team — the people page, editable in src/content/team.json.
+   ============================================================ */
+export * from "./team";
