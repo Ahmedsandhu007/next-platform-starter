@@ -39,36 +39,38 @@
       "href": "/how-we-help",
       "children": [
         { "label": "Proactive Tax Planning", "href": "/how-we-help/proactive-tax-planning" },
-        { "label": "Advisory & Growth", "href": "/how-we-help/advisory-partnership" }
+        { "label": "Advisory & Growth", "href": "/how-we-help/advisory-partnership" },
+        { "label": "Team", "href": "/team" }
       ]
     },
     {
-      "label": "Why MMR",
-      "href": "/why-mmr",
+      "label": "How We Work",
+      "href": "/how-we-work",
       "mega": [
         {
-          "label": "Our promise",
-          "icon": "Award",
+          "label": "Our process",
+          "icon": "Settings2",
           "items": [
-            { "title": "ACCA & ICAEW qualified", "description": "Chartered-standard, regulated and fully insured.", "icon": "Award", "href": "/why-mmr#why" },
-            { "title": "Transparent fixed fees", "description": "Agreed up front — no hidden charges.", "icon": "BadgePoundSterling", "href": "/why-mmr#why" },
-            { "title": "Your own accountant", "description": "A named adviser who knows your business.", "icon": "UserRound", "href": "/why-mmr#why" }
+            { "title": "Free discovery call", "description": "We learn your business and give a clear quote.", "icon": "PhoneCall", "href": "/how-we-work#process" },
+            { "title": "Seamless onboarding", "description": "We handle the switch and set up your software.", "icon": "Settings2", "href": "/how-we-work#process" },
+            { "title": "We manage the numbers", "description": "Bookkeeping, tax and payroll, quietly handled.", "icon": "LineChart", "href": "/how-we-work#process" },
+            { "title": "You grow with insight", "description": "Proactive advice keeps you ahead all year.", "icon": "Sparkles", "href": "/how-we-work#process" }
           ]
         },
         {
-          "label": "What you get",
-          "icon": "Sparkles",
+          "label": "Why MMR & support",
+          "icon": "MessagesSquare",
           "items": [
-            { "title": "Fast turnaround", "description": "A reply to every query within one business day.", "icon": "Zap", "href": "/why-mmr#why" },
-            { "title": "Software experts", "description": "Certified in Xero, QuickBooks and Sage.", "icon": "Laptop", "href": "/why-mmr#why" },
-            { "title": "Client stories", "description": "See what UK businesses say about us.", "icon": "MessagesSquare", "href": "/why-mmr#testimonials" }
+            { "title": "Why MMR", "description": "Qualified, fixed-fee and genuinely proactive.", "icon": "Award", "href": "/why-mmr" },
+            { "title": "Switch to MMR", "description": "We move you from your old accountant, paperless.", "icon": "Zap", "href": "/how-we-work#process" },
+            { "title": "Year-round support", "description": "A dedicated accountant, only a call away.", "icon": "MessagesSquare", "href": "/why-mmr#why" }
           ]
         }
       ]
     },
     {
-      "label": "Industries",
-      "href": "/industries",
+      "label": "Case Studies",
+      "href": "/case-studies",
       "mega": [
         {
           "label": "Professional & digital",
@@ -92,33 +94,6 @@
         }
       ]
     },
-    {
-      "label": "How We Work",
-      "href": "/how-we-work",
-      "mega": [
-        {
-          "label": "Our process",
-          "icon": "Settings2",
-          "items": [
-            { "title": "Free discovery call", "description": "We learn your business and give a clear quote.", "icon": "PhoneCall", "href": "/how-we-work#process" },
-            { "title": "Seamless onboarding", "description": "We handle the switch and set up your software.", "icon": "Settings2", "href": "/how-we-work#process" },
-            { "title": "We manage the numbers", "description": "Bookkeeping, tax and payroll, quietly handled.", "icon": "LineChart", "href": "/how-we-work#process" },
-            { "title": "You grow with insight", "description": "Proactive advice keeps you ahead all year.", "icon": "Sparkles", "href": "/how-we-work#process" }
-          ]
-        },
-        {
-          "label": "Switching & support",
-          "icon": "MessagesSquare",
-          "items": [
-            { "title": "Switch to MMR", "description": "We move you from your old accountant, paperless.", "icon": "Zap", "href": "/how-we-work#process" },
-            { "title": "Year-round support", "description": "A dedicated accountant, only a call away.", "icon": "MessagesSquare", "href": "/why-mmr#why" }
-          ]
-        }
-      ]
-    },
-    { "label": "Case Studies", "href": "/case-studies" },
-    { "label": "Team", "href": "/team" },
-    { "label": "Blog", "href": "/blog" },
-    { "label": "FAQ", "href": "/faq" }
+    { "label": "Blog", "href": "/blog" }
   ]
 }

@@ -9,6 +9,18 @@ import { copy, legalPages, navLinks, services, siteConfig } from "@/lib/content"
 export function Footer() {
   const year = new Date().getFullYear();
 
+  // The header nav is intentionally compact — Why MMR, Industries, Team and FAQ
+  // are nested into dropdowns there. The footer stays a full directory, so it
+  // lists the top-level pages (CMS-driven) plus those nested pages, flat.
+  const quickLinks = [
+    ...navLinks.map((l) => ({ label: l.label, href: l.href })),
+    { label: "Why MMR", href: "/why-mmr" },
+    { label: "Industries", href: "/industries" },
+    { label: "Team", href: "/team" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Contact", href: "/contact" },
+  ];
+
   return (
     <footer className="relative overflow-hidden bg-brand-blue-deep text-white/70">
       {/* faint white dot-grid + soft glows, fading down from the top */}
@@ -76,18 +88,13 @@ export function Footer() {
           <nav aria-label="Quick links">
             <h2 className="text-[0.95rem] font-extrabold uppercase tracking-[0.14em] text-white">{copy.footer.columns.quickLinks}</h2>
             <ul className="mt-5 flex flex-col gap-3 text-sm">
-              {navLinks.map((l) => (
+              {quickLinks.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="text-white/60 transition-colors hover:text-white">
                     {l.label}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/contact" className="text-white/60 transition-colors hover:text-white">
-                  Contact
-                </Link>
-              </li>
             </ul>
           </nav>
 
