@@ -155,3 +155,9 @@ export const legalPages: LegalPage[] = legalData.pages as LegalPage[];
    @/lib/content remains the single import surface.
    ============================================================ */
 export * from "./detailContent";
+
+/* ============================================================
+   Blog / News — posts editable in src/content/blog.json, typed
+   and assembled in blog.ts, re-exported here.
+   ============================================================ */
+export * from "./blog";

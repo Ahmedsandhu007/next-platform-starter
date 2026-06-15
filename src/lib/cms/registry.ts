@@ -12,6 +12,7 @@ import { validateSettings, validateCopy } from "@/lib/cms/siteSchema";
 import { validateSections } from "@/lib/cms/itemsSchema";
 import { validateNav } from "@/lib/cms/navSchema";
 import { validateLegal } from "@/lib/cms/legalSchema";
+import { validateBlog } from "@/lib/cms/blogSchema";
 
 export type CollectionMode = "list" | "object";
 
@@ -36,6 +37,7 @@ export const collections: Collection[] = [
   { id: "industries-1", label: "Industries — set A", group: "Detail pages", file: "src/content/industries-1.json", mode: "list", validate: validateFile },
   { id: "industries-2", label: "Industries — set B", group: "Detail pages", file: "src/content/industries-2.json", mode: "list", validate: validateFile },
   { id: "approach", label: "How we help", group: "Detail pages", file: "src/content/approach.json", mode: "list", validate: validateFile },
+  { id: "blog", label: "Blog posts", group: "Blog", file: "src/content/blog.json", mode: "list", validate: validateBlog },
 ];
 
 const byId: Record<string, Collection> = Object.fromEntries(collections.map((c) => [c.id, c]));

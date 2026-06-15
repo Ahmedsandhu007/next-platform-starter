@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { DetailFaq, DetailSection, RawDetail } from "@/lib/detailSchema";
 import { limitFor } from "@/lib/cms/limits";
+import { BackLink, SaveButton, StatusBanner, Card } from "@/components/admin/fields";
 
 const fieldClass =
   "w-full rounded-none border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-ink/30 focus:border-bronze focus-visible:outline-none focus:ring-1 focus:ring-bronze";
@@ -263,61 +263,6 @@ export function PageEditor({ file, slug }: { file: string; slug: string }) {
 }
 
 /* ---------- small building blocks ---------- */
-
-function BackLink() {
-  return (
-    <Link href="/admin" className="text-xs font-semibold uppercase tracking-[0.14em] text-bronze hover:underline">
-      ← All content
-    </Link>
-  );
-}
-
-function SaveButton({ saving, onClick }: { saving: boolean; onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={saving}
-      className="bg-ink px-6 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-bronze disabled:cursor-not-allowed disabled:opacity-60"
-    >
-      {saving ? "Saving…" : "Save & publish"}
-    </button>
-  );
-}
-
-function StatusBanner({ saved, error, issues }: { saved: boolean; error: string; issues: string[] }) {
-  if (saved) {
-    return (
-      <div className="mt-5 border border-emerald-300 bg-emerald-50 p-4 text-sm text-emerald-900">
-        Saved. Your changes will be live in about 1–2 minutes, once the site finishes rebuilding.
-      </div>
-    );
-  }
-  if (error || issues.length > 0) {
-    return (
-      <div className="mt-5 border border-red-300 bg-red-50 p-4 text-sm text-red-800">
-        {error && <p className="font-semibold">{error}</p>}
-        {issues.length > 0 && (
-          <ul className="mt-2 list-disc space-y-1 pl-5 font-mono text-xs">
-            {issues.map((issue, i) => (
-              <li key={i}>{issue}</li>
-            ))}
-          </ul>
-        )}
-      </div>
-    );
-  }
-  return null;
-}
-
-function Card({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="mt-6 border border-line bg-white p-5 sm:p-6">
-      <h2 className="font-display text-base font-bold text-ink">{title}</h2>
-      <div className="mt-4 space-y-4">{children}</div>
-    </section>
-  );
-}
 
 function Labeled({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (

@@ -87,6 +87,14 @@ export const TEXT_LIMITS: Record<string, number> = {
   metaDescription: 185,
   slug: 60,
 
+  // Blog
+  author: 70,
+  category: 40,
+  excerpt: 300,
+  date: 12,
+  imageAlt: 140,
+  image: 200,
+
   // Plural array keys (so limitFor("points") resolves directly)
   pillars: 60,
   points: 110,

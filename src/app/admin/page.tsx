@@ -4,6 +4,7 @@ import servicesRaw from "@/content/services.json";
 import industries1Raw from "@/content/industries-1.json";
 import industries2Raw from "@/content/industries-2.json";
 import approachRaw from "@/content/approach.json";
+import blogRaw from "@/content/blog.json";
 import { objectCollections } from "@/lib/cms/registry";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +16,7 @@ const COLLECTIONS: { file: string; label: string; pages: ListItem[] }[] = [
   { file: "industries-1", label: "Industries — set A", pages: industries1Raw as unknown as ListItem[] },
   { file: "industries-2", label: "Industries — set B", pages: industries2Raw as unknown as ListItem[] },
   { file: "approach", label: "How we help", pages: approachRaw as unknown as ListItem[] },
+  { file: "blog", label: "Blog posts", pages: blogRaw as unknown as ListItem[] },
 ];
 
 export default function AdminDashboard() {

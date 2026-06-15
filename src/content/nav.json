@@ -116,6 +116,7 @@
         }
       ]
     },
+    { "label": "Blog", "href": "/blog" },
     { "label": "FAQ", "href": "/faq" }
   ]
 }
