@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { Reveal } from "@/components/ui/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
 import { DotCluster, RingAccent } from "@/components/ui/Decorations";
@@ -67,7 +68,7 @@ export function CtaBand() {
             <h2 className="mt-5 text-3xl text-white sm:text-4xl lg:text-[2.9rem] lg:leading-[1.1]">
               {copy.cta.title}
             </h2>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">{copy.cta.subtitle}</p>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70"><InlineMarkdown>{copy.cta.subtitle}</InlineMarkdown></p>
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
               <ButtonLink href="/contact" variant="bronze" size="lg" withArrow>
                 {copy.cta.primaryCta}

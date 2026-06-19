@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SpotArt, type Name as SpotArtName } from "@/components/ui/SpotArt";
 import { Icon, type IconName } from "@/components/ui/Icon";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 
 /**
  * Banner header for sub-pages — a brand-blue hero that mirrors the home page:
@@ -76,7 +77,9 @@ export function PageHero({
               {title}
             </h1>
             {subtitle ? (
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/75">{subtitle}</p>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/75">
+                {typeof subtitle === "string" ? <InlineMarkdown>{subtitle}</InlineMarkdown> : subtitle}
+              </p>
             ) : null}
           </Reveal>
 

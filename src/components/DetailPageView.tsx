@@ -7,6 +7,7 @@ import { CtaBand } from "@/components/CtaBand";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { CustomSchema } from "@/components/CustomSchema";
 import { jsonLd } from "@/lib/jsonLd";
 import { siteConfig } from "@/lib/content";
@@ -145,7 +146,9 @@ export function DetailPageView({ page }: { page: DetailPage }) {
                   <Icon name={sectionIcon(s.heading, pageIcon)} className="h-8 w-8" strokeWidth={1.5} aria-hidden />
                 </span>
                 <h3 className="mt-5 font-display text-lg text-ink">{s.heading}</h3>
-                <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{s.body[0]}</p>
+                <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">
+                  <InlineMarkdown>{s.body[0] ?? ""}</InlineMarkdown>
+                </p>
               </article>
             ))}
           </div>

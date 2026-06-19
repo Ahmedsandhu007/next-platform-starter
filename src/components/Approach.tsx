@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SpotArt } from "@/components/ui/SpotArt";
 import { DotCluster } from "@/components/ui/Decorations";
@@ -30,7 +31,7 @@ export function Approach() {
                       <SpotArt name={v.art} className="mx-auto max-w-[230px]" />
                     </div>
                     <h3 className="mt-7 text-xl text-ink">{v.title}</h3>
-                    <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-muted">{v.description}</p>
+                    <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-muted"><InlineMarkdown>{v.description}</InlineMarkdown></p>
                     <Link
                       href={`/how-we-help/${v.slug}`}
                       className={`mt-5 inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] transition-colors ${

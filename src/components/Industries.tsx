@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { InteractiveCard } from "@/components/ui/InteractiveCard";
@@ -34,7 +35,7 @@ export function Industries() {
                       <Icon name={industry.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
                     </span>
                     <h3 className="mt-5 text-base text-ink">{industry.title}</h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{industry.description}</p>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted"><InlineMarkdown>{industry.description}</InlineMarkdown></p>
                     <Link
                       href={`/industries/${industry.slug}`}
                       className={`mt-4 inline-flex items-center gap-1.5 text-[0.7rem] font-bold uppercase tracking-[0.16em] transition-colors ${

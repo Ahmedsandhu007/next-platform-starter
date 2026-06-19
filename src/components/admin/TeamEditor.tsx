@@ -18,7 +18,7 @@ export function TeamEditor() {
           <>
             <Card title="Heading">
               <Field label="Heading" value={data.heading} role="heading" onChange={(v) => ed.mutate((p) => setIn(p, ["heading"], v))} />
-              <Field label="Intro" value={data.intro} role="intro" multiline onChange={(v) => ed.mutate((p) => setIn(p, ["intro"], v))} />
+              <Field label="Intro" value={data.intro} role="intro" multiline rich onChange={(v) => ed.mutate((p) => setIn(p, ["intro"], v))} />
             </Card>
 
             <Card title="Team members">
@@ -80,7 +80,7 @@ function MemberRow({
         </div>
         <ImageField label="Photo" dir="team" round value={member.image ?? ""} onChange={(path) => onField("image", path)} />
         <Field label="Photo alt text" value={member.imageAlt ?? ""} role="imageAlt" onChange={(v) => onField("imageAlt", v)} />
-        <Field label="Bio" value={member.bio} role="bio" multiline onChange={(v) => onField("bio", v)} />
+        <Field label="Bio" value={member.bio} role="bio" multiline rich onChange={(v) => onField("bio", v)} />
       </div>
     </div>
   );

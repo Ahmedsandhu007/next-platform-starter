@@ -60,7 +60,7 @@ function SectionsFields({ data, upd }: { data: SectionsData; upd: (path: Path, v
     <Field label={label} value={String(get(path) ?? "")} onChange={(v) => upd(path, v)} role={String(path[path.length - 1])} />
   );
   const Area = (label: string, path: Path, rows = 2) => (
-    <Field label={label} value={String(get(path) ?? "")} onChange={(v) => upd(path, v)} role={String(path[path.length - 1])} multiline rows={rows} />
+    <Field label={label} value={String(get(path) ?? "")} onChange={(v) => upd(path, v)} role={String(path[path.length - 1])} multiline rich rows={rows} />
   );
 
   return (

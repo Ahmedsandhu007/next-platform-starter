@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { limitFor, formatFor, isFormat, formatHint, type FieldFormat } from "@/lib/cms/limits";
+import { RichTextField } from "./RichTextField";
 
 /** Shared admin form primitives, reused across CMS editors. */
 
@@ -83,6 +84,7 @@ export function Field({
   placeholder,
   multiline = false,
   rows = 3,
+  rich = false,
 }: {
   label: string;
   value: string;
@@ -95,8 +97,22 @@ export function Field({
   placeholder?: string;
   multiline?: boolean;
   rows?: number;
+  /** Render the Bold/Italic/Underline/Link toolbar (writes Markdown) instead of a plain textarea. */
+  rich?: boolean;
 }) {
   const limit = max ?? (role ? limitFor(role) : 400);
+  if (rich) {
+    return (
+      <div>
+        <span className="mb-1 flex items-end justify-between gap-2">
+          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink">{label}</span>
+          <CharCount value={value} max={limit} />
+        </span>
+        <RichTextField value={value} onChange={onChange} role={role} max={max} rows={rows} placeholder={placeholder} hideCount />
+        {hint && <span className="mt-1 block text-[0.68rem] text-muted">{hint}</span>}
+      </div>
+    );
+  }
   const fmt = format ?? (role ? formatFor(role) : null);
   const over = value.length > limit;
   const badFormat = !!fmt && value.trim() !== "" && !isFormat(value, fmt);
@@ -217,6 +233,7 @@ export function StringList({
   placeholder = "",
   role,
   max,
+  renderField,
 }: {
   items: string[];
   onChange: (next: string[]) => void;
@@ -227,6 +244,8 @@ export function StringList({
   role?: string;
   /** Explicit per-item character limit (overrides `role`). */
   max?: number;
+  /** Custom per-item editor (e.g. a rich-text field). Supplies its own counter. */
+  renderField?: (value: string, onChange: (v: string) => void) => ReactNode;
 }) {
   const set = (i: number, value: string) => onChange(items.map((it, idx) => (idx === i ? value : it)));
   const remove = (i: number) => onChange(items.filter((_, idx) => idx !== i));
@@ -242,21 +261,27 @@ export function StringList({
         return (
           <div key={i} className="flex items-start gap-2">
             <div className="flex-1">
-              {multiline ? (
-                <textarea
-                  value={item}
-                  placeholder={placeholder}
-                  rows={2}
-                  onChange={(e) => set(i, e.target.value)}
-                  className={`${cls} resize-y`}
-                />
+              {renderField ? (
+                renderField(item, (v) => set(i, v))
               ) : (
-                <input value={item} placeholder={placeholder} onChange={(e) => set(i, e.target.value)} className={cls} />
-              )}
-              {limit !== undefined && (
-                <div className="mt-0.5 flex justify-end">
-                  <CharCount value={item} max={limit} />
-                </div>
+                <>
+                  {multiline ? (
+                    <textarea
+                      value={item}
+                      placeholder={placeholder}
+                      rows={2}
+                      onChange={(e) => set(i, e.target.value)}
+                      className={`${cls} resize-y`}
+                    />
+                  ) : (
+                    <input value={item} placeholder={placeholder} onChange={(e) => set(i, e.target.value)} className={cls} />
+                  )}
+                  {limit !== undefined && (
+                    <div className="mt-0.5 flex justify-end">
+                      <CharCount value={item} max={limit} />
+                    </div>
+                  )}
+                </>
               )}
             </div>
             <div className="pt-0.5">

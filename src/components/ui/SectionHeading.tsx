@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { Reveal } from "./Reveal";
+import { InlineMarkdown } from "./MarkdownContent";
 
 export function SectionHeading({
   eyebrow,
@@ -35,7 +36,7 @@ export function SectionHeading({
             isCenter ? "max-w-2xl" : "max-w-xl"
           }`}
         >
-          {subtitle}
+          {typeof subtitle === "string" ? <InlineMarkdown>{subtitle}</InlineMarkdown> : subtitle}
         </p>
       ) : null}
     </Reveal>

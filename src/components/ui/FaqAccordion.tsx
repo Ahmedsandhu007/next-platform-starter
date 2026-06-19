@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { type DetailFaq } from "@/lib/detailContent";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 
 /** Reusable FAQ accordion (mirrors the home FAQ section), driven by a faqs array. */
 export function FaqAccordion({ faqs }: { faqs: DetailFaq[] }) {
@@ -56,7 +57,9 @@ export function FaqAccordion({ faqs }: { faqs: DetailFaq[] }) {
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     className="overflow-hidden"
                   >
-                    <p className="px-6 pb-6 text-sm leading-relaxed text-muted sm:text-[0.95rem]">{faq.answer}</p>
+                    <p className="px-6 pb-6 text-sm leading-relaxed text-muted sm:text-[0.95rem]">
+                      <InlineMarkdown>{faq.answer}</InlineMarkdown>
+                    </p>
                   </motion.div>
                 )}
               </AnimatePresence>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
@@ -41,7 +42,7 @@ export function Services() {
                     </span>
 
                     <h3 className="mt-6 text-xl text-ink">{service.title}</h3>
-                    <p className="mt-2.5 text-sm leading-relaxed text-muted">{service.description}</p>
+                    <p className="mt-2.5 text-sm leading-relaxed text-muted"><InlineMarkdown>{service.description}</InlineMarkdown></p>
 
                     <ul className="mt-5 flex flex-1 flex-col gap-2.5 border-t border-line pt-5">
                       {service.points.map((point) => (
@@ -87,7 +88,7 @@ export function Services() {
                     </span>
 
                     <h3 className="mt-6 text-xl text-ink">{v.title}</h3>
-                    <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted">{v.description}</p>
+                    <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted"><InlineMarkdown>{v.description}</InlineMarkdown></p>
 
                     <Link
                       href={`/how-we-help/${v.slug}`}

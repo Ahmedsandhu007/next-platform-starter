@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import type { SiteCopy } from "@/lib/cms/siteSchema";
 import { CharCount, fieldClass, Labeled, StringList } from "@/components/admin/fields";
+import { RichTextField } from "@/components/admin/RichTextField";
 import { limitFor } from "@/lib/cms/limits";
 import { Card, EditorHeader, LoadGate, type Path, SaveBtn, setIn, StatusBanners, useObjectEditor } from "@/components/admin/objectEditor";
 
@@ -93,15 +94,21 @@ function CopyFields({ data, upd }: { data: SiteCopy; upd: (path: Path, value: un
       </Labeled>
     );
   };
-  const Area = (label: string, path: Path, rows = 3) => {
+  const Area = (label: string, path: Path, rows = 3, plain = false) => {
     const v = String(get(path) ?? "");
     const limit = limitFor(String(path[path.length - 1]));
     return (
       <Labeled label={label}>
-        <textarea {...bind(path)} rows={rows} className={`${fieldClass} resize-y ${v.length > limit ? "border-red-400" : ""}`} />
-        <div className="mt-0.5 flex justify-end">
-          <CharCount value={v} max={limit} />
-        </div>
+        {plain ? (
+          <>
+            <textarea {...bind(path)} rows={rows} className={`${fieldClass} resize-y ${v.length > limit ? "border-red-400" : ""}`} />
+            <div className="mt-0.5 flex justify-end">
+              <CharCount value={v} max={limit} />
+            </div>
+          </>
+        ) : (
+          <RichTextField value={v} onChange={(val) => upd(path, val)} max={limit} rows={rows} />
+        )}
       </Labeled>
     );
   };
@@ -226,7 +233,7 @@ function CopyFields({ data, upd }: { data: SiteCopy; upd: (path: Path, value: un
                 </div>
                 {Area("Banner subtitle", ["pages", key, "subtitle"], 2)}
                 {Text("Search-engine title", ["pages", key, "metaTitle"])}
-                {Area("Search-engine description", ["pages", key, "metaDescription"], 2)}
+                {Area("Search-engine description", ["pages", key, "metaDescription"], 2, true)}
               </div>
             </div>
           ))}

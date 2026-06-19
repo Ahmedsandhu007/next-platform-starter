@@ -1,6 +1,7 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { useTapActivate } from "@/components/ui/useTapActivate";
@@ -21,7 +22,7 @@ function Step({ step }: { step: (typeof processSteps)[number] }) {
         <Icon name={step.icon as IconName} className="h-4 w-4 text-accent" strokeWidth={2} aria-hidden />
         <h3 className="text-lg text-ink">{step.title}</h3>
       </div>
-      <p className="mx-auto mt-2.5 max-w-xs text-sm leading-relaxed text-muted">{step.description}</p>
+      <p className="mx-auto mt-2.5 max-w-xs text-sm leading-relaxed text-muted"><InlineMarkdown>{step.description}</InlineMarkdown></p>
     </li>
   );
 }

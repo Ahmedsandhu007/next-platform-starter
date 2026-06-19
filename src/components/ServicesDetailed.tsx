@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { Reveal } from "@/components/ui/Reveal";
 import { SpotArt } from "@/components/ui/SpotArt";
 import { ButtonLink } from "@/components/ui/Button";
@@ -35,7 +36,7 @@ export function ServicesDetailed() {
                 <Reveal className={reversed ? "lg:order-1" : ""} y={24}>
                   <span className="eyebrow text-accent">Service {String(i + 1).padStart(2, "0")}</span>
                   <h2 className="mt-3 text-3xl text-ink sm:text-4xl">{service.title}</h2>
-                  <p className="mt-4 max-w-lg text-lg leading-relaxed text-muted">{service.description}</p>
+                  <p className="mt-4 max-w-lg text-lg leading-relaxed text-muted"><InlineMarkdown>{service.description}</InlineMarkdown></p>
                   <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                     {service.points.map((p) => (
                       <li key={p} className="flex items-center gap-2.5 text-sm font-medium text-ink/80">

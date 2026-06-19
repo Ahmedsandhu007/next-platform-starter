@@ -1,5 +1,6 @@
 import { Clock, Mail, MapPin, type LucideIcon } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { Reveal } from "@/components/ui/Reveal";
 import { ContactForm } from "@/components/ContactForm";
 import { copy, siteConfig } from "@/lib/content";
@@ -39,7 +40,7 @@ export function Contact() {
               <h2 className="mt-5 text-3xl text-ink sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">
                 {copy.contact.title}
               </h2>
-              <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">{copy.contact.subtitle}</p>
+              <p className="mt-5 max-w-md text-lg leading-relaxed text-muted"><InlineMarkdown>{copy.contact.subtitle}</InlineMarkdown></p>
             </Reveal>
 
             <Reveal delay={0.08}>

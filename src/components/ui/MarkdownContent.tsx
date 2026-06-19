@@ -55,6 +55,7 @@ const overrides = {
   li: { props: { className: "text-[0.95rem] leading-relaxed text-muted" } },
   strong: { props: { className: "font-semibold text-ink" } },
   em: { props: { className: "italic" } },
+  u: { props: { className: "underline underline-offset-2 decoration-ink/40" } },
   a: { component: MdLink },
   blockquote: { props: { className: "mt-4 border-l-2 border-accent pl-4 italic text-muted" } },
   hr: { props: { className: "my-8 border-line" } },
@@ -67,14 +68,47 @@ const overrides = {
 };
 
 /**
+ * Escape every HTML angle-bracket EXCEPT the underline tags <u>/</u>. Markdown has
+ * no underline syntax, so the CMS toolbar emits <u>...</u>; this lets ONLY that one
+ * (attribute-less) tag through and escapes everything else, so enabling raw-HTML
+ * parsing below can never become an injection vector. Bold/italic/links use real
+ * Markdown syntax and are unaffected by the escaping.
+ */
+const U_OPEN = "@@U_OPEN@@";
+const U_CLOSE = "@@U_CLOSE@@";
+function prepareMd(src: string): string {
+  return src
+    .replace(/<u>/gi, U_OPEN)
+    .replace(/<\/u>/gi, U_CLOSE)
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .split(U_OPEN)
+    .join("<u>")
+    .split(U_CLOSE)
+    .join("</u>");
+}
+
+/**
  * Renders Markdown body content with the site's typography. Editors can use
- * ## headings, **bold**, [links](/services/vat), tables, lists and images — the
- * content the SEO team needs. Plain text renders as normal paragraphs.
+ * ## headings, **bold**, _italic_, <u>underline</u>, [links](/services/vat),
+ * tables, lists and images. Plain text renders as normal paragraphs.
  */
 export function MarkdownContent({ children, className }: { children: string; className?: string }) {
   return (
     <div className={`[&>*:first-child]:mt-0 ${className ?? ""}`}>
-      <Markdown options={{ forceBlock: true, disableParsingRawHTML: true, overrides }}>{children}</Markdown>
+      <Markdown options={{ forceBlock: true, disableParsingRawHTML: false, overrides }}>{prepareMd(children)}</Markdown>
     </div>
   );
+}
+
+/**
+ * Inline variant for short fields (descriptions, card text, FAQ answers): renders
+ * **bold**, _italic_, <u>underline</u> and [links](/path) with NO block wrapping,
+ * so it drops straight inside an existing <p>/<span>. Same safe pipeline as above.
+ */
+export function InlineMarkdown({ children, className }: { children: string; className?: string }) {
+  const md = (
+    <Markdown options={{ forceInline: true, disableParsingRawHTML: false, overrides }}>{prepareMd(children)}</Markdown>
+  );
+  return className ? <span className={className}>{md}</span> : md;
 }

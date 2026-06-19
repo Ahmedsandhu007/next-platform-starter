@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Clock, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { Logo } from "@/components/ui/Logo";
 import { ButtonLink } from "@/components/ui/Button";
 import { socialLinks } from "@/components/ui/social";
@@ -48,7 +49,7 @@ export function Footer() {
             ) : (
               <Logo tone="light" size="md" />
             )}
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/60">{copy.footer.blurb}</p>
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/60"><InlineMarkdown>{copy.footer.blurb}</InlineMarkdown></p>
             <div className="mt-7">
               <ButtonLink href="/contact" variant="bronze" withArrow>
                 {copy.footer.cta}
@@ -139,7 +140,7 @@ export function Footer() {
           <p className="max-w-4xl">
             {siteConfig.name}{" "}Ltd is registered in England &amp; Wales (Company No.{" "}
             {siteConfig.companyNumber}). Registered office: {siteConfig.contact.addressLine},{" "}
-            {siteConfig.contact.city}, {siteConfig.contact.postcode}. {copy.footer.disclaimer}
+            {siteConfig.contact.city}, {siteConfig.contact.postcode}. <InlineMarkdown>{copy.footer.disclaimer}</InlineMarkdown>
           </p>
           <div className="mt-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
             <p>© {year} {siteConfig.name} Ltd. All rights reserved.</p>

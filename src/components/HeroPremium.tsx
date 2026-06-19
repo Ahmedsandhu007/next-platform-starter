@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck, Star } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { ButtonLink } from "@/components/ui/Button";
 import Image from "next/image";
 import { GoogleG } from "@/components/ui/brands";
@@ -66,7 +67,7 @@ export function HeroPremium({ cutoutSrc = null }: { cutoutSrc?: string | null })
             </motion.h1>
 
             <motion.p variants={item} className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">
-              {copy.hero.paragraph}
+              <InlineMarkdown>{copy.hero.paragraph}</InlineMarkdown>
             </motion.p>
 
             <motion.div variants={item} className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">

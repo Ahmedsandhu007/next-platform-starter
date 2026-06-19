@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { DetailFaq, DetailSection, RawDetail } from "@/lib/detailSchema";
 import { limitFor } from "@/lib/cms/limits";
 import { BackLink, SaveButton, StatusBanner, Card } from "@/components/admin/fields";
+import { RichTextField } from "@/components/admin/RichTextField";
 
 const fieldClass =
   "w-full rounded-none border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-ink/30 focus:border-bronze focus-visible:outline-none focus:ring-1 focus:ring-bronze";
@@ -163,13 +164,8 @@ export function PageEditor({ file, slug }: { file: string; slug: string }) {
             className={fieldClass}
           />
         </Labeled>
-        <Labeled label="Intro (hero subtitle)" hint={counter(page.intro.length, "intro")}>
-          <textarea
-            value={page.intro}
-            rows={3}
-            onChange={(e) => mutate((p) => ({ ...p, intro: e.target.value }))}
-            className={`${fieldClass} resize-y`}
-          />
+        <Labeled label="Intro (hero subtitle)">
+          <RichTextField value={page.intro} onChange={(v) => mutate((p) => ({ ...p, intro: v }))} role="intro" rows={3} />
         </Labeled>
         <Labeled label="Slug / URL (cannot be changed here)">
           <input value={page.slug} readOnly disabled className={`${fieldClass} bg-neutral-100 text-muted`} />
@@ -353,12 +349,14 @@ function StringList({
   multiline = false,
   addLabel = "Add item",
   placeholder = "",
+  renderField,
 }: {
   items: string[];
   onChange: (next: string[]) => void;
   multiline?: boolean;
   addLabel?: string;
   placeholder?: string;
+  renderField?: (value: string, onChange: (v: string) => void) => React.ReactNode;
 }) {
   const set = (i: number, value: string) => onChange(items.map((it, idx) => (idx === i ? value : it)));
   const remove = (i: number) => onChange(items.filter((_, idx) => idx !== i));
@@ -369,7 +367,9 @@ function StringList({
       {items.length === 0 && <p className="text-xs italic text-muted">None yet.</p>}
       {items.map((item, i) => (
         <div key={i} className="flex items-start gap-2">
-          {multiline ? (
+          {renderField ? (
+            <div className="flex-1">{renderField(item, (v) => set(i, v))}</div>
+          ) : multiline ? (
             <textarea
               value={item}
               placeholder={placeholder}
@@ -443,6 +443,9 @@ function SectionEditor({
             multiline
             addLabel="Add paragraph"
             placeholder="Paragraph text…"
+            renderField={(v, oc) => (
+              <RichTextField value={v} onChange={oc} role="body" rows={3} placeholder="Paragraph text… (select text, then B / I / U / link)" />
+            )}
           />
         </div>
         <div>
@@ -485,13 +488,8 @@ function FaqEditor({
         <Labeled label="Question" hint={counter(faq.question.length, "question")}>
           <input value={faq.question} onChange={(e) => set({ question: e.target.value })} className={fieldClass} />
         </Labeled>
-        <Labeled label="Answer" hint={counter(faq.answer.length, "answer")}>
-          <textarea
-            value={faq.answer}
-            rows={3}
-            onChange={(e) => set({ answer: e.target.value })}
-            className={`${fieldClass} resize-y`}
-          />
+        <Labeled label="Answer">
+          <RichTextField value={faq.answer} onChange={(v) => set({ answer: v })} role="answer" rows={3} />
         </Labeled>
       </div>
     </div>

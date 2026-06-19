@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/ui/Container";
 import { BackgroundFX } from "@/components/ui/BackgroundFX";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { CtaBand } from "@/components/CtaBand";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { CustomSchema } from "@/components/CustomSchema";
@@ -49,7 +50,7 @@ export default function TeamPage() {
                 )}
                 <h2 className="mt-5 font-display text-lg text-ink">{m.name}</h2>
                 <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-accent">{m.role}</p>
-                <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{m.bio}</p>
+                <p className="mt-3 text-[0.95rem] leading-relaxed text-muted"><InlineMarkdown>{m.bio}</InlineMarkdown></p>
               </li>
             ))}
           </ul>

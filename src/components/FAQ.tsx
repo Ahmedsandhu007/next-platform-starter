@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ButtonLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
@@ -75,7 +76,7 @@ export function FAQ() {
                           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                           className="overflow-hidden"
                         >
-                          <p className="px-6 pb-6 text-sm leading-relaxed text-muted sm:text-[0.95rem]">{faq.answer}</p>
+                          <p className="px-6 pb-6 text-sm leading-relaxed text-muted sm:text-[0.95rem]"><InlineMarkdown>{faq.answer}</InlineMarkdown></p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -87,7 +88,7 @@ export function FAQ() {
 
           <div className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-line bg-cream/40 p-8 text-center">
             <p className="font-display text-xl text-ink">{copy.faq.stillHaveTitle}</p>
-            <p className="max-w-md text-sm text-muted">{copy.faq.stillHaveText}</p>
+            <p className="max-w-md text-sm text-muted"><InlineMarkdown>{copy.faq.stillHaveText}</InlineMarkdown></p>
             <ButtonLink href="/contact" variant="primary" withArrow>
               {copy.faq.stillHaveCta}
             </ButtonLink>

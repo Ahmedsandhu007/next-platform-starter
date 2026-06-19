@@ -1,6 +1,7 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
+import { InlineMarkdown } from "@/components/ui/MarkdownContent";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
@@ -30,7 +31,7 @@ export function WhyChoose() {
                       <Icon name={point.icon as IconName} className="h-6 w-6" strokeWidth={1.8} aria-hidden />
                     </span>
                     <h3 className="mt-5 text-lg text-ink">{point.title}</h3>
-                    <p className="mt-2.5 text-[0.95rem] leading-relaxed text-muted">{point.description}</p>
+                    <p className="mt-2.5 text-[0.95rem] leading-relaxed text-muted"><InlineMarkdown>{point.description}</InlineMarkdown></p>
                   </>
                 )}
               </InteractiveCard>
