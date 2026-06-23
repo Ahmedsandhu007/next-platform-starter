@@ -2,9 +2,10 @@
 
 A lightweight admin at **`/admin`** lets you edit most of the site's content —
 your site-wide details and text, the home-page reviews, and the detail pages
-(Services, Industries and "How we help"). Saving commits the change to the
-GitHub repo, which triggers a Netlify rebuild — your edit is live in about
-**1–2 minutes**.
+(Services, Industries and "How we help"). **Saving stores your change as a draft —
+it does not touch the live site or trigger a build.** When you're ready, click
+**Publish changes** on the dashboard to push everything live at once (~1–2 minutes).
+Batching many edits into a single publish keeps Netlify build usage low.
 
 The public site is unaffected by the CMS: it still reads content at build time,
 so if the CMS is not configured the marketing site builds and runs exactly as
@@ -94,7 +95,8 @@ Create a **fine-grained personal access token** that can commit to the site repo
 | `ADMIN_SESSION_SECRET` | A long random string that signs the login cookie. |
 | `GITHUB_TOKEN` | The fine-grained token from step 1. |
 | `GITHUB_REPO` | `Ahmedsandhu007/next-platform-starter` |
-| `GITHUB_BRANCH` | `main` |
+| `GITHUB_BRANCH` | `main` — the **published** branch Netlify builds. |
+| `GITHUB_DRAFT_BRANCH` | `cms-draft` (default) — where **Save** commits go; never built. Created automatically. |
 
 Generate a session secret with:
 
@@ -102,8 +104,14 @@ Generate a session secret with:
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-**Production (Netlify):** Site configuration → Environment variables → add all five.
+**Production (Netlify):** Site configuration → Environment variables → add them all.
 After adding them, trigger a redeploy so they take effect.
+
+> **Important — this is what saves build credits:** in Netlify, set **Site
+> configuration → Build & deploy → Branch deploys → "Deploy only the production
+> branch"**. That ensures commits to the `cms-draft` branch (i.e. every CMS *Save*)
+> do **not** trigger a build — only **Publish changes** does. Draft commits are
+> also tagged `[skip ci]` as a backstop.
 
 **Local development:** copy `.env.example` to `.env.local` and fill in the values.
 Tip: for local testing, point `GITHUB_REPO`/`GITHUB_BRANCH` at a branch you don't
@@ -117,11 +125,20 @@ mind test commits landing on.
 2. Pick a page from the dashboard.
 3. Edit the fields. Use the ↑ / ↓ buttons to reorder list items, ✕ to remove,
    and the "+ Add" buttons to add.
-4. Click **Save & publish**.
-5. Wait ~1–2 minutes for the rebuild, then refresh the live page.
+4. Click **Save** — your change is stored as a **draft**; the live site is unchanged.
+5. Edit as many pages / sections as you like — each Save adds to the same draft.
+6. When you're ready, open the **Dashboard** and click **Publish changes** — this
+   pushes everything live in a single build (~1–2 minutes). A badge in the top bar
+   shows how many unpublished changes are waiting.
 
-Each save creates a commit named `CMS: update <file>.json (<page title>)`, so
-there's a full history and any change can be reverted in GitHub if needed.
+**Drafts & publishing.** Saves commit to a separate `cms-draft` branch, so they
+never build the site. **Publish changes** merges that branch into `main` (one commit,
+one build). On the dashboard you can also **Discard** to throw away all unpublished
+drafts and revert to the live version. If you try to log out with unpublished
+changes, you'll be asked whether to **publish**, **keep the draft**, or **discard**.
+
+Each save creates a commit named `CMS: update <file>.json (<page title>) [skip ci]`,
+so there's a full history and any change can be reverted in GitHub if needed.
 
 ---
 
@@ -159,8 +176,12 @@ switch on **reCAPTCHA** spam protection or a **visitor auto-reply**, see
 - **"Saving is disabled" on the dashboard** → `GITHUB_TOKEN` / `GITHUB_REPO` are missing.
 - **Save fails with a GitHub error** → the token lacks *Contents: Read and write*,
   has expired, or `GITHUB_REPO` / `GITHUB_BRANCH` is wrong.
-- **Edit saved but the site looks unchanged** → the rebuild hasn't finished yet
-  (check Netlify deploys), or you're viewing a cached page — hard-refresh.
+- **Edit saved but the site looks unchanged** → expected — saves are drafts. Click
+  **Publish changes** on the dashboard, then wait ~1–2 minutes for the build.
+- **Published but still unchanged** → the build hasn't finished (check Netlify
+  deploys), or you're viewing a cached page — hard-refresh.
+- **Publish says "merge conflict"** → the published branch changed outside the CMS.
+  Use **Discard** to reset the draft to live, then re-apply your edits.
 
 ## Scope / future
 

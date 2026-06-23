@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { limitFor, formatFor, isFormat, formatHint, type FieldFormat } from "@/lib/cms/limits";
 import { RichTextField } from "./RichTextField";
+import { notifyCmsChanged } from "@/components/admin/AdminStatusProvider";
 
 /** Shared admin form primitives, reused across CMS editors. */
 
@@ -359,16 +360,20 @@ export function SaveButton({ saving, onClick }: { saving: boolean; onClick: () =
       disabled={saving}
       className="bg-ink px-6 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-bronze disabled:cursor-not-allowed disabled:opacity-60"
     >
-      {saving ? "Saving…" : "Save & publish"}
+      {saving ? "Saving…" : "Save"}
     </button>
   );
 }
 
 export function StatusBanner({ saved, error, issues }: { saved: boolean; error: string; issues: string[] }) {
+  // When a save lands, ping the shared status so the pending-changes badge updates.
+  useEffect(() => {
+    if (saved) notifyCmsChanged();
+  }, [saved]);
   if (saved) {
     return (
       <div className="mt-5 border border-emerald-300 bg-emerald-50 p-4 text-sm text-emerald-900">
-        Saved. Your changes will be live in about 1–2 minutes, once the site finishes rebuilding.
+        Saved as a draft — go to the Dashboard and click “Publish changes” to make it live.
       </div>
     );
   }

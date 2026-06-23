@@ -8,6 +8,7 @@ import approachRaw from "@/content/approach.json";
 import blogRaw from "@/content/blog.json";
 import caseStudiesRaw from "@/content/case-studies.json";
 import { NewEntryButton } from "@/components/admin/NewBlogButton";
+import { PublishBar } from "@/components/admin/PublishBar";
 
 export const dynamic = "force-dynamic";
 
@@ -45,8 +46,9 @@ export default function AdminDashboard() {
     <div>
       <h1 className="font-display text-3xl font-extrabold text-ink">Dashboard</h1>
       <p className="mt-2 max-w-2xl text-muted">
-        Edit your site content, SEO and blog. Saving commits to your repository and publishes automatically in
-        about 1–2 minutes, once the site rebuilds.
+        Edit your site content, SEO and blog. <strong className="font-semibold text-ink">Saving stores a draft</strong> — it
+        does not change the live site. When you&apos;re ready, click <strong className="font-semibold text-ink">Publish
+        changes</strong> below to push everything live in one go (about 1–2 minutes).
       </p>
 
       {!canSave && (
@@ -58,6 +60,8 @@ export default function AdminDashboard() {
           </p>
         </div>
       )}
+
+      <PublishBar />
 
       {/* Quick cards */}
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

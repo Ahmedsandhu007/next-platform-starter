@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
+import { notifyCmsChanged } from "@/components/admin/AdminStatusProvider";
 
 /**
  * Shared scaffold for "object-mode" CMS editors (a single JSON file edited whole):
@@ -127,7 +128,7 @@ export function SaveBtn({ saving, onClick }: { saving: boolean; onClick: () => v
       disabled={saving}
       className="bg-ink px-6 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-bronze disabled:cursor-not-allowed disabled:opacity-60"
     >
-      {saving ? "Saving…" : "Save & publish"}
+      {saving ? "Saving…" : "Save"}
     </button>
   );
 }
@@ -166,11 +167,15 @@ export function StatusBanners({
   saveError: string;
   issues: string[];
 }) {
+  // When a save lands, ping the shared status so the pending-changes badge updates.
+  useEffect(() => {
+    if (saved) notifyCmsChanged();
+  }, [saved]);
   return (
     <>
       {saved && (
         <div className="mt-5 border border-emerald-300 bg-emerald-50 p-4 text-sm text-emerald-900">
-          Saved. Your changes will be live in about 1–2 minutes, once the site rebuilds.
+          Saved as a draft — go to the Dashboard and click “Publish changes” to make it live.
         </div>
       )}
       {(saveError || issues.length > 0) && (
