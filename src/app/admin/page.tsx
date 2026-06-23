@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Search, Type, LayoutGrid, Menu as MenuIcon, Newspaper, Briefcase, Users, Star, FileText, Settings } from "lucide-react";
-import { githubConfigured } from "@/lib/github";
+import { getJsonFile, githubConfigured } from "@/lib/github";
+import { getCollection } from "@/lib/cms/registry";
 import servicesRaw from "@/content/services.json";
 import industries1Raw from "@/content/industries-1.json";
 import industries2Raw from "@/content/industries-2.json";
@@ -14,33 +15,56 @@ export const dynamic = "force-dynamic";
 
 type ListItem = { slug: string; title: string };
 
-const COLLECTIONS: { file: string; label: string; pages: ListItem[]; anchor?: string }[] = [
-  { file: "services", label: "Services", pages: servicesRaw as unknown as ListItem[] },
-  { file: "industries-1", label: "Industries — set A", pages: industries1Raw as unknown as ListItem[] },
-  { file: "industries-2", label: "Industries — set B", pages: industries2Raw as unknown as ListItem[] },
-  { file: "approach", label: "How we help", pages: approachRaw as unknown as ListItem[] },
-  { file: "blog", label: "Blog", pages: blogRaw as unknown as ListItem[], anchor: "blog" },
-  { file: "case-studies", label: "Case studies", pages: caseStudiesRaw as unknown as ListItem[], anchor: "case-studies" },
+/**
+ * List collections shown on the dashboard. The imported JSON is the PUBLISHED
+ * (build-time) version, kept as a fallback; at request time we load the DRAFT
+ * version so unpublished creates / edits / deletes show here immediately.
+ */
+const LIST_COLLECTIONS: { id: string; label: string; anchor?: string; fallback: ListItem[] }[] = [
+  { id: "services", label: "Services", fallback: servicesRaw as unknown as ListItem[] },
+  { id: "industries-1", label: "Industries — set A", fallback: industries1Raw as unknown as ListItem[] },
+  { id: "industries-2", label: "Industries — set B", fallback: industries2Raw as unknown as ListItem[] },
+  { id: "approach", label: "How we help", fallback: approachRaw as unknown as ListItem[] },
+  { id: "blog", label: "Blog", anchor: "blog", fallback: blogRaw as unknown as ListItem[] },
+  { id: "case-studies", label: "Case studies", anchor: "case-studies", fallback: caseStudiesRaw as unknown as ListItem[] },
 ];
 
-const blogCount = (blogRaw as unknown[]).length;
-const csCount = (caseStudiesRaw as unknown[]).length;
+/** Load a list collection from the draft branch; fall back to the published JSON
+ *  if GitHub isn't configured or the read fails. */
+async function loadDraftList(id: string, fallback: ListItem[]): Promise<ListItem[]> {
+  if (!githubConfigured()) return fallback;
+  const col = getCollection(id);
+  if (!col) return fallback;
+  try {
+    const { data } = await getJsonFile<ListItem[]>(col.file);
+    if (!Array.isArray(data)) return fallback;
+    return data.map((p) => ({ slug: p.slug, title: p.title }));
+  } catch {
+    return fallback;
+  }
+}
 
-const CARDS = [
-  { label: "SEO & search", href: "/admin/seo", icon: Search, sub: "Titles, descriptions, indexing, social" },
-  { label: "Page text", href: "/admin/copy", icon: Type, sub: "Headings & copy on every page" },
-  { label: "Sections", href: "/admin/sections", icon: LayoutGrid, sub: "Services, industries, FAQs…" },
-  { label: "Navigation", href: "/admin/nav", icon: MenuIcon, sub: "Menus & mega-menus" },
-  { label: "Blog", href: "#blog", icon: Newspaper, sub: `${blogCount} post${blogCount === 1 ? "" : "s"}` },
-  { label: "Case studies", href: "#case-studies", icon: Briefcase, sub: `${csCount} case stud${csCount === 1 ? "y" : "ies"}` },
-  { label: "Team", href: "/admin/team", icon: Users, sub: "People page" },
-  { label: "Reviews", href: "/admin/reviews", icon: Star, sub: "Google reviews" },
-  { label: "Legal", href: "/admin/legal", icon: FileText, sub: "Privacy, terms, cookies" },
-  { label: "Site settings", href: "/admin/settings", icon: Settings, sub: "Contact, logos, social" },
-];
-
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
   const canSave = githubConfigured();
+
+  const lists = await Promise.all(LIST_COLLECTIONS.map((c) => loadDraftList(c.id, c.fallback)));
+  const collections = LIST_COLLECTIONS.map((c, i) => ({ ...c, pages: lists[i] }));
+  const countOf = (id: string) => collections.find((c) => c.id === id)?.pages.length ?? 0;
+  const blogCount = countOf("blog");
+  const csCount = countOf("case-studies");
+
+  const CARDS = [
+    { label: "SEO & search", href: "/admin/seo", icon: Search, sub: "Titles, descriptions, indexing, social" },
+    { label: "Page text", href: "/admin/copy", icon: Type, sub: "Headings & copy on every page" },
+    { label: "Sections", href: "/admin/sections", icon: LayoutGrid, sub: "Services, industries, FAQs…" },
+    { label: "Navigation", href: "/admin/nav", icon: MenuIcon, sub: "Menus & mega-menus" },
+    { label: "Blog", href: "#blog", icon: Newspaper, sub: `${blogCount} post${blogCount === 1 ? "" : "s"}` },
+    { label: "Case studies", href: "#case-studies", icon: Briefcase, sub: `${csCount} case stud${csCount === 1 ? "y" : "ies"}` },
+    { label: "Team", href: "/admin/team", icon: Users, sub: "People page" },
+    { label: "Reviews", href: "/admin/reviews", icon: Star, sub: "Google reviews" },
+    { label: "Legal", href: "/admin/legal", icon: FileText, sub: "Privacy, terms, cookies" },
+    { label: "Site settings", href: "/admin/settings", icon: Settings, sub: "Contact, logos, social" },
+  ];
 
   return (
     <div>
@@ -85,20 +109,20 @@ export default function AdminDashboard() {
         })}
       </div>
 
-      {/* Per-entry lists (detail pages + blog) */}
+      {/* Per-entry lists (detail pages + blog + case studies) — draft-aware */}
       <div className="mt-12 space-y-8">
-        {COLLECTIONS.map((collection) => (
-          <section key={collection.file} id={collection.anchor} className="scroll-mt-24">
+        {collections.map((collection) => (
+          <section key={collection.id} id={collection.anchor} className="scroll-mt-24">
             <div className="flex items-center justify-between gap-3">
               <h2 className="font-display text-xs font-bold uppercase tracking-[0.16em] text-muted">{collection.label}</h2>
-              {collection.file === "blog" && <NewEntryButton file="blog" noun="post" />}
-              {collection.file === "case-studies" && <NewEntryButton file="case-studies" noun="case study" />}
+              {collection.id === "blog" && <NewEntryButton file="blog" noun="post" />}
+              {collection.id === "case-studies" && <NewEntryButton file="case-studies" noun="case study" />}
             </div>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {collection.pages.map((page) => (
                 <li key={page.slug}>
                   <Link
-                    href={`/admin/edit/${collection.file}/${page.slug}`}
+                    href={`/admin/edit/${collection.id}/${page.slug}`}
                     className="flex items-center justify-between gap-3 border border-line bg-white px-4 py-3 text-sm transition-colors hover:border-bronze"
                   >
                     <span className="font-semibold text-ink">{page.title}</span>
