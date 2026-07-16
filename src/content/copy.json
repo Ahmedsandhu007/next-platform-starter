@@ -1,10 +1,14 @@
 {
   "hero": {
     "eyebrow": "Chartered accountants · Trusted UK-wide",
-    "headlineLead": "Expert accounting for",
+    "headlineLead": "Chartered Accountants in Manchester for",
     "headlineAccent": "UK businesses",
     "paragraph": "From proactive tax planning to fully-managed payroll, MMR gives established UK companies a cloud-first finance team — fixed monthly fees, a dedicated chartered accountant, and advice that helps you keep more of what you earn.",
-    "pillars": ["Fixed monthly fees", "Your own accountant", "Switch in days"],
+    "pillars": [
+      "Fixed monthly fees",
+      "Your own accountant",
+      "Switch in days"
+    ],
     "primaryCta": "Book a Free Consultation",
     "secondaryCta": "Explore Services",
     "ratingScore": "4.9/5",
@@ -74,14 +78,27 @@
     "title": "Let's talk numbers",
     "subtitle": "Tell us a little about your business and we'll come back with a clear, fixed-fee quote — usually within one business day. No pressure, no jargon.",
     "accepting": "Accepting new clients this quarter",
-    "labels": { "call": "Call us", "email": "Email us", "visit": "Visit us", "hours": "Opening hours" }
+    "labels": {
+      "call": "Call us",
+      "email": "Email us",
+      "visit": "Visit us",
+      "hours": "Opening hours"
+    }
   },
   "footer": {
     "blurb": "Chartered-standard accountants helping UK businesses keep more of what they earn — with proactive advice and transparent fixed fees.",
     "cta": "Book a Consultation",
-    "columns": { "services": "Services", "quickLinks": "Quick Links", "contact": "Get in touch" },
+    "columns": {
+      "services": "Services",
+      "quickLinks": "Quick Links",
+      "contact": "Get in touch"
+    },
     "disclaimer": "A firm of accountants regulated for a range of investment business activities; ACCA-registered. Content on this website is for general guidance only and does not constitute professional advice.",
-    "legal": ["Privacy Policy", "Terms", "Cookies"]
+    "legal": [
+      "Privacy Policy",
+      "Terms",
+      "Cookies"
+    ]
   },
   "pages": {
     "services": {
